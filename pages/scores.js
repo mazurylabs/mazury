@@ -8,8 +8,8 @@ const user = {
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
 const navigation = [
-  { name: 'Home', href: '/', current: true },
-  { name: 'Your scores', href: '/scores', current: false },
+  { name: 'Home', href: '/', current: false },
+  { name: 'Your scores', href: '/scores', current: true },
   { name: 'People', href: '/people', current: false },
   { name: 'Jobs', href: '/jobs', current: false },
   { name: 'Refer a friend', href: '/refer', current: false },
@@ -32,7 +32,7 @@ export default function Home() {
         navigation={navigation}
         user={user}
         userNavigation={userNavigation}
-        header={"Welcome back, anon"}
+        header={"Your scores"}
       />
       <main className="-mt-32">
         <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
