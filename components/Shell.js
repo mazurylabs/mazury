@@ -171,7 +171,7 @@ export default function Shell(props) {
                         >
                           Connect
                         </button>
-                    }
+                      }
                     </div>
                   </div>
                   <div className="-mr-2 flex md:hidden">
@@ -205,34 +205,50 @@ export default function Shell(props) {
                   </a>
                 ))}
               </div>
-              <div className="pt-4 pb-3 border-t border-gray-700">
-                <div className="flex items-center px-5">
-                  <div className="flex-shrink-0">
-                    <img className="h-10 w-10 rounded-full" src={props.user.imageUrl} alt="" />
-                  </div>
-                  <div className="ml-3">
-                    <div className="text-base font-medium leading-none text-white">{props.user.name}</div>
-                    <div className="text-sm font-medium leading-none text-gray-400">{props.user.email}</div>
-                  </div>
-                  <button
-                    type="button"
-                    className="ml-auto bg-gray-800 flex-shrink-0 p-1 text-gray-400 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                  >
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
-                </div>
-                <div className="mt-3 px-2 space-y-1">
-                  {props.userNavigation.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
+              <div className="pt-4 pb-3 border-t border-gray-700 flex justify-center">
+                {connected
+                ?
+                  <Menu as="div" className="ml-3 relative">
+                    <div>
+                      <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none">
+                        <p
+                          className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-900 bg-gray-100 hover:bg-gray-200 focus:outline-none"
+                        >
+                          {`${address.slice(0, 5)}...${address.slice(-3)}`}
+                        </p>
+                      </Menu.Button>
+                    </div>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
                     >
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
+                      <Menu.Items className="mt-2 text-center rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Item key={"disconnect"}>
+                          {({ active }) => (
+                            <button
+                              onClick={disconnectWallet}
+                            >
+                              {"Disconnect"}
+                            </button>
+                          )}
+                        </Menu.Item>
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
+                :
+                  <button
+                    onClick={connectWallet}
+                    type="button"
+                    className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-900 bg-gray-100 hover:bg-gray-200 focus:outline-none"
+                  >
+                    Connect
+                  </button>
+                }
               </div>
             </Disclosure.Panel>
           </>
