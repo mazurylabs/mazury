@@ -32,7 +32,7 @@ export default function Home() {
         navigation={navigation}
         user={user}
         userNavigation={userNavigation}
-        header={"Your scores"}
+        header={"Refer a friend"}
       />
       <main className="-mt-32">
         <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
