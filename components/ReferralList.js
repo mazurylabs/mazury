@@ -1,9 +1,29 @@
 // todo supply with actual, not mockup values
 const people = [
   {
-    name: 'Account not verified',
+    name: 'Anon',
     address: '0xF417ACe7b13c0ef4fcb5548390a450A4B75D3eB3',
     referred_skills: ["solidity", "react", "rust", "design", "memes"]
+  },
+  {
+    name: 'Anon',
+    address: '0x1a57916bcafCE18183Bf42f1a83CEE4F28735712',
+    referred_skills: ["solidity", "react", "memes"]
+  },
+  {
+    name: 'Anon',
+    address: '0x5FA7729263a827BA6d31eEd665abDF150b233DD7',
+    referred_skills: ["rust", "design"]
+  },
+  {
+    name: 'Anon',
+    address: '0xdb61A4e5653a93E71a7d7CfeBBc9A4e6040a020a',
+    referred_skills: ["solidity", "react", "rust", "design"]
+  },
+  {
+    name: 'Anon',
+    address: '0xdb61A4e5653a93E71a7d7CfeBBc9A4e6040a020a',
+    referred_skills: ["solidity", "react", "rust", "design"]
   },
 ]
 
@@ -12,7 +32,7 @@ export default function ReferralList() {
     <div className="flex flex-col">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <div className="overflow-hidden border-b border-gray-200 sm:rounded-t-lg">
+          <div className="overflow-hidden border-b border-gray-200 sm:rounded-lg">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>

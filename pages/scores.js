@@ -1,5 +1,6 @@
 import Shell from '../components/Shell'
 import ReferralList from '../components/ReferralList'
+import ScoresList from '../components/ScoresList'
 import Head from 'next/head'
 
 const user = {
@@ -37,10 +38,11 @@ export default function Home() {
       />
       <main className="-mt-32">
         <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row">
-          <div className="bg-gray-50 rounded-lg h-96 shadow flex-grow mr-10">
+          <div className="bg-white rounded-lg h-96 shadow flex-grow mr-10 overflow-hidden">
             <ReferralList />
           </div>
-          <div className="bg-white rounded-lg h-96 shadow px-5 py-6 sm:px-6 w-96">
+          <div className="bg-white rounded-lg h-96 shadow px-5 py-2 sm:px-6 w-96">
+            <ScoresList />
           </div>
         </div>
       </main>
