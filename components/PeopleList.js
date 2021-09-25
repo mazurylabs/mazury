@@ -137,7 +137,7 @@ const people = [
   },
 ]
 
-export default function ReferralList() {
+export default function PeopleList() {
   return (
     <div className="flex flex-col">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

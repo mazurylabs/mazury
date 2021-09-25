@@ -5,7 +5,7 @@ import PeopleSearch from '../components/PeopleSearch'
 
 const navigation = [
   { name: 'Home', href: '/', current: false },
-  { name: 'Your referrals', href: '/scores', current: false },
+  { name: 'Your scores', href: '/scores', current: false },
   { name: 'People', href: '/people', current: true },
   { name: 'Jobs', href: '/jobs', current: false },
   { name: 'Refer a friend', href: '/refer', current: false },
@@ -30,7 +30,7 @@ export default function Home() {
         header={"People"}
       />
       <main className="-mt-32">
-        <div className="mb-5 flex flex-row justify-end w-full px-4 sm:px-6 lg:px-12 -mt-48">
+        <div className="max-w-7xl mx-auto mb-5 flex flex-row justify-end w-full px-4 sm:px-6 lg:px-8 -mt-48">
           <div className="w-64">
             <PeopleSearch />
           </div>
