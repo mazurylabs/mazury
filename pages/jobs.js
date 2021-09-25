@@ -36,11 +36,13 @@ export default function Home() {
       />
       <main className="-mt-32">
         <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
-          {/* Replace with your content */}
-          <div className="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
-            <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
+          <div className="bg-white rounded-lg h-96 shadow px-5 py-6 sm:px-6">
+            <div className="border-gray-300 h-full px-5 py-6 md:px-16 max-w-screen-md mx-auto md:flex-row">
+              <h2 className="text-3xl font-semibold mb-4">Jobs are coming</h2>
+              <p className="mb-4">The feature is not active yet, but soon you will be able to see & apply for jobs at the best DAOs, web3 startups and our other partners.</p>
+              <p className="mb-4">All you need to apply is your reputation score, so <button className="font-semibold text-green-500 text-opacity-80">grab your link</button> and reach out to your friends for a referral :)</p>
+            </div>
           </div>
-          {/* /End replace */}
         </div>
       </main>
     </div>
