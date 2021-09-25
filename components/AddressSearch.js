@@ -12,6 +12,7 @@ export default function AddressSearch(props) {
           id="search"
           placeholder="ETH address"
           spellCheck="false"
+          defaultValue={props.searchedAddress}
           onChange={(e) => props.setSearchedAddress(e.target.value)}
           className="shadow-sm focus:outline-none focus:ring-gray-400 focus:border-gray-400 w-full md:w-96 sm:text-sm border-gray-300 border rounded-md py-2 px-4"
         />

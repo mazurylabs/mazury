@@ -1,6 +1,7 @@
 import Shell from '../components/Shell'
 import AddressSearch from '../components/AddressSearch'
 import ReferPanel from '../components/ReferPanel'
+import { useRouter } from "next/router";
 import Head from 'next/head'
 
 import { useState, useEffect } from 'react';
@@ -18,16 +19,12 @@ const navigation = [
   { name: 'Jobs', href: '/jobs', current: false },
   { name: 'Refer a friend', href: '/refer', current: true },
 ]
-const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
-]
 
 export default function Refer() {
 
   const [searchedAddress, setSearchedAddress] = useState("")
   const [addressIsValid, setAddressIsValid] = useState(false)
+  const router = useRouter();
 
   useEffect(() => {
     if(searchedAddress.match(/^0x[a-fA-F0-9]{40}$/)){
@@ -38,6 +35,13 @@ export default function Refer() {
     
   }, [searchedAddress])
 
+  useEffect(() => {
+    if(!router.isReady) return;
+    if(router.query.address){
+      setSearchedAddress(router.query.address)
+    }
+  }, [router.isReady])
+
   return (
     <div>
       <Head>
@@ -47,8 +51,6 @@ export default function Refer() {
 
       <Shell
         navigation={navigation}
-        user={user}
-        userNavigation={userNavigation}
         header={"Refer a friend"}
       />
       <main className="-mt-32">
