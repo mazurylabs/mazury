@@ -23,6 +23,7 @@ export default function ReferPanel(props) {
       </div>
       <div className="md:w-2/3">
         <SkillsList
+          provider={props.provider}
           address={props.address}
         />
       </div>

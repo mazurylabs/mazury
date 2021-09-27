@@ -3,6 +3,8 @@ import Head from 'next/head'
 import PeopleList from '../components/PeopleList'
 import PeopleSearch from '../components/PeopleSearch'
 
+import { useState, useEffect } from 'react';
+
 const navigation = [
   { name: 'Home', href: '/', current: false },
   { name: 'Your scores', href: '/scores', current: false },
@@ -10,13 +12,11 @@ const navigation = [
   { name: 'Jobs', href: '/jobs', current: false },
   { name: 'Refer a friend', href: '/refer', current: false },
 ]
-const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
-]
 
 export default function Home() {
+  
+  const [provider, setProvider] = useState(null)
+  
   return (
     <div>
       <Head>
@@ -25,8 +25,9 @@ export default function Home() {
       </Head>
 
       <Shell
+        provider={provider}
+        setProvider={setProvider}
         navigation={navigation}
-        userNavigation={userNavigation}
         header={"People"}
       />
       <main className="-mt-32">

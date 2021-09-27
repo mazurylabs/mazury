@@ -6,12 +6,6 @@ import Head from 'next/head'
 
 import { useState, useEffect } from 'react';
 
-const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-}
 const navigation = [
   { name: 'Home', href: '/', current: false },
   { name: 'Your referrals', href: '/scores', current: false },
@@ -24,6 +18,7 @@ export default function Refer() {
 
   const [searchedAddress, setSearchedAddress] = useState("")
   const [addressIsValid, setAddressIsValid] = useState(false)
+  const [provider, setProvider] = useState(null)
   const router = useRouter();
 
   useEffect(() => {
@@ -50,6 +45,8 @@ export default function Refer() {
       </Head>
 
       <Shell
+        provider={provider}
+        setProvider={setProvider}
         navigation={navigation}
         header={"Refer a friend"}
       />
@@ -66,6 +63,7 @@ export default function Refer() {
               ?
                 <div className="w-full md:mt-8">
                   <ReferPanel
+                    provider={provider}
                     address={searchedAddress}
                   />
                 </div>

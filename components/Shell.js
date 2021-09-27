@@ -16,7 +16,6 @@ function classNames(...classes) {
 export default function Shell(props) {
 
   const [web3Modal, setWeb3Modal] = useState(null)
-  const [provider, setProvider] = useState(null)
   const [connected, setConnected] = useState(false)
   const [address, setAddress] = useState("...")
 
@@ -50,7 +49,7 @@ export default function Shell(props) {
 
   async function connectWallet() {
     const provider = await web3Modal.connect();
-    setProvider(provider)
+    props.setProvider(provider)
     setConnected(true)
   }
 
@@ -58,12 +57,12 @@ export default function Shell(props) {
     // this doesn't work at all XD
 
     await web3Modal.clearCachedProvider();
-    setProvider(null)
+    props.setProvider(null)
     setConnected(false)
   }
 
   async function fetchAccountData() {
-    const web3 = new Web3(provider)
+    const web3 = new Web3(props.provider)
     const accounts = await web3.eth.getAccounts()
     setAddress(accounts[0])
   }
@@ -74,10 +73,10 @@ export default function Shell(props) {
     let web3;
     if (window.ethereum) {
         web3 = new Web3(window.ethereum);
-        setProvider(window.ethereum)
+        props.setProvider(window.ethereum)
     } else if (window.web3) {
         web3 = new Web3(window.web3.currentProvider);
-        setProvider(window.web3.currentProvider)
+        props.setProvider(window.web3.currentProvider)
     };
 
     const accounts = await web3.eth.getAccounts()

@@ -1,12 +1,7 @@
 import Shell from '../components/Shell'
 import Head from 'next/head'
+import { useState, useEffect } from 'react';
 
-const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-}
 const navigation = [
   { name: 'Home', href: '/', current: true },
   { name: 'Your referrals', href: '/scores', current: false },
@@ -16,6 +11,9 @@ const navigation = [
 ]
 
 export default function Home() {
+
+  const [provider, setProvider] = useState(null)
+
   return (
     <div>
       <Head>
@@ -24,8 +22,9 @@ export default function Home() {
       </Head>
 
       <Shell
+        provider={provider}
+        setProvider={setProvider}
         navigation={navigation}
-        user={user}
         header={"Welcome back, anon"}
       />
       <main className="-mt-32">
