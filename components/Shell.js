@@ -81,7 +81,6 @@ export default function Shell(props) {
     };
 
     const accounts = await web3.eth.getAccounts()
-    console.log(accounts)
     if(accounts.length > 0){
       setConnected(true)
     }

@@ -1,10 +1,9 @@
 import SkillsList from './SkillsList';
-import { useState, useEffect } from 'react';
 
 export default function ReferPanel(props) {
 
   return (
-    <div className="border-gray-300 border rounded-lg h-full shadow-sm px-5 py-6 md:px-16 max-w-screen-md mx-auto flex flex-col md:flex-row">
+    <div className="h-full px-5 py-6 md:px-16 max-w-screen-lg mx-auto flex flex-col md:flex-row">
       <div className="md:w-1/3">
         <div
           className="col-span-1 flex flex-col text-center rounded-lg"
@@ -23,7 +22,9 @@ export default function ReferPanel(props) {
         </div>
       </div>
       <div className="md:w-2/3">
-        <SkillsList />
+        <SkillsList
+          address={props.address}
+        />
       </div>
     </div>
   )

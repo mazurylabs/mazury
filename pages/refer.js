@@ -64,7 +64,7 @@ export default function Refer() {
               />
               {searchedAddress && addressIsValid
               ?
-                <div className="w-full mt-8">
+                <div className="w-full md:mt-8">
                   <ReferPanel
                     address={searchedAddress}
                   />
