@@ -28,7 +28,8 @@ export default function Refer() {
   const [infuraProvider, setInfuraProvider] = useState(null)
 
   useEffect(() => {
-    setInfuraProvider(ethers.getDefaultProvider(1, {options: {infuraId: process.env.NEXT_PUBLIC_INFURA_ID}}))
+    const newInfuraProvider = new ethers.providers.JsonRpcProvider(process.env.NEXT_PUBLIC_INFURA_URL);
+    setInfuraProvider(newInfuraProvider)
   }, [])
 
   useEffect(() => {
@@ -56,9 +57,7 @@ export default function Refer() {
   }, [router.isReady])
 
   async function getEnsReverseRecord() {
-    console.log(searchedAddress)
     const ensName = await infuraProvider.lookupAddress(searchedAddress);
-    console.log(ensName)
     if(ensName) {
       setReferralEnsName(ensName)
     } else{
@@ -67,9 +66,7 @@ export default function Refer() {
   }
 
   async function getResolverAddress() {
-    console.log(searchedAddress)
     const address = await infuraProvider.resolveName(searchedAddress);
-    console.log(address)
     if(address){
       setReferralAddress(address)
     }else{

@@ -43,7 +43,9 @@ export default function Shell(props) {
     });
 
     setWeb3Modal(web3Modal)
-    setInfuraProvider(ethers.getDefaultProvider(1, {options: {infuraId: process.env.NEXT_PUBLIC_INFURA_ID}}))
+
+    const newInfuraProvider = new ethers.providers.JsonRpcProvider(process.env.NEXT_PUBLIC_INFURA_URL);
+    setInfuraProvider(newInfuraProvider)
   }, [])
 
   useEffect(() => {
