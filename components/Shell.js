@@ -1,4 +1,5 @@
 import { Fragment } from 'react'
+import { ethers, providers } from "ethers";
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 
@@ -6,7 +7,6 @@ import { useState, useEffect } from 'react';
 
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
-import Web3 from "web3"
 
 
 function classNames(...classes) {
@@ -49,7 +49,7 @@ export default function Shell(props) {
 
   async function connectWallet() {
     const provider = await web3Modal.connect();
-    props.setProvider(provider)
+    props.setProvider(new providers.Web3Provider(provider))
     setConnected(true)
   }
 
@@ -62,26 +62,20 @@ export default function Shell(props) {
   }
 
   async function fetchAccountData() {
-    const web3 = new Web3(props.provider)
-    const accounts = await web3.eth.getAccounts()
-    setAddress(accounts[0])
+    const address = await props.signer.getAddress()
+    setAddress(address)
   }
 
   const checkConnection = async () => {
     // works only for metamask so far
 
-    let web3;
     if (window.ethereum) {
-        web3 = new Web3(window.ethereum);
-        props.setProvider(window.ethereum)
-    } else if (window.web3) {
-        web3 = new Web3(window.web3.currentProvider);
-        props.setProvider(window.web3.currentProvider)
-    };
+      const newProvider = new ethers.providers.Web3Provider(window.ethereum);
+      props.setProvider(newProvider)
+      console.log(newProvider.getSigner())
+      props.setSigner(newProvider.getSigner())
 
-    const accounts = await web3.eth.getAccounts()
-    if(accounts.length > 0){
-      setConnected(true)
+      setConnected(Boolean(window.ethereum.selectedAddress)) // ugly hack lol
     }
   };
 

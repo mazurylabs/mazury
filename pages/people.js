@@ -16,6 +16,7 @@ const navigation = [
 export default function Home() {
   
   const [provider, setProvider] = useState(null)
+  const [signer, setSigner] = useState(null)
   
   return (
     <div>
@@ -27,6 +28,8 @@ export default function Home() {
       <Shell
         provider={provider}
         setProvider={setProvider}
+        signer={signer}
+        setSigner={setSigner}
         navigation={navigation}
         header={"People"}
       />

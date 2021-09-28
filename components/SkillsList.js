@@ -33,13 +33,12 @@ export default function SkillsList(props) {
     )
 
     // Doesn't work, migrate web3modal integration to ethers
-    if (typeof window.ethereum !== 'undefined') {
-      const signer = props.provider.getSigner() // this doesn't work with web3
-      const contract = new ethers.Contract(EAS_CONTRACT, EAS_ABI, signer)
+    if (typeof window.ethereum !== 'undefined') { // this doesn't work with web3
+      const contract = new ethers.Contract(EAS_CONTRACT, EAS_ABI, props.signer)
       const transaction = await contract.attest(
-        referralAddress,
+        props.referralAddress,
         COMPETENCE_SCHEMA_UUID,
-        100000000000000,
+        ethers.constants.MaxUint256,
         "0x0000000000000000000000000000000000000000000000000000000000000000",
         encoded_data
       )

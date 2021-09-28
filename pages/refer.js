@@ -19,6 +19,7 @@ export default function Refer() {
   const [searchedAddress, setSearchedAddress] = useState("")
   const [addressIsValid, setAddressIsValid] = useState(false)
   const [provider, setProvider] = useState(null)
+  const [signer, setSigner] = useState(null)
   const router = useRouter();
 
   useEffect(() => {
@@ -47,6 +48,8 @@ export default function Refer() {
       <Shell
         provider={provider}
         setProvider={setProvider}
+        signer={signer}
+        setSigner={setSigner}
         navigation={navigation}
         header={"Refer a friend"}
       />
@@ -64,6 +67,7 @@ export default function Refer() {
                 <div className="w-full md:mt-8">
                   <ReferPanel
                     provider={provider}
+                    signer={signer}
                     address={searchedAddress}
                   />
                 </div>
