@@ -25,7 +25,6 @@ export default function SkillsList(props) {
     const AbiCoder = ethers.utils.AbiCoder;
     const abiCoder = new AbiCoder();
     const types = [ ...Array(skills.length).keys() ].map( i => "bool");
-    console.log(types)
 
     const encoded_data = abiCoder.encode(
       types,
@@ -44,8 +43,6 @@ export default function SkillsList(props) {
       )
       await transaction.wait()
     }
-
-    console.log("Referral for " + props.address + "data: " + selectedSkills)
   }
 
   return (

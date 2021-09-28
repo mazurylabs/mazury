@@ -1,3 +1,4 @@
+import { ethers, providers } from "ethers";
 import Shell from '../components/Shell'
 import AddressSearch from '../components/AddressSearch'
 import ReferPanel from '../components/ReferPanel'
@@ -17,16 +18,31 @@ const navigation = [
 export default function Refer() {
 
   const [searchedAddress, setSearchedAddress] = useState("")
+  const [referralEnsName, setReferralEnsName] = useState("loading...")
+  const [referralAddress, setReferralAddress] = useState("")
   const [addressIsValid, setAddressIsValid] = useState(false)
   const [provider, setProvider] = useState(null)
   const [signer, setSigner] = useState(null)
   const [chainId, setChainId] = useState(4)
   const router = useRouter();
+  const [infuraProvider, setInfuraProvider] = useState(null)
+
+  useEffect(() => {
+    setInfuraProvider(ethers.getDefaultProvider(1, {options: {infuraId: process.env.NEXT_PUBLIC_INFURA_ID}}))
+  }, [])
 
   useEffect(() => {
     if(searchedAddress.match(/^0x[a-fA-F0-9]{40}$/)){
+      setReferralAddress(searchedAddress)
+      getEnsReverseRecord()
+      setAddressIsValid(true)
+    } else if(searchedAddress.match(/^[a-zA-Z0-9]+.eth$/)) {
+      setReferralEnsName(searchedAddress)
+      getResolverAddress()
       setAddressIsValid(true)
     } else {
+      setReferralAddress("")
+      setReferralEnsName("loading...")
       setAddressIsValid(false)
     }
     
@@ -38,6 +54,29 @@ export default function Refer() {
       setSearchedAddress(router.query.address)
     }
   }, [router.isReady])
+
+  async function getEnsReverseRecord() {
+    console.log(searchedAddress)
+    const ensName = await infuraProvider.lookupAddress(searchedAddress);
+    console.log(ensName)
+    if(ensName) {
+      setReferralEnsName(ensName)
+    } else{
+      setReferralEnsName("Anon")
+    }
+  }
+
+  async function getResolverAddress() {
+    console.log(searchedAddress)
+    const address = await infuraProvider.resolveName(searchedAddress);
+    console.log(address)
+    if(address){
+      setReferralAddress(address)
+    }else{
+      setReferralAddress("")
+      setAddressIsValid(false)
+    }
+  }
 
   return (
     <div>
@@ -71,7 +110,8 @@ export default function Refer() {
                   <ReferPanel
                     provider={provider}
                     signer={signer}
-                    address={searchedAddress}
+                    referralAddress={referralAddress}
+                    referralEnsName={referralEnsName}
                   />
                 </div>
               :

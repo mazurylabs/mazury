@@ -20,6 +20,8 @@ export default function Shell(props) {
   const [web3Modal, setWeb3Modal] = useState(null)
   const [connected, setConnected] = useState(false)
   const [address, setAddress] = useState("...")
+  const [ensReverseRecord, setEnsReverseRecord] = useState(null)
+  const [infuraProvider, setInfuraProvider] = useState(null)
 
   useEffect(() => {
 
@@ -41,15 +43,13 @@ export default function Shell(props) {
     });
 
     setWeb3Modal(web3Modal)
+    setInfuraProvider(ethers.getDefaultProvider(1, {options: {infuraId: process.env.NEXT_PUBLIC_INFURA_ID}}))
   }, [])
 
   useEffect(() => {
     
     if(props.provider){
-      console.log("connected")
       props.provider.on('network', (newNetwork, oldNetwork) => {
-        console.log(newNetwork.chainId)
-        console.log(oldNetwork)
         if (oldNetwork) {
           fetchNetworkData()
         }
@@ -82,6 +82,8 @@ export default function Shell(props) {
   async function fetchAccountData() {
     const address = await props.signer.getAddress()
     setAddress(address)
+    const ensReverseRecord = await infuraProvider.lookupAddress(address);
+    setEnsReverseRecord(ensReverseRecord)
   }
 
   async function fetchNetworkData() {
@@ -150,7 +152,7 @@ export default function Shell(props) {
                               <p
                                 className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-900 bg-gray-100 hover:bg-gray-200 focus:outline-none"
                               >
-                                {`${address.slice(0, 5)}...${address.slice(-3)}`}
+                                {ensReverseRecord ? ensReverseRecord : `${address.slice(0, 5)}...${address.slice(-3)}`}
                               </p>
                             </Menu.Button>
                           </div>
