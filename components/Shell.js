@@ -8,6 +8,8 @@ import { useState, useEffect } from 'react';
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 
+import WrongNetworkModal from './WrongNetworkModal';
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -42,7 +44,23 @@ export default function Shell(props) {
   }, [])
 
   useEffect(() => {
+    
+    if(props.provider){
+      console.log("connected")
+      props.provider.on('network', (newNetwork, oldNetwork) => {
+        console.log(newNetwork.chainId)
+        console.log(oldNetwork)
+        if (oldNetwork) {
+          fetchNetworkData()
+        }
+      })
+    }
+
+  }, [props.provider])
+
+  useEffect(() => {
     if(connected){
+      fetchNetworkData()
       fetchAccountData()
     }
   }, [connected])
@@ -66,13 +84,17 @@ export default function Shell(props) {
     setAddress(address)
   }
 
+  async function fetchNetworkData() {
+    const chainId = await props.signer.getChainId()
+    props.setChainId(chainId)
+  }
+
   const checkConnection = async () => {
     // works only for metamask so far
 
     if (window.ethereum) {
-      const newProvider = new ethers.providers.Web3Provider(window.ethereum);
+      const newProvider = new ethers.providers.Web3Provider(window.ethereum, "any");
       props.setProvider(newProvider)
-      console.log(newProvider.getSigner())
       props.setSigner(newProvider.getSigner())
 
       setConnected(Boolean(window.ethereum.selectedAddress)) // ugly hack lol
@@ -81,6 +103,9 @@ export default function Shell(props) {
 
   return (
     <div className="bg-gray-800 pb-32">
+      {(props.chainId != 4) &&
+        <WrongNetworkModal />
+      }
       <Disclosure as="nav" className="bg-gray-800">
         {({ open }) => (
           <>

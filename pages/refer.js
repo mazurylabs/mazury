@@ -20,6 +20,7 @@ export default function Refer() {
   const [addressIsValid, setAddressIsValid] = useState(false)
   const [provider, setProvider] = useState(null)
   const [signer, setSigner] = useState(null)
+  const [chainId, setChainId] = useState(4)
   const router = useRouter();
 
   useEffect(() => {
@@ -50,6 +51,8 @@ export default function Refer() {
         setProvider={setProvider}
         signer={signer}
         setSigner={setSigner}
+        chainId={chainId}
+        setChainId={setChainId}
         navigation={navigation}
         header={"Refer a friend"}
       />

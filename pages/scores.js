@@ -17,6 +17,7 @@ export default function Home() {
   
   const [provider, setProvider] = useState(null)
   const [signer, setSigner] = useState(null)
+  const [chainId, setChainId] = useState(4)
 
   return (
     <div>
@@ -30,6 +31,8 @@ export default function Home() {
         setProvider={setProvider}
         signer={signer}
         setSigner={setSigner}
+        chainId={chainId}
+        setChainId={setChainId}
         navigation={navigation}
         header={"Your referrals & scores"}
       />
