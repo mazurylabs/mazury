@@ -1,33 +1,4 @@
-// todo supply with actual, not mockup values
-const people = [
-  {
-    name: 'Anon',
-    address: '0xF417ACe7b13c0ef4fcb5548390a450A4B75D3eB3',
-    referred_skills: ["solidity", "react", "rust", "design", "memes"]
-  },
-  {
-    name: 'Anon',
-    address: '0x1a57916bcafCE18183Bf42f1a83CEE4F28735712',
-    referred_skills: ["solidity", "react", "memes"]
-  },
-  {
-    name: 'Anon',
-    address: '0x5FA7729263a827BA6d31eEd665abDF150b233DD7',
-    referred_skills: ["rust", "design"]
-  },
-  {
-    name: 'Anon',
-    address: '0xdb61A4e5653a93E71a7d7CfeBBc9A4e6040a020a',
-    referred_skills: ["solidity", "react", "rust", "design"]
-  },
-  {
-    name: 'Anon',
-    address: '0xdb61A4e5653a93E71a7d7CfeBBc9A4e6040a020a',
-    referred_skills: ["solidity", "react", "rust", "design"]
-  },
-]
-
-export default function ReferralList() {
+export default function ReferralList(props) {
   return (
     <div className="flex flex-col">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -51,8 +22,8 @@ export default function ReferralList() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {people.map((person) => (
-                  <tr key={person.address}>
+                {props.referrals && props.referrals.map((referral) => (
+                  <tr key={referral.author}>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10">
@@ -63,15 +34,15 @@ export default function ReferralList() {
                         </span>
                         </div>
                         <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">{person.name}</div>
-                          <div className="text-sm text-gray-500">{`${person.address.slice(0, 5)}...${person.address.slice(-3)}`}</div>
+                          <div className="text-sm font-medium text-gray-900">Anon</div>
+                          <div className="text-sm text-gray-500">{`${referral.author.slice(0, 5)}...${referral.author.slice(-3)}`}</div>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {person.referred_skills.map((skill) => (
-                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-200 text-gray-800 mr-2">
-                          {skill}
+                      {referral.skills.map((skill) => (
+                        <span key={skill.id} className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-200 text-gray-800 mr-2">
+                          {skill.humanName}
                         </span>
                       ))}
                     </td>
