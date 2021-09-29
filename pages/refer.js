@@ -8,8 +8,7 @@ import Head from 'next/head'
 import { useState, useEffect } from 'react';
 
 const navigation = [
-  { name: 'Home', href: '/', current: false },
-  { name: 'Your referrals', href: '/scores', current: false },
+  { name: 'Your referrals', href: '/', current: false },
   { name: 'People', href: '/people', current: false },
   { name: 'Jobs', href: '/jobs', current: false },
   { name: 'Refer a friend', href: '/refer', current: true },
