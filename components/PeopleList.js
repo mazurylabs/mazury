@@ -6,132 +6,104 @@ function getRandomInt(max) {
 // todo supply with actual, not mockup values
 const people = [
   {
-    name: 'Anon',
+    name: 'wojtek.eth',
     address: '0xF417ACe7b13c0ef4fcb5548390a450A4B75D3eB3',
     referred_skills: [
       {
-        "name": "Solidity",
-        "score": getRandomInt(20)*5
+        "name": "Frontend development",
+        "score": 5
       },
       {
-        "name": "React",
-        "score": getRandomInt(20)*5
+        "name": "Backend development",
+        "score": 5
       },
       {
-        "name": "Rust",
-        "score": getRandomInt(20)*5
-      },
-      {
-        "name": "Design",
-        "score": getRandomInt(20)*5
+        "name": "Smart contract development",
+        "score": 3
       },
       {
         "name": "Memes",
-        "score": getRandomInt(20)*5
+        "score": 2
       }
     ]
   },
   {
-    name: 'Anon',
-    address: '0xF417ACe7b13c0ef4fcb5548390a450A4B75D3eB3',
+    name: '0xluc.eth',
+    address: '0x16A93D9EbC3E95d5Bf16cbDCdBa2e5f3B4767838',
     referred_skills: [
       {
-        "name": "Solidity",
-        "score": getRandomInt(20)*5
+        "name": "Product management",
+        "score": 6
       },
       {
-        "name": "React",
-        "score": getRandomInt(20)*5
-      },
-      {
-        "name": "Rust",
-        "score": getRandomInt(20)*5
-      },
-      {
-        "name": "Design",
-        "score": getRandomInt(20)*5
+        "name": "Community",
+        "score": 3
       },
       {
         "name": "Memes",
-        "score": getRandomInt(20)*5
+        "score": 2
       }
     ]
   },
   {
-    name: 'Anon',
-    address: '0xF417ACe7b13c0ef4fcb5548390a450A4B75D3eB3',
+    name: 'shaad.eth',
+    address: '0xdaFdDc25CD5c4fDe8925290C6903fDF11B52f15A',
     referred_skills: [
       {
-        "name": "Solidity",
-        "score": getRandomInt(20)*5
+        "name": "Writing",
+        "score": 9
       },
       {
-        "name": "React",
-        "score": getRandomInt(20)*5
+        "name": "NFT degen",
+        "score": 6
       },
       {
-        "name": "Rust",
-        "score": getRandomInt(20)*5
+        "name": "Teaching",
+        "score": 2
       },
       {
         "name": "Design",
-        "score": getRandomInt(20)*5
+        "score": 1
+      },
+    ]
+  },
+  {
+    name: 'm1guel.eth',
+    address: '0x5BCe009FEEcA1dE81229E6534F3Ee633B7332FdD',
+    referred_skills: [
+      {
+        "name": "Frontend development",
+        "score": 9
+      },
+      {
+        "name": "Backend development",
+        "score": 9
+      },
+      {
+        "name": "Smart contract development",
+        "score": 9
+      },
+      {
+        "name": "Design",
+        "score": 9
       },
       {
         "name": "Memes",
-        "score": getRandomInt(20)*5
-      }
+        "score": 9
+      },
     ]
   },
   {
     name: 'Anon',
-    address: '0xF417ACe7b13c0ef4fcb5548390a450A4B75D3eB3',
+    address: '0xD40131A7EB2f796db047bCF2c8B372D46876ff6e',
     referred_skills: [
       {
-        "name": "Solidity",
-        "score": getRandomInt(20)*5
+        "name": "Defi degen",
+        "score": 4
       },
       {
-        "name": "React",
-        "score": getRandomInt(20)*5
-      },
-      {
-        "name": "Rust",
-        "score": getRandomInt(20)*5
-      },
-      {
-        "name": "Design",
-        "score": getRandomInt(20)*5
-      },
-      {
-        "name": "Memes",
-        "score": getRandomInt(20)*5
-      }
-    ]
-  },
-  {
-    name: 'Anon',
-    address: '0xF417ACe7b13c0ef4fcb5548390a450A4B75D3eB3',
-    referred_skills: [
-      {
-        "name": "Solidity",
-        "score": getRandomInt(20)*5
-      },
-      {
-        "name": "React",
-        "score": getRandomInt(20)*5
-      },
-      {
-        "name": "Rust",
-        "score": getRandomInt(20)*5
-      },
-      {
-        "name": "Design",
-        "score": getRandomInt(20)*5
-      },
-      {
-        "name": "Memes",
-        "score": getRandomInt(20)*5
+        "name": "NFT degen",
+        "score": 4
       }
     ]
   },
