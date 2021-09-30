@@ -46,7 +46,7 @@ export default function PeopleList(props) {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap max-w-lg overflow-auto">
                       {person.skills.map((skill) => (
-                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-200 text-gray-800 mr-2">
+                        <span key={`${skill.name}+${person.address}`} className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-200 text-gray-800 mr-2">
                           {`${skill.name}: ${skill.score}`}
                         </span>
                       ))}

@@ -22,6 +22,7 @@ export default function Home() {
   const [signer, setSigner] = useState(null)
   const [chainId, setChainId] = useState(4)
   const [people, setPeople] = useState([])
+  const [displayPeople, setDisplayPeople] = useState([])
 
   useEffect(() => {
     fetchPeople()
@@ -53,13 +54,9 @@ export default function Home() {
       }
     }
 
-    console.log(peopleReferrals)
-
     for (const [address, referralsData] of Object.entries(peopleReferrals)){
       peopleReferrals[address] = referralsDataToScores(referralsData)
     }
-
-    console.log(peopleReferrals)
 
     for (const [address, referralData] of Object.entries(peopleReferrals)){
       peopleReferralsList.push(
@@ -71,6 +68,7 @@ export default function Home() {
     }
 
     setPeople(peopleReferralsList)
+    setDisplayPeople(peopleReferralsList)
   }
 
   function referralsDataToScores(data) {
@@ -130,13 +128,16 @@ export default function Home() {
       <main className="-mt-32">
         <div className="max-w-7xl mx-auto mb-5 flex flex-row justify-end w-full px-4 sm:px-6 lg:px-8 -mt-48">
           <div className="w-64">
-            <PeopleSearch />
+            <PeopleSearch
+              people={people}
+              setDisplayPeople={setDisplayPeople}
+            />
           </div>
         </div>
         <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-lg shadow">
             <PeopleList
-              people={people}
+              people={displayPeople}
             />
           </div>
         </div>
