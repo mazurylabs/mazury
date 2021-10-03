@@ -276,7 +276,7 @@ export default function Shell(props) {
       </Disclosure>
       {/* TODO get rid of referral link */}
       <header className="">
-        <p className="text-white py-1 text-xs text-right px-4 sm:px-6 lg:px-8">https://dev.app.mazurylabs.com/refer?address={address}</p>
+        <p className="text-white py-1 text-xs text-right px-4 sm:px-6 lg:px-8">Your referral link: https://dev.app.mazurylabs.com/refer?address={address}</p>
         <div className="max-w-7xl py-10 mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold text-white">{props.header}</h1>
         </div>
