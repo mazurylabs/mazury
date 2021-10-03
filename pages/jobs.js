@@ -39,7 +39,7 @@ export default function Home() {
             <div className="border-gray-300 h-full px-5 py-6 md:px-16 max-w-screen-md mx-auto md:flex-row">
               <h2 className="text-3xl font-semibold mb-4">Jobs are coming</h2>
               <p className="mb-4">The feature is not active yet, but soon you will be able to see & apply for jobs at the best DAOs, web3 startups and our other partners.</p>
-              <p className="mb-4">All you need to apply is your reputation score, so <button className="font-semibold text-green-500 text-opacity-80">grab your link</button> and reach out to your friends for a referral :)</p>
+              <p className="mb-4">All you need to apply is your reputation score, so grab your link and reach out to your friends for a referral :)</p>
             </div>
           </div>
         </div>
