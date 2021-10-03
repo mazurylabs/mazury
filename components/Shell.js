@@ -95,13 +95,12 @@ export default function Shell(props) {
 
   const checkConnection = async () => {
     // works only for metamask so far
-
     if (window.ethereum) {
       const newProvider = new ethers.providers.Web3Provider(window.ethereum, "any");
       props.setProvider(newProvider)
       props.setSigner(newProvider.getSigner())
-
-      setConnected(Boolean(window.ethereum.selectedAddress)) // ugly hack lol
+      const address = await newProvider.getSigner().getAddress()
+      setConnected(Boolean(address))
     }
   };
 
