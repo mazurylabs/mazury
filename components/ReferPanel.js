@@ -18,7 +18,6 @@ export default function ReferPanel(props) {
     const result = await axios.get(`https://api.poap.xyz/actions/scan/${props.referralAddress}`)
 
     setPoaps(result.data)
-    console.log(result.data)
   }
 
   return (

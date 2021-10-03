@@ -86,7 +86,6 @@ export default function Home() {
       )
     }
     setReferrals(receivedReferrals)
-    console.log(receivedReferrals)
   }
 
   function parseReferralData(data) {

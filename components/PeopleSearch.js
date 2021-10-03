@@ -3,15 +3,12 @@ import {DebounceInput} from 'react-debounce-input';
 export default function PeopleSearch(props) {
 
   function searchPeople(query) {
-    console.log(query)
     if (query == "") {
       props.setDisplayPeople(props.people)
     } else {
       const searchedPeople = []
       for (const person of props.people) {
         for (const skill of person.skills) {
-          console.log(skill)
-          console.log(query)
           if(skill.name.toLowerCase().includes(query.toLowerCase())) {
             searchedPeople.push(person)
             break
