@@ -18,7 +18,6 @@ export default function SkillsList(props) {
     e.classList.toggle("hover:bg-green-500");
     e.classList.toggle("text-gray-100");
     e.classList.toggle("border-white");
-    e.classList.toggle("hover:border-white");
   }
 
   async function saveReferral() {
@@ -55,7 +54,7 @@ export default function SkillsList(props) {
               key={skill.id}
               id={skill.id}
               onClick={(e) => toggleSkill(e.target)}
-              className="px-4 py-3 text-sm font-medium text-gray-700 text-left border border-gray-300 hover:border-gray-400 rounded-lg focus:outline-none transition duration-100"
+              className="px-4 py-3 text-sm font-medium text-gray-700 text-left border border-gray-300 hover:border-green-500 rounded-lg focus:outline-none transition duration-100"
             >
               {skill.humanName}
             </button>
