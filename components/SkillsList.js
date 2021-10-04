@@ -9,6 +9,7 @@ const EAS_ABI = [{"inputs":[{"internalType":"contract IASRegistry","name":"regis
 export default function SkillsList(props) {
 
   const [selectedSkills, setSelectedSkills] = useState(skills.map((skill) => (false)));
+  const [transactionState, setTransactionState] = useState("default")
 
   function toggleSkill(e){
     const skillId = e.id
@@ -40,7 +41,9 @@ export default function SkillsList(props) {
         "0x0000000000000000000000000000000000000000000000000000000000000000",
         encoded_data
       )
+      setTransactionState("pending")
       await transaction.wait()
+      setTransactionState("done")
     }
   }
 
@@ -61,13 +64,29 @@ export default function SkillsList(props) {
           ))}
         </div>
       </fieldset>
-      <button
-        type="button"
-        onClick={saveReferral}
-        className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gray-800 hover:bg-green-400 focus:outline-none transition duration-200"
-      >
-        Save the referral
-      </button>
+      {transactionState == "default" &&
+        <button
+          type="button"
+          onClick={saveReferral}
+          className="inline-flex w-40 justify-center items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gray-800 hover:bg-green-400 focus:outline-none transition duration-200"
+        >
+          Save the referral
+        </button>
+      }
+      {transactionState == "pending" &&
+        <div
+          className="inline-flex w-50 justify-center items-center px-4 py-2 text-base font-medium rounded-md shadow-sm text-white bg-yellow-500 focus:outline-none transition duration-200"
+        >
+          <p>Transaction pending...</p>
+        </div>
+      }
+      {transactionState == "done" &&
+        <div
+          className="inline-flex w-40 justify-center items-center px-4 py-2 text-base font-medium rounded-md text-white bg-green-500 focus:outline-none transition duration-200"
+        >
+          Done!
+        </div>
+      }
     </div>
   )
 }
