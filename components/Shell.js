@@ -18,14 +18,11 @@ function classNames(...classes) {
 export default function Shell(props) {
 
   const [web3Modal, setWeb3Modal] = useState(null)
-  const [connected, setConnected] = useState(false)
   const [address, setAddress] = useState("...")
   const [ensReverseRecord, setEnsReverseRecord] = useState(null)
   const [infuraProvider, setInfuraProvider] = useState(null)
 
   useEffect(() => {
-
-    checkConnection()
 
     const providerOptions = {
       walletconnect: {
@@ -37,48 +34,42 @@ export default function Shell(props) {
     };
   
     const web3Modal = new Web3Modal({
-      cacheProvider: false, // optional
+      cacheProvider: true, // optional
+      network: "rinkeby",
       providerOptions, // required
       disableInjectedProvider: false, // optional. For MetaMask / Brave / Opera.
     });
 
-    setWeb3Modal(web3Modal)
-
     const newInfuraProvider = new ethers.providers.JsonRpcProvider(process.env.NEXT_PUBLIC_INFURA_URL);
     setInfuraProvider(newInfuraProvider)
+
+    setWeb3Modal(web3Modal)
   }, [])
 
   useEffect(() => {
-    
-    if(props.provider){
-      props.provider.on('network', (newNetwork, oldNetwork) => {
-        if (oldNetwork) {
-          fetchNetworkData()
-        }
-      })
+    if(web3Modal){
+      checkConnection()
     }
-
-  }, [props.provider])
+  }, [web3Modal])
 
   useEffect(() => {
-    if(connected){
+    if(props.signer && infuraProvider){
       fetchNetworkData()
       fetchAccountData()
     }
-  }, [connected])
+  }, [props.signer, infuraProvider])
 
   async function connectWallet() {
     const provider = await web3Modal.connect();
-    props.setProvider(new providers.Web3Provider(provider))
-    setConnected(true)
+    const ethersProvider = new providers.Web3Provider(provider)
+    props.setProvider(ethersProvider)
+    props.setSigner(ethersProvider.getSigner())
   }
 
   async function disconnectWallet() {
-    // this doesn't work at all XD
-
     await web3Modal.clearCachedProvider();
     props.setProvider(null)
-    setConnected(false)
+    props.setSigner(null)
   }
 
   async function fetchAccountData() {
@@ -94,13 +85,11 @@ export default function Shell(props) {
   }
 
   const checkConnection = async () => {
-    // works only for metamask so far
-    if (window.ethereum) {
-      const newProvider = new ethers.providers.Web3Provider(window.ethereum, "any");
-      props.setProvider(newProvider)
-      props.setSigner(newProvider.getSigner())
-      const address = await newProvider.getSigner().getAddress()
-      setConnected(Boolean(address))
+    if (web3Modal.cachedProvider) {
+      const provider = await web3Modal.connect();
+      const ethersProvider = new providers.Web3Provider(provider)
+      props.setProvider(ethersProvider)
+      props.setSigner(ethersProvider.getSigner())
     }
   };
 
@@ -145,7 +134,7 @@ export default function Shell(props) {
                   </div>
                   <div className="hidden md:block">
                     <div className="ml-4 flex items-center md:ml-6">
-                      {connected
+                      {props.signer
                       ?
                         <Menu as="div" className="ml-3 relative">
                           <div>
@@ -226,7 +215,7 @@ export default function Shell(props) {
                 ))}
               </div>
               <div className="pt-4 pb-3 border-t border-gray-700 flex justify-center">
-                {connected
+                {props.signer
                 ?
                   <Menu as="div" className="ml-3 relative">
                     <div>
@@ -276,7 +265,7 @@ export default function Shell(props) {
       </Disclosure>
       {/* TODO get rid of referral link & FAQ */}
       <header className="">
-        {connected && <p className="text-white py-1 text-xs text-right px-4 sm:px-6 lg:px-8">Your referral link: https://dev.app.mazurylabs.com/refer?address={address}</p>}
+        {props.signer && <p className="text-white py-1 text-xs text-right px-4 sm:px-6 lg:px-8">Your referral link: https://dev.app.mazurylabs.com/refer?address={address}</p>}
         <a target="_blank" href="https://mercury-elk-8de.notion.site/Mazury-early-testing-FAQ-50f1ffe8dd4a4b92ace8453690c3975c"><p className="text-white w-full py-1 text-xs underline text-right px-4 sm:px-6 lg:px-8">Testing FAQ</p></a>
         <div className="max-w-7xl py-10 mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold text-white">{props.header}</h1>
