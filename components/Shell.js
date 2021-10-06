@@ -3,7 +3,7 @@ import { ethers, providers } from "ethers";
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
@@ -21,6 +21,8 @@ export default function Shell(props) {
   const [address, setAddress] = useState("...")
   const [ensReverseRecord, setEnsReverseRecord] = useState(null)
   const [infuraProvider, setInfuraProvider] = useState(null)
+  const signerRef = useRef(props.signer)
+  signerRef.current = props.signer
 
   useEffect(() => {
 
@@ -61,6 +63,7 @@ export default function Shell(props) {
 
   async function connectWallet() {
     const provider = await web3Modal.connect();
+    addListeners(provider)
     const ethersProvider = new providers.Web3Provider(provider)
     props.setProvider(ethersProvider)
     props.setSigner(ethersProvider.getSigner())
@@ -87,11 +90,24 @@ export default function Shell(props) {
   const checkConnection = async () => {
     if (web3Modal.cachedProvider) {
       const provider = await web3Modal.connect();
+      addListeners(provider)
       const ethersProvider = new providers.Web3Provider(provider)
       props.setProvider(ethersProvider)
       props.setSigner(ethersProvider.getSigner())
     }
   };
+
+  const addListeners = async (provider) => {
+
+    provider.on("accountsChanged", (accounts) => {
+      window.location.reload()
+    });
+    
+    // Subscribe to chainId change
+    provider.on("chainChanged", (chainId) => {
+      props.setChainId(chainId)
+    });
+  }
 
   return (
     <div className="bg-gray-800 pb-32">
