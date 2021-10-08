@@ -3,7 +3,7 @@ import { ethers, providers } from "ethers";
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
@@ -21,8 +21,6 @@ export default function Shell(props) {
   const [address, setAddress] = useState("...")
   const [ensReverseRecord, setEnsReverseRecord] = useState(null)
   const [infuraProvider, setInfuraProvider] = useState(null)
-  const signerRef = useRef(props.signer)
-  signerRef.current = props.signer
 
   useEffect(() => {
 
