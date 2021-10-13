@@ -1,4 +1,3 @@
-import { ethers } from "ethers";
 import axios from "axios";
 import { skills } from "../utils/const"
 
@@ -30,82 +29,34 @@ export default function Home() {
   
   async function fetchPeople() {
 
-    const result = await axios.post(
-      "https://api.studio.thegraph.com/query/5950/mazury-test-1/v1.0.0",
-      {
-        query: `{
-          attestations(where: {revoked: false, schema: \"0xee610047e16d27b734e6f37c41a2cc06984381dec683f744791d236aeddf0769\"}) {
-            id
-            data
-            recipient
-          }
-        }`,
-      }
-    );
+    const result = await axios.get("https://mazury-staging.herokuapp.com/profiles/");
 
-    const peopleReferrals = {}
-    const peopleReferralsList = []
-
-    for (const referral of result.data.data.attestations) {
-      if (referral.recipient in peopleReferrals) {
-        peopleReferrals[referral.recipient].push(referral.data)
-      } else {
-        peopleReferrals[referral.recipient] = [referral.data]
-      }
-    }
-
-    for (const [address, referralsData] of Object.entries(peopleReferrals)){
-      peopleReferrals[address] = referralsDataToScores(referralsData)
-    }
-
-    for (const [address, referralData] of Object.entries(peopleReferrals)){
-      peopleReferralsList.push(
-        {
-          "address": address,
-          "skills": referralData
-        }
-      )
-    }
-
-    setPeople(peopleReferralsList)
-    setDisplayPeople(peopleReferralsList)
-  }
-
-  function referralsDataToScores(data) {
-    const AbiCoder = ethers.utils.AbiCoder;
-    const abiCoder = new AbiCoder();
-    const types = [ ...Array(skills.length).keys() ].map( i => "bool");
-
-    const userScores = {}
-
-    for (const referralData of data){
-      const boolArray = abiCoder.decode(
-        types,
-        referralData
-      )
+    const people = []
+    let profile_skills;
+    for (const profile of result.data) {
       
+      profile_skills = []
       skills.forEach(function (skill, index) {
-        if(boolArray[index]){
-          if(skill.humanName in userScores){
-            userScores[skill.humanName] = userScores[skill.humanName] +1
-          } else {
-            userScores[skill.humanName] = 1
-          }
+        if(profile[skill.easName] >= 0){ // TODO don't display zeros
+          profile_skills.push(
+            {
+              "name": skill.humanName,
+              "score": profile[skill.easName],
+            }
+          )
         }
       });
-    }
-
-    const userScoresList = []
-    for (const [skill, score] of Object.entries(userScores)) {
-      userScoresList.push(
+      people.push(
         {
-          "name": skill,
-          "score": score
+          "address": profile.eth_address,
+          "username": profile.ens_name,
+          "skills": profile_skills
         }
       )
     }
 
-    return userScoresList
+    setPeople(people)
+    setDisplayPeople(people)
   }
   
   return (

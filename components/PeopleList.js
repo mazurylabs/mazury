@@ -34,7 +34,7 @@ export default function PeopleList(props) {
                           </span>
                         </div>
                         <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">Anon</div>
+                          <div className="text-sm font-medium text-gray-900">{person.username ? person.username : "Anon"}</div>
                           <div className="text-sm text-gray-500">{`${person.address.slice(0, 5)}...${person.address.slice(-3)}`}</div>
                         </div>
                       </a>

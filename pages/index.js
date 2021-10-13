@@ -1,4 +1,3 @@
-import { ethers } from "ethers";
 import { skills } from "../utils/const"
 
 import Shell from '../components/Shell'
@@ -30,39 +29,11 @@ export default function Home() {
     }
   }, [signer])
 
-  useEffect(() => {
-    const scores = []
-    const scoresDict = {}
-    for (const referral of referrals) {
-      for (const skill of referral.skills) {
-        if (skill.humanName in scoresDict) {
-          scoresDict[skill.humanName] = scoresDict[skill.humanName] + 1
-        } else {
-          scoresDict[skill.humanName] = 1
-        }
-      }
-    }
-
-    for (const [skill, score] of Object.entries(scoresDict)) {
-      scores.push(
-        {
-          "name": skill,
-          "score": score
-        }
-      )
-    }
-
-    scores.sort(function(a, b) {
-      return b.score - a.score;
-    });
-
-    setScores(scores)
-  }, [referrals])
-
   async function fetchReferrals() {
     const address = await signer.getAddress()
 
     const result = await axios.get(`https://mazury-staging.herokuapp.com/referrals/?receiver=${address}`)
+    const profileData = await axios.get(`https://mazury-staging.herokuapp.com/profiles/${address}`)
 
     const receivedReferrals = []
 
@@ -76,6 +47,22 @@ export default function Home() {
       )
     }
     setReferrals(receivedReferrals)
+
+    const scores = []
+
+    skills.forEach(function (skill, index) {
+      if(profileData.data[skill.easName] > 0){
+        scores.push(
+          {
+            "name": skill.humanName,
+            "score": profileData.data[skill.easName]
+          }
+        )
+      }
+    });
+
+    setScores(scores)
+
   }
 
   function parseReferralData(data) {
