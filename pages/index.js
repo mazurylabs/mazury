@@ -62,26 +62,16 @@ export default function Home() {
   async function fetchReferrals() {
     const address = await signer.getAddress()
 
-    const result = await axios.post(
-      "https://api.studio.thegraph.com/query/5950/mazury-test-1/v1.0.0",
-      {
-        query: `{
-          attestations(where: {recipient: \"${address}\", revoked: false, schema: \"0xee610047e16d27b734e6f37c41a2cc06984381dec683f744791d236aeddf0769\"}) {
-            id
-            data
-            recipient
-            attester
-          }
-        }`,
-      }
-    );
+    const result = await axios.get(`https://mazury-staging.herokuapp.com/referrals/?receiver=${address}`)
 
     const receivedReferrals = []
-    for (const referral of result.data.data.attestations) {
+
+    for (const referral of result.data) {
       receivedReferrals.push(
         {
-          "author": referral.attester,
-          "skills": parseReferralData(referral.data)
+          "author_address": referral.author.eth_address,
+          "author_username": referral.author.ens_name,
+          "skills": parseReferralData(referral)
         }
       )
     }
@@ -90,19 +80,10 @@ export default function Home() {
 
   function parseReferralData(data) {
 
-    const AbiCoder = ethers.utils.AbiCoder;
-    const abiCoder = new AbiCoder();
-    const types = [ ...Array(skills.length).keys() ].map( i => "bool");
-
-    const boolArray = abiCoder.decode(
-      types,
-      data
-    )
-
     const parsedData = []
     
     skills.forEach(function (skill, index) {
-      if(boolArray[index]){
+      if(data[skill.easName]){
         parsedData.push(skill)
       }
     });

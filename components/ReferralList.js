@@ -34,8 +34,8 @@ export default function ReferralList(props) {
                         </span>
                         </div>
                         <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">Anon</div>
-                          <div className="text-sm text-gray-500">{`${referral.author.slice(0, 5)}...${referral.author.slice(-3)}`}</div>
+                          <div className="text-sm font-medium text-gray-900">{referral.author_username ? referral.author_username : "Anon"}</div>
+                          <div className="text-sm text-gray-500">{`${referral.author_address.slice(0, 5)}...${referral.author_address.slice(-3)}`}</div>
                         </div>
                       </div>
                     </td>
