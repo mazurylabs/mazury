@@ -22,7 +22,9 @@ const Person = () => {
   const [chainId, setChainId] = useState(4)
   const [referrals, setReferrals] = useState([])
   const [scores, setScores] = useState([])
-  const [address, setAddress] = useState([])
+  const [address, setAddress] = useState("")
+  const [username, setUsername] = useState("")
+  const [avatar, setAvatar] = useState("")
   
   const router = useRouter()
 
@@ -37,78 +39,50 @@ const Person = () => {
     }
   }, [router.isReady])
 
-  useEffect(() => {
-    const scores = []
-    const scoresDict = {}
-    for (const referral of referrals) {
-      for (const skill of referral.skills) {
-        if (skill.humanName in scoresDict) {
-          scoresDict[skill.humanName] = scoresDict[skill.humanName] + 1
-        } else {
-          scoresDict[skill.humanName] = 1
-        }
-      }
-    }
-
-    for (const [skill, score] of Object.entries(scoresDict)) {
-      scores.push(
-        {
-          "name": skill,
-          "score": score
-        }
-      )
-    }
-
-    scores.sort(function(a, b) {
-      return b.score - a.score;
-    });
-
-    setScores(scores)
-  }, [referrals])
-
   async function fetchReferrals() {
 
-    const result = await axios.post(
-      "https://api.studio.thegraph.com/query/5950/mazury-test-1/v1.0.0",
-      {
-        query: `{
-          attestations(where: {recipient: \"${address}\", revoked: false, schema: \"0xee610047e16d27b734e6f37c41a2cc06984381dec683f744791d236aeddf0769\"}) {
-            id
-            data
-            recipient
-            attester
-          }
-        }`,
-      }
-    );
+    const result = await axios.get(`https://mazury-staging.herokuapp.com/referrals/?receiver=${address}`)
+    const profileData = await axios.get(`https://mazury-staging.herokuapp.com/profiles/${address}`)
+
+    setAvatar(profileData.data["avatar"])
+    setUsername(profileData.data["ens_name"])
 
     const receivedReferrals = []
-    for (const referral of result.data.data.attestations) {
+
+    for (const referral of result.data) {
       receivedReferrals.push(
         {
-          "author": referral.attester,
-          "skills": parseReferralData(referral.data)
+          "author_address": referral.author.eth_address,
+          "author_username": referral.author.ens_name,
+          "author_avatar": referral.author.avatar,
+          "skills": parseReferralData(referral)
         }
       )
     }
     setReferrals(receivedReferrals)
+
+    const scores = []
+
+    skills.forEach(function (skill, index) {
+      if(profileData.data[skill.easName] >= 0){ // TODO change in the future not to show zeros
+        scores.push(
+          {
+            "name": skill.humanName,
+            "score": profileData.data[skill.easName]
+          }
+        )
+      }
+    });
+
+    setScores(scores)
   }
 
   function parseReferralData(data) {
 
-    const AbiCoder = ethers.utils.AbiCoder;
-    const abiCoder = new AbiCoder();
-    const types = [ ...Array(skills.length).keys() ].map( i => "bool");
-
-    const boolArray = abiCoder.decode(
-      types,
-      data
-    )
-
     const parsedData = []
     
     skills.forEach(function (skill, index) {
-      if(boolArray[index]){
+      if(data[skill.easName]){
         parsedData.push(skill)
       }
     });
@@ -136,6 +110,8 @@ const Person = () => {
         <div className="max-w-7xl mx-auto mb-5 flex flex-row justify-end w-full px-4 sm:px-6 lg:px-8 -mt-48">
           <UserProfile
             address={address}
+            avatar={avatar}
+            username={username}
             referrals={referrals}
             scores={scores}
           />

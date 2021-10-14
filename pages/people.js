@@ -50,6 +50,7 @@ export default function Home() {
         {
           "address": profile.eth_address,
           "username": profile.ens_name,
+          "avatar": profile.avatar,
           "skills": profile_skills
         }
       )

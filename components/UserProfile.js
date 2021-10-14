@@ -10,13 +10,11 @@ export default function Example(props) {
           <div className="flex items-center space-x-5">
             <div className="flex-shrink-0 bg-gray-100 rounded-full overflow-hidden">
               <span className="h-16 w-16 rounded-full bg-gray-100 mx-auto shadow">
-                <svg className="h-16 w-16 text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
+                <img className="h-16 w-16" src={props.avatar} />
               </span>
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-200">Anon</h1>
+              <h1 className="text-2xl font-bold text-gray-200">{props.username ? props.username : "Anon"}</h1>
               <p className="text-sm font-medium text-gray-400">{`${props.address.slice(0, 5)}...${props.address.slice(-3)}`}</p>
             </div>
           </div>
