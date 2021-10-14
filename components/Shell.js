@@ -277,11 +277,8 @@ export default function Shell(props) {
           </>
         )}
       </Disclosure>
-      {/* TODO get rid of referral link & FAQ */}
       <header className="">
         <div className="max-w-7xl pb-10 mx-auto px-4 sm:px-6 lg:px-8">
-          {props.signer && <p className="text-white py-1 text-xs text-right">Your referral link: https://dev.app.mazurylabs.com/refer?address={address}</p>}
-          <a target="_blank" href="https://mercury-elk-8de.notion.site/Mazury-early-testing-FAQ-50f1ffe8dd4a4b92ace8453690c3975c"><p className="text-white w-full py-1 text-xs underline text-right">Testing FAQ</p></a>
           <h1 className="text-3xl pt-10 font-bold text-white">{props.header}</h1>
         </div>
       </header>
