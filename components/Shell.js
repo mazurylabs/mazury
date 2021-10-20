@@ -10,6 +10,7 @@ import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 
 import WrongNetworkModal from './WrongNetworkModal';
+import axios from 'axios';
 
 
 function classNames(...classes) {
@@ -20,8 +21,10 @@ export default function Shell(props) {
 
   const [web3Modal, setWeb3Modal] = useState(null)
   const [address, setAddress] = useState("...")
-  const [ensReverseRecord, setEnsReverseRecord] = useState(null)
+  const [ensName, setEnsName] = useState(null)
   const [infuraProvider, setInfuraProvider] = useState(null)
+  const [accountDataFetched, setAccountDataFetched] = useState(false)
+  const [avatar, setAvatar] = useState("")
 
   useEffect(() => {
 
@@ -54,11 +57,11 @@ export default function Shell(props) {
   }, [web3Modal])
 
   useEffect(() => {
-    if(props.signer && infuraProvider){
+    if(props.signer){
       fetchNetworkData()
       fetchAccountData()
     }
-  }, [props.signer, infuraProvider])
+  }, [props.signer])
 
   async function connectWallet() {
     const provider = await web3Modal.connect();
@@ -75,10 +78,14 @@ export default function Shell(props) {
   }
 
   async function fetchAccountData() {
-    const address = await props.signer.getAddress()
-    setAddress(address)
-    const ensReverseRecord = await infuraProvider.lookupAddress(address);
-    setEnsReverseRecord(ensReverseRecord)
+    if (!accountDataFetched){
+      const address = await props.signer.getAddress()
+      setAddress(address)
+      const accountData = await axios.get(`https://mazury-staging.herokuapp.com/profiles/${address}/`)
+      setEnsName(accountData.data.ens_name)
+      setAvatar(accountData.data.avatar)
+      setAccountDataFetched(true)
+    }
   }
 
   async function fetchNetworkData() {
@@ -156,11 +163,13 @@ export default function Shell(props) {
                         <span className="sr-only">View notifications</span>
                         <BellIcon className="h-6 w-6" aria-hidden="true" />
                       </button>
-                      <Link href="/profile">
-                        <a>
-                          <img className="h-8 w-8 rounded-full ml-3" src={"https://mazurylabs-staging.s3.eu-central-1.amazonaws.com/avatars/gradient3.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYEYJ2JINA57WRDY7%2F20211019%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20211019T170533Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=2bb16b1a7f04b09e001ad2e578a88fdfeb0a0672424600e840cf6c0da9b138e2"} alt="" />
-                        </a>
-                      </Link>
+                      {avatar &&
+                        <Link href="/profile">
+                          <a>
+                            <img className="h-8 w-8 rounded-full ml-3" src={avatar} alt="" />
+                          </a>
+                        </Link>
+                      }
                       {props.signer
                       ?
                         <Menu as="div" className="ml-3 relative">
@@ -169,7 +178,7 @@ export default function Shell(props) {
                               <p
                                 className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-900 bg-gray-100 hover:bg-gray-200 focus:outline-none"
                               >
-                                {ensReverseRecord ? ensReverseRecord : `${address.slice(0, 5)}...${address.slice(-3)}`}
+                                {ensName ? ensName : `${address.slice(0, 5)}...${address.slice(-3)}`}
                               </p>
                             </Menu.Button>
                           </div>
