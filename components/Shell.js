@@ -10,6 +10,7 @@ import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 
 import WrongNetworkModal from './WrongNetworkModal';
+import { useUserData } from '../context/userData';
 import axios from 'axios';
 
 
@@ -21,10 +22,7 @@ export default function Shell(props) {
 
   const [web3Modal, setWeb3Modal] = useState(null)
   const [address, setAddress] = useState("...")
-  const [ensName, setEnsName] = useState(null)
-  const [infuraProvider, setInfuraProvider] = useState(null)
-  const [accountDataFetched, setAccountDataFetched] = useState(false)
-  const [avatar, setAvatar] = useState("")
+  const { userData, setUserData } = useUserData()
 
   useEffect(() => {
 
@@ -44,9 +42,6 @@ export default function Shell(props) {
       disableInjectedProvider: false, // optional. For MetaMask / Brave / Opera.
     });
 
-    const newInfuraProvider = new ethers.providers.JsonRpcProvider(process.env.NEXT_PUBLIC_INFURA_URL);
-    setInfuraProvider(newInfuraProvider)
-
     setWeb3Modal(web3Modal)
   }, [])
 
@@ -58,8 +53,10 @@ export default function Shell(props) {
 
   useEffect(() => {
     if(props.signer){
+      if(Object.keys(userData).length === 0){
+        fetchAccountData()
+      }
       fetchNetworkData()
-      fetchAccountData()
     }
   }, [props.signer])
 
@@ -78,14 +75,10 @@ export default function Shell(props) {
   }
 
   async function fetchAccountData() {
-    if (!accountDataFetched){
-      const address = await props.signer.getAddress()
-      setAddress(address)
-      const accountData = await axios.get(`https://mazury-staging.herokuapp.com/profiles/${address}/`)
-      setEnsName(accountData.data.ens_name)
-      setAvatar(accountData.data.avatar)
-      setAccountDataFetched(true)
-    }
+    const address = await props.signer.getAddress()
+    setAddress(address)
+    const accountDataResponse = await axios.get(`https://mazury-staging.herokuapp.com/profiles/${address}/`)
+    setUserData(accountDataResponse.data)
   }
 
   async function fetchNetworkData() {
@@ -156,19 +149,21 @@ export default function Shell(props) {
                   </div>
                   <div className="hidden md:block">
                     <div className="ml-4 flex items-center md:ml-6">
-                      <button
-                        type="button"
-                        className="bg-gray-800 p-1 text-gray-400 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                      >
-                        <span className="sr-only">View notifications</span>
-                        <BellIcon className="h-6 w-6" aria-hidden="true" />
-                      </button>
-                      {avatar &&
-                        <Link href="/profile">
-                          <a>
-                            <img className="h-8 w-8 rounded-full ml-3" src={avatar} alt="" />
-                          </a>
-                        </Link>
+                      {userData &&
+                        <div className="flex flex-row">
+                          <button
+                            type="button"
+                            className="bg-gray-800 p-1 text-gray-400 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                          >
+                            <span className="sr-only">View notifications</span>
+                            <BellIcon className="h-6 w-6" aria-hidden="true" />
+                          </button>
+                          <Link href="/profile">
+                            <a>
+                              <img className="h-8 w-8 rounded-full ml-3" src={userData.avatar} alt="" />
+                            </a>
+                          </Link>
+                        </div>
                       }
                       {props.signer
                       ?
@@ -178,7 +173,7 @@ export default function Shell(props) {
                               <p
                                 className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-900 bg-gray-100 hover:bg-gray-200 focus:outline-none"
                               >
-                                {ensName ? ensName : `${address.slice(0, 5)}...${address.slice(-3)}`}
+                                {userData.ens_name ? userData.ens_name : `${address.slice(0, 5)}...${address.slice(-3)}`}
                               </p>
                             </Menu.Button>
                           </div>
