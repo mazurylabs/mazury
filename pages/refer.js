@@ -22,7 +22,6 @@ export default function Refer() {
   const [referralAddress, setReferralAddress] = useState("")
   const [addressIsValid, setAddressIsValid] = useState(false)
   const { provider, signer } = useContext(web3Context)
-  const [chainId, setChainId] = useState(4)
   const router = useRouter();
   const [infuraProvider, setInfuraProvider] = useState(null)
 
@@ -82,8 +81,6 @@ export default function Refer() {
       </Head>
 
       <Shell
-        chainId={chainId}
-        setChainId={setChainId}
         navigation={navigation}
         header={"Refer a friend"}
       />

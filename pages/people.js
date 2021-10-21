@@ -17,7 +17,6 @@ const navigation = [
 
 export default function Home() {
   
-  const [chainId, setChainId] = useState(4)
   const [people, setPeople] = useState([])
   const [displayPeople, setDisplayPeople] = useState([])
 
@@ -66,8 +65,6 @@ export default function Home() {
       </Head>
 
       <Shell
-        chainId={chainId}
-        setChainId={setChainId}
         navigation={navigation}
         header={"People"}
       />

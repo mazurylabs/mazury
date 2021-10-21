@@ -19,7 +19,6 @@ const navigation = [
 export default function Home() {
   
   const { signer } = useContext(web3Context)
-  const [chainId, setChainId] = useState(4)
   const [referrals, setReferrals] = useState([])
   const [scores, setScores] = useState([])
 
@@ -87,8 +86,6 @@ export default function Home() {
       </Head>
 
       <Shell
-        chainId={chainId}
-        setChainId={setChainId}
         navigation={navigation}
         header={"Your referrals & scores"}
       />

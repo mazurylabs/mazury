@@ -12,8 +12,6 @@ const navigation = [
 
 export default function Home() {
 
-  const [chainId, setChainId] = useState(4)
-
   return (
     <div>
       <Head>
@@ -22,8 +20,6 @@ export default function Home() {
       </Head>
 
       <Shell
-        chainId={chainId}
-        setChainId={setChainId}
         navigation={navigation}
         header={"Jobs"}
       />

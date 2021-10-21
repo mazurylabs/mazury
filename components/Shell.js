@@ -23,7 +23,16 @@ export default function Shell(props) {
 
   const [address, setAddress] = useState("...")
   const { userData, setUserData } = useContext(UserDataContext)
-  const { provider, setProvider, signer, setSigner, web3Modal, setWeb3Modal } = useContext(web3Context)
+  const {
+    provider,
+    setProvider,
+    signer,
+    setSigner,
+    chainId,
+    setChainId,
+    web3Modal,
+    setWeb3Modal
+  } = useContext(web3Context)
 
   useEffect(() => {
 
@@ -84,7 +93,7 @@ export default function Shell(props) {
 
   async function fetchNetworkData() {
     const chainId = await signer.getChainId()
-    props.setChainId(chainId)
+    setChainId(chainId)
   }
 
   const checkConnection = async () => {
@@ -105,13 +114,13 @@ export default function Shell(props) {
     
     // Subscribe to chainId change
     provider.on("chainChanged", (chainId) => {
-      props.setChainId(chainId)
+      setChainId(chainId)
     });
   }
 
   return (
     <div className="bg-gray-800 pb-32">
-      {(props.chainId != 4) &&
+      {(chainId != 4) &&
         <WrongNetworkModal />
       }
       <Disclosure as="nav" className="bg-gray-800">
