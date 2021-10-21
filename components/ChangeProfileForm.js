@@ -1,12 +1,40 @@
-import { useContext } from "react"
+import axios from "axios"
+import { useContext, useState, useRef, useEffect } from "react"
 import { UserDataContext } from "../context/userData"
 
 export default function ChangeProfileForm() {
 
   const { userData } = useContext(UserDataContext)
 
+  const [username, setUsername] = useState("")
+  const [bio, setBio] = useState("")
+  const [avatar, setAvatar] = useState(null)
+  const [avatarPreview, setAvatarPreview] = useState("")
+  const fileUploadRef = useRef(null)
+
+  useEffect(() => {
+    if(avatar){
+      setAvatarPreview(URL.createObjectURL(avatar))
+    }
+  }, [avatar])
+
+  const changeProfileData = () => {
+    const formData = new FormData()
+    if(avatar) {
+      formData.append("avatar", avatar, avatar.name)
+    }
+    if(username) {
+      formData.append("username", username)
+    }
+    if(bio) {
+      formData.append("bio", bio)
+    }
+
+    axios.patch(`https://mazury-staging.herokuapp.com/profiles/${userData.eth_address}/`, formData).then(window.location.reload())
+  }
+
   return (
-    <form className="space-y-8 divide-y divide-gray-200 max-w-xl mx-auto px-4 py-4">
+    <div className="space-y-8 divide-y divide-gray-200 max-w-xl mx-auto px-4 py-4">
       <div className="space-y-8 divide-y divide-gray-200">
         <div>
           <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
@@ -25,6 +53,7 @@ export default function ChangeProfileForm() {
                   autoComplete="off"
                   defaultValue={userData.ens_name}
                   spellCheck={false}
+                  onChange={(e) => setUsername(e.target.value)}
                   className="flex-1 focus:ring-gray-500 focus:border-gray-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                 />
               </div>
@@ -38,9 +67,10 @@ export default function ChangeProfileForm() {
                   id="bio"
                   name="bio"
                   rows={3}
+                  onChange={(e) => setBio(e.target.value)}
                   placeholder="Write something about yourself!"
                   className="resize-none shadow-sm focus:ring-gray-500 focus:border-gray-500 block w-full sm:text-sm border border-gray-300 rounded-md"
-                  defaultValue={''}
+                  defaultValue={userData.bio}
                 />
               </div>
             </div>
@@ -50,12 +80,20 @@ export default function ChangeProfileForm() {
                 Profile picture
               </label>
               <div className="mt-1 flex items-center">
-                <img className="h-12 w-12 rounded-full ml-3" src={userData.avatar} alt="" />
-                <button
-                  type="button"
-                  className="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
+                <img className="h-12 w-12 rounded-full ml-3" src={avatarPreview ? avatarPreview : userData.avatar} alt="" />
+                <input
+                  type="file"
+                  onChange={(e) => setAvatar(e.target.files[0])}
+                  className="hidden"
+                  ref={fileUploadRef}
                 >
-                  Change
+                </input>
+                <button
+                  className="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
+                  type="button"
+                  onClick={() => fileUploadRef.current.click()}
+                >
+                  Upload
                 </button>
               </div>
             </div>
@@ -75,18 +113,13 @@ export default function ChangeProfileForm() {
         <div className="flex justify-end">
           <button
             type="button"
-            className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
             className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
+            onClick={changeProfileData}
           >
             Save
           </button>
         </div>
       </div>
-    </form>
+    </div>
   )
 }
