@@ -1,10 +1,34 @@
+import { useContext } from "react"
+import { UserDataContext } from "../context/userData"
+
 export default function ChangeProfileForm() {
+
+  const { userData } = useContext(UserDataContext)
+
   return (
     <form className="space-y-8 divide-y divide-gray-200 max-w-xl mx-auto px-4 py-4">
       <div className="space-y-8 divide-y divide-gray-200">
         <div>
           <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-
+            <div className="sm:col-span-6">
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+                Username
+              </label>
+              <div className="mt-1 flex rounded-md shadow-sm">
+                <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+                  app.mazurylabs.com/people/
+                </span>
+                <input
+                  type="text"
+                  name="username"
+                  id="username"
+                  autoComplete="off"
+                  defaultValue={userData.ens_name}
+                  spellCheck={false}
+                  className="flex-1 focus:ring-gray-500 focus:border-gray-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                />
+              </div>
+            </div>
             <div className="sm:col-span-6">
               <label htmlFor="about" className="block text-sm font-medium text-gray-700">
                 Bio
@@ -26,14 +50,10 @@ export default function ChangeProfileForm() {
                 Profile picture
               </label>
               <div className="mt-1 flex items-center">
-                <span className="h-12 w-12 rounded-full overflow-hidden bg-gray-100">
-                  <svg className="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
-                </span>
+                <img className="h-12 w-12 rounded-full ml-3" src={userData.avatar} alt="" />
                 <button
                   type="button"
-                  className="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                  className="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
                 >
                   Change
                 </button>
@@ -46,6 +66,7 @@ export default function ChangeProfileForm() {
           <div>
             <h3 className="text-lg leading-6 font-medium text-gray-900">Integrations</h3>
             <p className="mt-1 text-sm text-gray-500">Connect your web2 accounts to bootstrap your scores</p>
+            <p className="mt-3 text-sm text-gray-600">soon :)</p>
           </div>
         </div>
       </div>
