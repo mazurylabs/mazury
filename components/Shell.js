@@ -131,11 +131,15 @@ export default function Shell(props) {
                 <div className="flex items-center justify-between h-16 px-4 sm:px-0">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
-                      <img
-                        className="h-8 w-8"
-                        src="/waves.png"
-                        alt="Logo"
-                      />
+                      <Link href="/">
+                        <a>
+                          <img
+                            className="h-8 w-8"
+                            src="/waves.png"
+                            alt="Logo"
+                          />
+                        </a>
+                      </Link>
                     </div>
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
