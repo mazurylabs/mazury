@@ -1,6 +1,6 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useState } from 'react'
 
-const UserDataContext = createContext()
+export const UserDataContext = createContext()
 
 export function UserDataDataProvider({ children }) {
   const [userData, setUserData] = useState({})
@@ -14,13 +14,4 @@ export function UserDataDataProvider({ children }) {
       {children}
     </UserDataContext.Provider>
   )
-}
-
-export function useUserData() {
-  const context = useContext(UserDataContext)
-
-  if (!context)
-    throw new Error('useUserData must be used inside a `UserDataDataProvider`')
-
-  return context
 }

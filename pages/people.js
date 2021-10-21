@@ -6,7 +6,7 @@ import Head from 'next/head'
 import PeopleList from '../components/PeopleList'
 import PeopleSearch from '../components/PeopleSearch'
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 const navigation = [
   { name: 'Your referrals', href: '/', current: false },
@@ -17,8 +17,6 @@ const navigation = [
 
 export default function Home() {
   
-  const [provider, setProvider] = useState(null)
-  const [signer, setSigner] = useState(null)
   const [chainId, setChainId] = useState(4)
   const [people, setPeople] = useState([])
   const [displayPeople, setDisplayPeople] = useState([])
@@ -68,10 +66,6 @@ export default function Home() {
       </Head>
 
       <Shell
-        provider={provider}
-        setProvider={setProvider}
-        signer={signer}
-        setSigner={setSigner}
         chainId={chainId}
         setChainId={setChainId}
         navigation={navigation}

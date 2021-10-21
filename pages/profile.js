@@ -16,8 +16,6 @@ const navigation = [
 
 export default function Home() {
   
-  const [provider, setProvider] = useState(null)
-  const [signer, setSigner] = useState(null)
   const [chainId, setChainId] = useState(4)
 
   return (
@@ -28,10 +26,6 @@ export default function Home() {
       </Head>
 
       <Shell
-        provider={provider}
-        setProvider={setProvider}
-        signer={signer}
-        setSigner={setSigner}
         chainId={chainId}
         setChainId={setChainId}
         navigation={navigation}

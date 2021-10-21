@@ -5,7 +5,8 @@ import ReferPanel from '../components/ReferPanel'
 import { useRouter } from "next/router";
 import Head from 'next/head'
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { web3Context } from "../context/web3Data"
 
 const navigation = [
   { name: 'Your referrals', href: '/', current: false },
@@ -20,8 +21,7 @@ export default function Refer() {
   const [referralEnsName, setReferralEnsName] = useState("loading...")
   const [referralAddress, setReferralAddress] = useState("")
   const [addressIsValid, setAddressIsValid] = useState(false)
-  const [provider, setProvider] = useState(null)
-  const [signer, setSigner] = useState(null)
+  const { provider, signer } = useContext(web3Context)
   const [chainId, setChainId] = useState(4)
   const router = useRouter();
   const [infuraProvider, setInfuraProvider] = useState(null)
@@ -82,10 +82,6 @@ export default function Refer() {
       </Head>
 
       <Shell
-        provider={provider}
-        setProvider={setProvider}
-        signer={signer}
-        setSigner={setSigner}
         chainId={chainId}
         setChainId={setChainId}
         navigation={navigation}

@@ -6,7 +6,8 @@ import ScoresList from '../components/ScoresList'
 import Head from 'next/head'
 
 import axios from "axios";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { web3Context } from "../context/web3Data"
 
 const navigation = [
   { name: 'Your referrals', href: '/', current: true },
@@ -17,8 +18,7 @@ const navigation = [
 
 export default function Home() {
   
-  const [provider, setProvider] = useState(null)
-  const [signer, setSigner] = useState(null)
+  const { signer } = useContext(web3Context)
   const [chainId, setChainId] = useState(4)
   const [referrals, setReferrals] = useState([])
   const [scores, setScores] = useState([])
@@ -87,10 +87,6 @@ export default function Home() {
       </Head>
 
       <Shell
-        provider={provider}
-        setProvider={setProvider}
-        signer={signer}
-        setSigner={setSigner}
         chainId={chainId}
         setChainId={setChainId}
         navigation={navigation}

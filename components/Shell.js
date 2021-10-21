@@ -4,13 +4,14 @@ import { ethers, providers } from "ethers";
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 
 import WrongNetworkModal from './WrongNetworkModal';
-import { useUserData } from '../context/userData';
+import { UserDataContext } from '../context/userData';
+import { web3Context } from '../context/web3Data';
 import axios from 'axios';
 
 
@@ -20,9 +21,9 @@ function classNames(...classes) {
 
 export default function Shell(props) {
 
-  const [web3Modal, setWeb3Modal] = useState(null)
   const [address, setAddress] = useState("...")
-  const { userData, setUserData } = useUserData()
+  const { userData, setUserData } = useContext(UserDataContext)
+  const { provider, setProvider, signer, setSigner, web3Modal, setWeb3Modal } = useContext(web3Context)
 
   useEffect(() => {
 
@@ -52,47 +53,47 @@ export default function Shell(props) {
   }, [web3Modal])
 
   useEffect(() => {
-    if(props.signer){
+    if(signer){
       if(Object.keys(userData).length === 0){
         fetchAccountData()
       }
       fetchNetworkData()
     }
-  }, [props.signer])
+  }, [signer])
 
   async function connectWallet() {
     const provider = await web3Modal.connect();
     addListeners(provider)
     const ethersProvider = new providers.Web3Provider(provider)
-    props.setProvider(ethersProvider)
-    props.setSigner(ethersProvider.getSigner())
+    setProvider(ethersProvider)
+    setSigner(ethersProvider.getSigner())
   }
 
   async function disconnectWallet() {
     await web3Modal.clearCachedProvider();
-    props.setProvider(null)
-    props.setSigner(null)
+    setProvider(null)
+    setSigner(null)
   }
 
   async function fetchAccountData() {
-    const address = await props.signer.getAddress()
+    const address = await signer.getAddress()
     setAddress(address)
     const accountDataResponse = await axios.get(`https://mazury-staging.herokuapp.com/profiles/${address}/`)
     setUserData(accountDataResponse.data)
   }
 
   async function fetchNetworkData() {
-    const chainId = await props.signer.getChainId()
+    const chainId = await signer.getChainId()
     props.setChainId(chainId)
   }
 
   const checkConnection = async () => {
-    if (web3Modal.cachedProvider) {
+    if (web3Modal.cachedProvider && signer == null) {
       const provider = await web3Modal.connect();
       addListeners(provider)
       const ethersProvider = new providers.Web3Provider(provider)
-      props.setProvider(ethersProvider)
-      props.setSigner(ethersProvider.getSigner())
+      setProvider(ethersProvider)
+      setSigner(ethersProvider.getSigner())
     }
   };
 
@@ -165,7 +166,7 @@ export default function Shell(props) {
                           </Link>
                         </div>
                       }
-                      {props.signer
+                      {signer
                       ?
                         <Menu as="div" className="ml-3 relative">
                           <div>
@@ -246,7 +247,7 @@ export default function Shell(props) {
                 ))}
               </div>
               <div className="pt-4 pb-3 border-t border-gray-700 flex justify-center">
-                {props.signer
+                {signer
                 ?
                   <Menu as="div" className="ml-3 relative">
                     <div>
