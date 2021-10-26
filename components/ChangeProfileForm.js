@@ -1,10 +1,12 @@
 import axios from "axios"
 import { useContext, useState, useRef, useEffect } from "react"
 import { UserDataContext } from "../context/userData"
+import { web3Context } from "../context/web3Data"
 
 export default function ChangeProfileForm() {
 
   const { userData } = useContext(UserDataContext)
+  const { signer } = useContext(web3Context)
 
   const [username, setUsername] = useState("")
   const [bio, setBio] = useState("")
@@ -18,7 +20,13 @@ export default function ChangeProfileForm() {
     }
   }, [avatar])
 
-  const changeProfileData = () => {
+  const getSignedMessage = async () => {
+    const response = await axios.get(`https://mazury-staging.herokuapp.com/auth/message?address=${userData.eth_address}`)
+    const signedMessage = await signer.signMessage(response.data)
+    return signedMessage
+  }
+
+  const changeProfileData = async () => {
     const formData = new FormData()
     if(avatar) {
       formData.append("avatar", avatar, avatar.name)
@@ -30,7 +38,20 @@ export default function ChangeProfileForm() {
       formData.append("bio", bio)
     }
 
-    axios.patch(`https://mazury-staging.herokuapp.com/profiles/${userData.eth_address}/`, formData).then(window.location.reload())
+    const auth_key = await getSignedMessage()
+
+    const response = await axios.patch(
+      `https://mazury-staging.herokuapp.com/profiles/${userData.eth_address}/`,
+      formData,
+      {
+        headers: {
+          'ETH-AUTH': auth_key
+        }
+      }
+      )
+      // .then(window.location.reload())
+
+    console.log(response)
   }
 
   return (
