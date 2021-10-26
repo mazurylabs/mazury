@@ -48,10 +48,7 @@ export default function ChangeProfileForm() {
           'ETH-AUTH': auth_key
         }
       }
-      )
-      // .then(window.location.reload())
-
-    console.log(response)
+      ).then(window.location.reload())
   }
 
   return (
