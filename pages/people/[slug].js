@@ -64,7 +64,7 @@ const Person = () => {
     const scores = []
 
     skills.forEach(function (skill, index) {
-      if(profileData.data[skill.easName] >= 0){ // TODO change in the future not to show zeros
+      if(profileData.data[skill.easName] > 0){
         scores.push(
           {
             "name": skill.humanName,

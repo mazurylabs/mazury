@@ -34,7 +34,7 @@ export default function Home() {
       
       profile_skills = []
       skills.forEach(function (skill, index) {
-        if(profile[skill.easName] >= 0){ // TODO don't display zeros
+        if(profile[skill.easName] > 0){
           profile_skills.push(
             {
               "name": skill.humanName,
