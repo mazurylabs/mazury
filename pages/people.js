@@ -19,18 +19,41 @@ export default function Home() {
   
   const [people, setPeople] = useState([])
   const [displayPeople, setDisplayPeople] = useState([])
+  const [startPage, setStartPage] = useState(0)
+  const [endPage, setEndPage] = useState(20)
+  const [prevPageURL, setPrevPageURL] = useState(null)
+  const [nextPageURL, setNextPageURL] = useState(null)
+  const [totalPeopleCount, setTotalPeopleCount] = useState(0)
 
   useEffect(() => {
     fetchPeople()
   }, [])
   
-  async function fetchPeople() {
+  async function fetchPeople(direction="") {
 
-    const result = await axios.get("https://mazury-staging.herokuapp.com/profiles/");
+    let result;
+
+    if(direction == "next") {
+      if(nextPageURL == null) return
+      result = await axios.get(nextPageURL);
+      setStartPage(startPage+20)
+      setEndPage(Math.min(endPage+20, totalPeopleCount))
+    } else if(direction == "prev") {
+      if(prevPageURL == null) return
+      result = await axios.get(prevPageURL);
+      setStartPage(Math.max(startPage-20, 0))
+      setEndPage(Math.max(endPage-20, 20))
+    } else {
+      result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles/`);
+    }
+
+    setPrevPageURL(result.data.previous)
+    setNextPageURL(result.data.next)
 
     const people = []
+    setTotalPeopleCount(result.data.count)
     let profile_skills;
-    for (const profile of result.data) {
+    for (const profile of result.data.results) {
       
       profile_skills = []
       skills.forEach(function (skill, index) {
@@ -80,7 +103,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-lg shadow">
             <PeopleList
+              startPage={startPage}
+              endPage={endPage}
+              totalPeopleCount={totalPeopleCount}
               people={displayPeople}
+              fetchPeople={fetchPeople}
             />
           </div>
         </div>

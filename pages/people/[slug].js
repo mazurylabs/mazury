@@ -41,8 +41,8 @@ const Person = () => {
 
   async function fetchReferrals() {
 
-    const result = await axios.get(`https://mazury-staging.herokuapp.com/referrals/?receiver=${address}`)
-    const profileData = await axios.get(`https://mazury-staging.herokuapp.com/profiles/${address}`)
+    const result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/referrals/?receiver=${address}`)
+    const profileData = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles/${address}`)
 
     setAvatar(profileData.data["avatar"])
     setUsername(profileData.data["ens_name"])

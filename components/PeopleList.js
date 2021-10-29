@@ -37,7 +37,7 @@ export default function PeopleList(props) {
                         </div>
                       </a>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap max-w-lg overflow-auto">
+                    <td className="px-6 py-4 whitespace-nowrap max-w-lg overflow-hidden">
                       {person.skills.map((skill) => (
                         <span key={`${skill.name}+${person.address}`} className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-200 text-gray-800 mr-2">
                           {`${skill.name}: ${skill.score}`}
@@ -49,6 +49,31 @@ export default function PeopleList(props) {
               </tbody>
             </table>
           </div>
+          <nav
+            className="bg-white px-4 py-3 flex items-center justify-betweenx sm:px-6"
+            aria-label="Pagination"
+          >
+            <div className="hidden sm:block">
+              <p className="text-sm text-gray-700">
+                Showing <span className="font-medium">{props.startPage}</span> to <span className="font-medium">{props.endPage}</span> of{' '}
+                <span className="font-medium">{props.totalPeopleCount}</span> results
+              </p>
+            </div>
+            <div className="flex-1 flex justify-between sm:justify-end">
+              <button
+                onClick={() => (props.fetchPeople("prev"))}
+                className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              >
+                Previous
+              </button>
+              <button
+                onClick={() => (props.fetchPeople("next"))}
+                className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              >
+                Next
+              </button>
+            </div>
+          </nav>
         </div>
       </div>
     </div>

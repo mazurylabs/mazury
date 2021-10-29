@@ -31,12 +31,12 @@ export default function Home() {
   async function fetchReferrals() {
     const address = await signer.getAddress()
 
-    const result = await axios.get(`https://mazury-staging.herokuapp.com/referrals/?receiver=${address}`)
-    const profileData = await axios.get(`https://mazury-staging.herokuapp.com/profiles/${address}`)
+    const result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/referrals/?receiver=${address}`)
+    const profileData = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles/${address}`)
 
     const receivedReferrals = []
 
-    for (const referral of result.data) {
+    for (const referral of result.data.results) {
       receivedReferrals.push(
         {
           "author_address": referral.author.eth_address,

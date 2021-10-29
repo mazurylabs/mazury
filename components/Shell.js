@@ -87,7 +87,7 @@ export default function Shell(props) {
   async function fetchAccountData() {
     const address = await signer.getAddress()
     setAddress(address)
-    const accountDataResponse = await axios.get(`https://mazury-staging.herokuapp.com/profiles/${address}/`)
+    const accountDataResponse = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles/${address}/`)
     setUserData(accountDataResponse.data)
   }
 

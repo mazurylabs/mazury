@@ -21,7 +21,7 @@ export default function ChangeProfileForm() {
   }, [avatar])
 
   const getSignedMessage = async () => {
-    const response = await axios.get(`https://mazury-staging.herokuapp.com/auth/message?address=${userData.eth_address}`)
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/message?address=${userData.eth_address}`)
     const signedMessage = await signer.signMessage(response.data)
     return signedMessage
   }
@@ -41,7 +41,7 @@ export default function ChangeProfileForm() {
     const auth_key = await getSignedMessage()
 
     const response = await axios.patch(
-      `https://mazury-staging.herokuapp.com/profiles/${userData.eth_address}/`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles/${userData.eth_address}/`,
       formData,
       {
         headers: {
