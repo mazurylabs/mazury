@@ -29,7 +29,7 @@ export default function Home() {
     fetchPeople()
   }, [])
   
-  async function fetchPeople(direction="") {
+  async function fetchPeople(direction="", query="") {
 
     let result;
 
@@ -43,6 +43,13 @@ export default function Home() {
       result = await axios.get(prevPageURL);
       setStartPage(Math.max(startPage-20, 0))
       setEndPage(Math.max(endPage-20, 20))
+    } else if(query != "") {
+      try{
+        result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles?empty=false&q=${query}`);
+      } catch {
+        console.log("search failed")
+        return
+      }
     } else {
       result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles?empty=false`);
     }
@@ -97,6 +104,7 @@ export default function Home() {
             <PeopleSearch
               people={people}
               setDisplayPeople={setDisplayPeople}
+              fetchPeople={fetchPeople}
             />
           </div>
         </div>
