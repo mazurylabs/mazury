@@ -44,7 +44,7 @@ export default function Home() {
       setStartPage(Math.max(startPage-20, 0))
       setEndPage(Math.max(endPage-20, 20))
     } else {
-      result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles/`);
+      result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles?empty=false`);
     }
 
     setPrevPageURL(result.data.previous)
