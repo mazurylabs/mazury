@@ -49,7 +49,7 @@ const Person = () => {
 
     const receivedReferrals = []
 
-    for (const referral of result.data) {
+    for (const referral of result.data.results) {
       receivedReferrals.push(
         {
           "author_address": referral.author.eth_address,
