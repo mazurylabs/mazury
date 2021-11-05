@@ -4,7 +4,7 @@ import ReferralList from './ReferralList';
 export default function Example(props) {
 
   return (
-    <div className="relative min-h-screen w-full">
+    <div className="relative w-full">
       <main className="py-10">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
           <div className="flex items-center space-x-5">

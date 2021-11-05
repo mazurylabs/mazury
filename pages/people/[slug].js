@@ -4,6 +4,7 @@ import { skills } from "../../utils/const"
 
 import Shell from '../../components/Shell'
 import UserProfile from '../../components/UserProfile'
+import Badge from "../../components/Badge";
 import Head from 'next/head'
 
 import { useRouter } from 'next/router'
@@ -22,30 +23,33 @@ const Person = () => {
   const [chainId, setChainId] = useState(4)
   const [referrals, setReferrals] = useState([])
   const [scores, setScores] = useState([])
-  const [address, setAddress] = useState("")
-  const [username, setUsername] = useState("")
-  const [avatar, setAvatar] = useState("")
+  const [badges, setBadges] = useState([])
+  const [profileData, setProfileData] = useState(null)
   
   const router = useRouter()
 
   useEffect(() => {
-    fetchReferrals()
-  }, [address])
+    if(profileData != null){
+      fetchReferrals()
+      fetchBadges()
+    }
+  }, [profileData])
 
   useEffect(() => {
     if(!router.isReady) return;
     if(router.query.slug){
-      setAddress(router.query.slug)
+      fetchProfileData(router.query.slug)
     }
   }, [router.isReady])
 
+  async function fetchProfileData(url_address) {
+    const profileData = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles/${url_address}`)
+    setProfileData(profileData.data)
+  }
+
   async function fetchReferrals() {
 
-    const result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/referrals/?receiver=${address}`)
-    const profileData = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles/${address}`)
-
-    setAvatar(profileData.data["avatar"])
-    setUsername(profileData.data["ens_name"])
+    const result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/referrals/?receiver=${profileData.eth_address}`)
 
     const receivedReferrals = []
 
@@ -64,17 +68,36 @@ const Person = () => {
     const scores = []
 
     skills.forEach(function (skill, index) {
-      if(profileData.data[skill.easName] > 0){
+      if(profileData[skill.easName] > 0){
         scores.push(
           {
             "name": skill.humanName,
-            "score": profileData.data[skill.easName]
+            "score": profileData[skill.easName]
           }
         )
       }
     });
 
     setScores(scores)
+  }
+
+  async function fetchBadges() {
+
+    const result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/badges/?owner=${profileData.eth_address}`)
+
+    const owned_badges = []
+
+    for (const badge of result.data.results) {
+      owned_badges.push(
+        {
+          "image": badge.badge_type.image,
+          "title": badge.badge_type.title,
+          "description": badge.badge_type.description,
+        }
+      )
+    }
+
+    setBadges(owned_badges)
   }
 
   function parseReferralData(data) {
@@ -108,13 +131,25 @@ const Person = () => {
       />
       <main className="-mt-32">
         <div className="max-w-7xl mx-auto mb-5 flex flex-row justify-end w-full px-4 sm:px-6 lg:px-8 -mt-48">
-          <UserProfile
-            address={address}
-            avatar={avatar}
-            username={username}
-            referrals={referrals}
-            scores={scores}
-          />
+          {profileData &&
+            <UserProfile
+              address={profileData.eth_address}
+              avatar={profileData.avatar}
+              username={profileData.ens_name}
+              referrals={referrals}
+              scores={scores}
+            />
+          }
+        </div>
+        <div className="max-w-5xl ml-20 pb-12 px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-6">
+          {badges.map((badge) => (
+            <Badge
+              key={badge.title}
+              image={badge.image}
+              title={badge.title}
+              description={badge.description}
+            />
+          ))}
         </div>
       </main>
     </div>
