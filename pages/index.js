@@ -112,7 +112,7 @@ export default function Home() {
 
       <Shell
         navigation={navigation}
-        header={"Welcome back, wojtek.eth"}
+        header={"Welcome"}
       />
       <main className="-mt-32">
         <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row">

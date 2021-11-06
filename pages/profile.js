@@ -1,11 +1,12 @@
-import { skills } from "../utils/const"
-
 import Shell from '../components/Shell'
 import ChangeProfileForm from "../components/ChangeProfileForm";
+import { UserDataContext } from "../context/userData"
+import { web3Context } from "../context/web3Data"
 import Head from 'next/head'
 
 import axios from "axios";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import Router, { useRouter } from "next/router";
 
 const navigation = [
   { name: 'Your referrals', href: '/', current: true },
@@ -14,7 +15,45 @@ const navigation = [
   { name: 'Refer a friend', href: '/refer', current: false },
 ]
 
-export default function Home() {
+export default function Profile() {
+
+  const { userData, loadingUserData, setUserData } = useContext(UserDataContext)
+  const { signer } = useContext(web3Context)
+  const router = useRouter();
+
+  useEffect(() => {
+    if(!router.isReady) return;
+    if(router.query.code && loadingUserData == false){
+      connectGithub(router.query.code)
+    }
+  }, [router.isReady, loadingUserData])
+
+  const getSignedMessage = async () => {
+
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/message?address=${userData.eth_address}`)
+    const signedMessage = await signer.signMessage(response.data)
+    return signedMessage
+  }
+
+  async function connectGithub(github_code) {
+    const auth_key = await getSignedMessage()
+
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/github?github_code=${github_code}`,
+      {},
+      {
+        headers: {
+          'ETH-AUTH': auth_key
+        }
+      }
+    )
+
+    const newUserData = userData
+    newUserData["github"] = response.data.username
+    setUserData(newUserData)
+
+    Router.push('/profile')
+  }
 
   return (
     <div>

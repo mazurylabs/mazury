@@ -22,7 +22,7 @@ function classNames(...classes) {
 export default function Shell(props) {
 
   const [address, setAddress] = useState("...")
-  const { userData, setUserData } = useContext(UserDataContext)
+  const { userData, setLoadingUserData, setUserData } = useContext(UserDataContext)
   const {
     provider,
     setProvider,
@@ -89,6 +89,7 @@ export default function Shell(props) {
     setAddress(address)
     const accountDataResponse = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles/${address}/`)
     setUserData(accountDataResponse.data)
+    setLoadingUserData(false)
   }
 
   async function fetchNetworkData() {
@@ -163,7 +164,7 @@ export default function Shell(props) {
                   </div>
                   <div className="hidden md:block">
                     <div className="ml-4 flex items-center md:ml-6">
-                      {userData &&
+                      {userData.avatar &&
                         <div className="flex flex-row">
                           <button
                             type="button"

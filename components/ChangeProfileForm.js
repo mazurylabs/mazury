@@ -2,6 +2,7 @@ import axios from "axios"
 import { useContext, useState, useRef, useEffect } from "react"
 import { UserDataContext } from "../context/userData"
 import { web3Context } from "../context/web3Data"
+import SocialMediaButton from "./SocialMediaButton"
 
 export default function ChangeProfileForm() {
 
@@ -122,7 +123,16 @@ export default function ChangeProfileForm() {
           <div>
             <h3 className="text-lg leading-6 font-medium text-gray-900">Integrations</h3>
             <p className="mt-1 text-sm text-gray-500">Connect your web2 accounts to bootstrap your scores</p>
-            <p className="mt-3 text-sm text-gray-600">soon :)</p>
+            <div className="flex flex-row space-x-4 mt-4">
+              <SocialMediaButton
+                name="Twitter"
+                username={userData.twitter}
+              />
+              <SocialMediaButton
+                name="Github"
+                username={userData.github}
+              />
+            </div>
           </div>
         </div>
       </div>
