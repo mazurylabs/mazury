@@ -100,7 +100,7 @@ export default function Home() {
       />
       <main className="-mt-32">
         <div className="max-w-7xl mx-auto mb-5 flex flex-row justify-end w-full px-4 sm:px-6 lg:px-8 -mt-48">
-          <div className="w-64">
+          <div className="w-72">
             <PeopleSearch
               people={people}
               setDisplayPeople={setDisplayPeople}

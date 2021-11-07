@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 export default function ReferralList(props) {
   return (
     <div className="flex flex-col">
@@ -25,15 +27,19 @@ export default function ReferralList(props) {
                 {props.referrals && props.referrals.map((referral) => (
                   <tr key={referral.author_address}>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="flex-shrink-0 h-10 w-10">
-                          <img className="h-10 w-10 rounded-full" src={referral.author_avatar} />
-                        </div>
-                        <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">{referral.author_username ? referral.author_username : "Anon"}</div>
-                          <div className="text-sm text-gray-500">{`${referral.author_address.slice(0, 5)}...${referral.author_address.slice(-3)}`}</div>
-                        </div>
-                      </div>
+                      <Link href={`/people/${referral.author_address}`}>
+                        <a>
+                          <div className="flex items-center">
+                            <div className="flex-shrink-0 h-10 w-10">
+                              <img className="h-10 w-10 rounded-full" src={referral.author_avatar} />
+                            </div>
+                            <div className="ml-4">
+                              <div className="text-sm font-medium text-gray-900">{referral.author_username ? referral.author_username : "Anon"}</div>
+                              <div className="text-sm text-gray-500">{`${referral.author_address.slice(0, 5)}...${referral.author_address.slice(-3)}`}</div>
+                            </div>
+                          </div>
+                        </a>
+                      </Link>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {referral.skills.map((skill) => (
