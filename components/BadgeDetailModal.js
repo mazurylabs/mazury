@@ -49,6 +49,9 @@ export default function BadgeDetailModal(props) {
                       {props.description}
                     </p>
                   </div>
+                  <div className="mt-4">
+                    <p className="text-sm text-gray-600 font-medium truncate">{`1/${props.total_supply}`}</p>
+                  </div>
                 </div>
               </div>
               <div className="mt-5 sm:mt-6">

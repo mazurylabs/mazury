@@ -4,7 +4,7 @@ export const UserDataContext = createContext()
 
 export function UserDataDataProvider({ children }) {
   const [userData, setUserData] = useState({})
-  const [loadingUserData, setLoadingUserData] = useState({})
+  const [loadingUserData, setLoadingUserData] = useState(true)
   return (
     <UserDataContext.Provider
       value={{

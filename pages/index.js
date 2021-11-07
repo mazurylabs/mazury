@@ -72,6 +72,9 @@ export default function Home() {
     const address = await signer.getAddress()
 
     const result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/badges/?owner=${address}`)
+    const result_types = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/badge_types`)
+
+    // todo get exactly types that are needed
 
     const owned_badges = []
 
@@ -81,6 +84,7 @@ export default function Home() {
           "image": badge.badge_type.image,
           "title": badge.badge_type.title,
           "description": badge.badge_type.description,
+          "total_supply": result_types.data.results.find(type => type.title == badge.badge_type.title).total_supply
         }
       )
     }
@@ -134,6 +138,7 @@ export default function Home() {
               image={badge.image}
               title={badge.title}
               description={badge.description}
+              total_supply={badge.total_supply}
             />
           ))}
         </div>

@@ -16,6 +16,7 @@ export default function Badge(props) {
         title={props.title}
         description={props.description}
         image={props.image}
+        total_supply={props.total_supply}
       />
       <div className="flex-shrink-0">
         <img className="h-10 w-10 rounded-full" src={props.image} alt="" />
@@ -23,7 +24,8 @@ export default function Badge(props) {
       <div className="flex-1 min-w-0">
         <span className="absolute inset-0" aria-hidden="true" />
         <p className="text-sm font-medium text-gray-900">{props.title}</p>
-        <p className="text-sm text-gray-500 truncate">{props.description}</p>
+        <p className="text-sm text-gray-500 truncate mb-1">{props.description}</p>
+        <p className="text-xs text-gray-600 font-medium truncate">{`1/${props.total_supply}`}</p>
       </div>
     </div>
   )
