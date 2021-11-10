@@ -21,12 +21,12 @@ export default function Example(props) {
         </div>
 
         <div className="mt-8 flex flex-col md:flex-row">
-          <div className="bg-white rounded-lg shadow flex-grow md:mr-10 overflow-y-auto mb-10 md:mb-auto lg:w-3/4">
+          <div className="bg-white rounded-lg shadow flex-grow md:mr-10 overflow-y-hidden mb-10 md:mb-auto">
             <ReferralList
               referrals={props.referrals}
             />
           </div>
-          <div className="bg-white rounded-lg shadow px-5 py-2 sm:px-6 md:w-80 lg:w-96">
+          <div className="bg-white rounded-lg shadow px-5 py-2 sm:px-6 md:w-80 lg:w-96 h-96 overflow-scroll">
             <ScoresList
               scores={props.scores}
             />
