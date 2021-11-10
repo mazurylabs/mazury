@@ -23,7 +23,7 @@ export default function ReferralList(props) {
                   </th>
                   <th
                     scope="col"
-                    className="px-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-60"
                   >
                     Content
                   </th>
@@ -66,6 +66,9 @@ export default function ReferralList(props) {
                 ))}
               </tbody>
             </table>
+            {props.referrals.length == 0 &&
+              <p className="w-full text-center py-4 text-sm">This user has not been referred yet</p>
+            }
           </div>
         </div>
       </div>

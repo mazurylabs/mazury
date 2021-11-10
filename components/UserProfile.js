@@ -26,7 +26,7 @@ export default function Example(props) {
               referrals={props.referrals}
             />
           </div>
-          <div className="bg-white rounded-lg shadow px-5 py-2 sm:px-6 md:w-80 lg:w-96 h-96 overflow-scroll">
+          <div className="bg-white rounded-lg shadow px-5 py-2 sm:px-6 md:w-80 lg:w-96 max-h-96 overflow-scroll">
             <ScoresList
               scores={props.scores}
             />
