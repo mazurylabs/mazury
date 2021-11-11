@@ -142,6 +142,7 @@ const Person = () => {
               username={profileData.ens_name}
               referrals={referrals}
               scores={scores}
+              bio={profileData.bio}
             />
           }
         </div>

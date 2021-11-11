@@ -60,7 +60,7 @@ export default function ReferralList(props) {
                       }
                     </td>
                     <td className="px-1 py-4 break-words">
-                      <p className="text-sm text-gray-900 pr-4">{`Kipit is the most talented frontend engineer I know. What a guy what the fuck`.slice(0,70)}</p>
+                      <p className="text-sm text-gray-900 pr-4">{`placehodler :)`.slice(0,70)}</p>
                     </td>
                   </tr>
                 ))}
