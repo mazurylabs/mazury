@@ -4,16 +4,22 @@ export default function ReferralList(props) {
   return (
     <div className="flex flex-col">
       <div className="-my-2">
-        <div className="py-2 align-middle inline-block">
+        <div className="py-2 align-middle inline-block w-full">
           <div className="border-b border-gray-200 sm:rounded-lg">
-            <table className="divide-y divide-gray-200">
+            <table className="divide-y divide-gray-200 w-full">
               <thead className="bg-gray-50">
-                <tr>
+                <tr className="flex flex-row w-full">
                   <th
                     scope="col"
-                    className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-44"
+                    className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-48"
                   >
                     Name
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider flex-grow"
+                  >
+                    Content
                   </th>
                   <th
                     scope="col"
@@ -21,18 +27,12 @@ export default function ReferralList(props) {
                   >
                     Referred for
                   </th>
-                  <th
-                    scope="col"
-                    className="px-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-60"
-                  >
-                    Content
-                  </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {props.referrals.map((referral) => (
-                  <tr key={referral.author_address}>
-                    <td className="px-4 py-4">
+                  <tr key={referral.author_address} className="flex flex-row">
+                    <td className="px-4 py-4 w-48">
                       <Link href={`/people/${referral.author_address}`}>
                         <a>
                           <div className="flex items-center">
@@ -47,7 +47,10 @@ export default function ReferralList(props) {
                         </a>
                       </Link>
                     </td>
-                    <td className="px-1 py-4">
+                    <td className="px-1 py-4 break-words flex-grow">
+                      <p className="text-sm text-gray-900 pr-4">{`placehodler :)`.slice(0,70)}</p>
+                    </td>
+                    <td className="px-1 py-4 w-96">
                       {referral.skills.slice(0,2).map((skill) => (
                         <span key={skill.id} className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-200 text-gray-800 mr-2">
                           {skill.humanName}
@@ -58,9 +61,6 @@ export default function ReferralList(props) {
                           {`+${referral.skills.length-2}`}
                         </span>
                       }
-                    </td>
-                    <td className="px-1 py-4 break-words">
-                      <p className="text-sm text-gray-900 pr-4">{`placehodler :)`.slice(0,70)}</p>
                     </td>
                   </tr>
                 ))}
