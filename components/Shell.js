@@ -82,6 +82,7 @@ export default function Shell(props) {
     await web3Modal.clearCachedProvider();
     setProvider(null)
     setSigner(null)
+    setUserData({})
   }
 
   async function fetchAccountData() {
