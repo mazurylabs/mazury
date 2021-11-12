@@ -13,8 +13,8 @@ import Badge from "../components/Badge"
 
 const navigation = [
   { name: 'Your referrals', href: '/', current: true },
+  { name: 'Dashboard', href: '/dashboard', current: false },
   { name: 'People', href: '/people', current: false },
-  { name: 'Jobs', href: '/jobs', current: false },
   { name: 'Refer a friend', href: '/refer', current: false },
 ]
 

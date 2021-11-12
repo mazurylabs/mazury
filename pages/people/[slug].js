@@ -12,8 +12,8 @@ import { useState, useEffect } from 'react';
 
 const navigation = [
   { name: 'Your referrals', href: '/', current: false },
+  { name: 'Dashboard', href: '/dashboard', current: false },
   { name: 'People', href: '/people', current: true },
-  { name: 'Jobs', href: '/jobs', current: false },
   { name: 'Refer a friend', href: '/refer', current: false },
 ]
 
