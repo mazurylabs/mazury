@@ -25,6 +25,7 @@ const Person = () => {
   const [scores, setScores] = useState([])
   const [badges, setBadges] = useState([])
   const [profileData, setProfileData] = useState(null)
+  const [poaps, setPoaps] = useState([])
   
   const router = useRouter()
 
@@ -32,6 +33,7 @@ const Person = () => {
     if(profileData != null){
       fetchReferrals()
       fetchBadges()
+      fetchPaops()
     }
   }, [profileData])
 
@@ -45,6 +47,12 @@ const Person = () => {
   async function fetchProfileData(url_address) {
     const profileData = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles/${url_address}`)
     setProfileData(profileData.data)
+  }
+
+  async function fetchPaops() {
+    const result = await axios.get(`https://api.poap.xyz/actions/scan/${profileData.eth_address}`)
+
+    setPoaps(result.data)
   }
 
   async function fetchReferrals() {
@@ -160,6 +168,23 @@ const Person = () => {
             />
           ))}
         </div>
+        <h2 className="text-4xl font-medium max-w-7xl w-full mx-auto pb-4 px-4 sm:px-6 lg:px-8">
+          POAPs
+        </h2>
+        {poaps.length > 0
+          ?
+            <div className="max-w-7xl mx-auto pb-12 grid grid-cols-5 gap-y-6 gap-x-6 place-items-center">
+              {poaps.map(poap => (
+                <a target="_blank" href={poap.event.event_url}>
+                  <img className="rounded-full w-24 h-24 lg:w-28 lg:h-28 shadow mx-auto" src={poap.event.image_url} />
+                </a>
+              ))}
+            </div>
+          :
+            <div className="max-w-7xl mx-auto pb-12 grid grid-cols-5 gap-y-6 gap-x-6 place-items-center">
+              No poaps
+            </div>
+        }
       </main>
     </div>
   )
