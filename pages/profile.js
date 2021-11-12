@@ -9,8 +9,8 @@ import { useState, useEffect, useContext } from 'react';
 import Router, { useRouter } from "next/router";
 
 const navigation = [
-  { name: 'Your referrals', href: '/', current: true },
-  { name: 'Dashboard', href: '/dashboard', current: false },
+  { name: 'Dashboard', href: '/', current: false },
+  { name: 'My profile', href: '/me', current: false },
   { name: 'People', href: '/people', current: false },
   { name: 'Refer a friend', href: '/refer', current: false },
 ]

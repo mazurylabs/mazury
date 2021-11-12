@@ -10,8 +10,8 @@ import PeopleSearch from '../components/PeopleSearch'
 import { useState, useEffect, useContext } from 'react';
 
 const navigation = [
-  { name: 'Your referrals', href: '/', current: false },
-  { name: 'Dashboard', href: '/dashboard', current: false },
+  { name: 'Dashboard', href: '/', current: false },
+  { name: 'My profile', href: '/me', current: false },
   { name: 'People', href: '/people', current: true },
   { name: 'Refer a friend', href: '/refer', current: false },
 ]

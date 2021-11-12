@@ -1,8 +1,8 @@
 import { skills } from "../utils/const"
 
 import Shell from '../components/Shell'
-import ReferralList from '../components/ReferralList'
-import ScoresList from '../components/ScoresList'
+
+import PeopleList from '../components/PeopleList'
 import Head from 'next/head'
 
 import axios from "axios";
@@ -10,105 +10,92 @@ import { useState, useEffect, useContext } from 'react';
 import { web3Context } from "../context/web3Data"
 import { UserDataContext } from "../context/userData"
 import Badge from "../components/Badge"
+import DashboardTile from "../components/DashboardTile"
 
 const navigation = [
-  { name: 'Your referrals', href: '/', current: true },
-  { name: 'Dashboard', href: '/dashboard', current: false },
+  { name: 'Dashboard', href: '/', current: true },
+  { name: 'My profile', href: '/me', current: false },
   { name: 'People', href: '/people', current: false },
   { name: 'Refer a friend', href: '/refer', current: false },
 ]
 
-export default function Home() {
+export default function Dashboard() {
   
   const { signer } = useContext(web3Context)
   const { userData } = useContext(UserDataContext)
-  const [referrals, setReferrals] = useState([])
-  const [badges, setBadges] = useState([])
-  const [scores, setScores] = useState([])
+  const [people, setPeople] = useState([])
+  const [displayPeople, setDisplayPeople] = useState([])
+  const [startPage, setStartPage] = useState(0)
+  const [endPage, setEndPage] = useState(20)
+  const [prevPageURL, setPrevPageURL] = useState(null)
+  const [nextPageURL, setNextPageURL] = useState(null)
+  const [totalPeopleCount, setTotalPeopleCount] = useState(0)
 
   const header_text = userData.ens_name ? `Welcome back, ${userData.ens_name}` : ``
 
   useEffect(() => {
-    if(signer){
-      fetchReferrals()
-      fetchBadges()
-    }
-  }, [signer])
+    fetchPeople("", "connected")
+  }, [])
 
-  async function fetchReferrals() {
-    const address = await signer.getAddress()
+  async function fetchPeople(direction="", query="") {
 
-    const result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/referrals/?receiver=${address}`)
-    const profileData = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles/${address}`)
+    let result;
 
-    const receivedReferrals = []
-
-    for (const referral of result.data.results) {
-      receivedReferrals.push(
-        {
-          "author_address": referral.author.eth_address,
-          "author_username": referral.author.ens_name,
-          "author_avatar": referral.author.avatar,
-          "skills": parseReferralData(referral)
-        }
-      )
-    }
-    setReferrals(receivedReferrals)
-
-    const scores = []
-
-    skills.forEach(function (skill, index) {
-      if(profileData.data[skill.easName] > 0){
-        scores.push(
-          {
-            "name": skill.humanName,
-            "score": profileData.data[skill.easName]
-          }
-        )
+    if(direction == "next") {
+      if(nextPageURL == null) return
+      result = await axios.get(nextPageURL);
+      setStartPage(startPage+20)
+      setEndPage(Math.min(endPage+20, totalPeopleCount))
+    } else if(direction == "prev") {
+      if(prevPageURL == null) return
+      result = await axios.get(prevPageURL);
+      setStartPage(Math.max(startPage-20, 0))
+      setEndPage(Math.max(endPage-20, 20))
+    } else if(query != "") {
+      try{
+        result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles?empty=false&q=${query}`);
+        setEndPage(Math.min(result.data.count, 20))
+      } catch {
+        console.log("search failed")
+        return
       }
-    });
+    } else {
+      result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles?empty=false`);
+      setEndPage(Math.min(result.data.count, 20))
+    }
 
-    setScores(scores.slice(0,4))
+    setPrevPageURL(result.data.previous)
+    setNextPageURL(result.data.next)
 
-  }
-
-  async function fetchBadges() {
-    const address = await signer.getAddress()
-
-    const result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/badges/?owner=${address}`)
-    const result_types = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/badge_types`)
-
-    // todo get exactly types that are needed
-
-    const owned_badges = []
-
-    for (const badge of result.data.results) {
-      owned_badges.push(
+    const people = []
+    setTotalPeopleCount(result.data.count)
+    let profile_skills;
+    for (const profile of result.data.results) {
+      
+      profile_skills = []
+      skills.forEach(function (skill, index) {
+        if(profile[skill.easName] > 0){
+          profile_skills.push(
+            {
+              "name": skill.humanName,
+              "score": profile[skill.easName],
+            }
+          )
+        }
+      });
+      people.push(
         {
-          "image": badge.badge_type.image,
-          "title": badge.badge_type.title,
-          "description": badge.badge_type.description,
-          "total_supply": result_types.data.results.find(type => type.title == badge.badge_type.title).total_supply
+          "address": profile.eth_address,
+          "username": profile.ens_name,
+          "avatar": profile.avatar,
+          "skills": profile_skills,
+          "badges": profile.top_badges
         }
       )
     }
 
-    console.log(owned_badges)
-
-    setBadges(owned_badges)
-  }
-
-  function parseReferralData(data) {
-
-    const parsedData = []
-    
-    skills.forEach(function (skill, index) {
-      if(data[skill.easName]){
-        parsedData.push(skill)
-      }
-    });
-
-    return parsedData
+    setPeople(people)
+    setDisplayPeople(people)
   }
 
   return (
@@ -124,25 +111,38 @@ export default function Home() {
       />
       <main className="-mt-32">
         <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row">
-          <div className="bg-white rounded-lg h-96 shadow flex-grow md:mr-10 overflow-y-auto mb-10 md:mb-auto">
-            <ReferralList
-              referrals={referrals}
+          <div className="flex flex-row justify-center w-full">
+            <DashboardTile
+              href="/people?q=top_aave_gov"
+              title="Top aave governance"
+            />
+            <DashboardTile
+              href="/people?q=referred_by_fabric"
+              title="Referred by Fabric"
+            />
+            <DashboardTile
+              href="/people?q=open"
+              title="Open to opportunities"
+            />
+            <DashboardTile
+              href="/people?q=verified_with_twitter"
+              title="Verified with twitter"
             />
           </div>
         </div>
         <h2 className="text-4xl font-medium max-w-7xl w-full mx-auto pb-4 px-4 sm:px-6 lg:px-8">
-          Badges
+          People in your communities
         </h2>
-        <div className="max-w-7xl w-full mx-auto pb-12 px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-10 gap-y-6">
-          {badges.map((badge) => (
-            <Badge
-              key={badge.title}
-              image={badge.image}
-              title={badge.title}
-              description={badge.description}
-              total_supply={badge.total_supply}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-lg shadow w-full">
+            <PeopleList
+              startPage={startPage}
+              endPage={endPage}
+              totalPeopleCount={totalPeopleCount}
+              people={displayPeople}
+              fetchPeople={fetchPeople}
             />
-          ))}
+          </div>
         </div>
       </main>
     </div>
