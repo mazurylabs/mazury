@@ -107,24 +107,28 @@ export default function Dashboard() {
 
       <Shell
         navigation={navigation}
-        header={header_text}
+        header=""
       />
       <main className="-mt-32">
         <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row">
           <div className="flex flex-row justify-center w-full">
             <DashboardTile
+              icon="/aave.png"
               href="/people?q=top_aave_gov"
               title="Top aave governance"
             />
             <DashboardTile
+              icon="/fabric.jpeg"
               href="/people?q=referred_by_fabric"
               title="Referred by Fabric"
             />
             <DashboardTile
+              icon="/open.png"
               href="/people?q=open"
               title="Open to opportunities"
             />
             <DashboardTile
+              icon="/twitter.png"
               href="/people?q=verified_with_twitter"
               title="Verified with twitter"
             />
