@@ -167,13 +167,6 @@ export default function Shell(props) {
                     <div className="ml-4 flex items-center md:ml-6">
                       {userData.avatar &&
                         <div className="flex flex-row">
-                          <button
-                            type="button"
-                            className="bg-gray-800 p-1 text-gray-400 rounded-full hover:text-white focus:outline-none"
-                          >
-                            <span className="sr-only">View notifications</span>
-                            <BellIcon className="h-6 w-6" aria-hidden="true" />
-                          </button>
                           <Link href="/profile">
                             <a>
                               <img className="h-8 w-8 rounded-full ml-3" src={userData.avatar} alt="" />

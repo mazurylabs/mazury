@@ -8,6 +8,7 @@ import Head from 'next/head'
 import axios from "axios";
 import { useState, useEffect, useContext } from 'react';
 import { web3Context } from "../context/web3Data"
+import { UserDataContext } from "../context/userData"
 import Badge from "../components/Badge"
 
 const navigation = [
@@ -20,9 +21,12 @@ const navigation = [
 export default function Home() {
   
   const { signer } = useContext(web3Context)
+  const { userData } = useContext(UserDataContext)
   const [referrals, setReferrals] = useState([])
   const [badges, setBadges] = useState([])
   const [scores, setScores] = useState([])
+
+  const header_text = userData.ens_name ? `Welcome back, ${userData.ens_name}` : ``
 
   useEffect(() => {
     if(signer){
@@ -116,7 +120,7 @@ export default function Home() {
 
       <Shell
         navigation={navigation}
-        header={"Welcome"}
+        header={header_text}
       />
       <main className="-mt-32">
         <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row">
@@ -126,6 +130,9 @@ export default function Home() {
             />
           </div>
         </div>
+        <h2 className="text-4xl font-medium max-w-7xl w-full mx-auto pb-4 px-4 sm:px-6 lg:px-8">
+          Badges
+        </h2>
         <div className="max-w-7xl w-full mx-auto pb-12 px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-10 gap-y-6">
           {badges.map((badge) => (
             <Badge

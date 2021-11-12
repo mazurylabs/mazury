@@ -23,8 +23,7 @@ export default function UserProfile(props) {
             content={props.bio}
           />
         </div>
-
-        <div className="mt-8 flex flex-col md:flex-row">
+        <div className=" flex flex-col md:flex-row">
           <div className="bg-white rounded-lg shadow flex-grow md:mr-10 overflow-y-hidden mb-10 md:mb-auto">
             <ReferralList
               referrals={props.referrals}

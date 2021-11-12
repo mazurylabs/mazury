@@ -1,3 +1,5 @@
+import BadgeMinPreview from "./BadgeMinPreview"
+
 export default function PeopleList(props) {
   return (
     <div className="flex flex-col">
@@ -17,7 +19,13 @@ export default function PeopleList(props) {
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Skills
+                    Top skills
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Top badges
                   </th>
                 </tr>
               </thead>
@@ -38,10 +46,19 @@ export default function PeopleList(props) {
                       </a>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap max-w-lg overflow-hidden">
-                      {person.skills.map((skill) => (
+                      {person.skills.slice(0,2).map((skill) => (
                         <span key={`${skill.name}+${person.address}`} className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-200 text-gray-800 mr-2">
-                          {`${skill.name}: ${skill.score}`}
+                          {`${skill.name}`}
                         </span>
+                      ))}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap max-w-lg overflow-hidden flex flex-row items-center">
+                      {person.badges.map((badge) => (
+                        <div className="mr-2 my-2">
+                          <BadgeMinPreview
+                            badgeData={badge}
+                          />
+                        </div>
                       ))}
                     </td>
                   </tr>
