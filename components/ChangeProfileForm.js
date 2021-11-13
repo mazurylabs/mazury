@@ -161,7 +161,7 @@ export default function ChangeProfileForm() {
                     type="checkbox"
                     className="h-4 w-4 text-gray-900 border-gray-300 rounded focus:outline-none"
                     defaultChecked={userData.open_to_opportunities}
-                    onChange={(e) => setOpenToOpportunities(e.target.checked)}
+                    onClick={(e) => setOpenToOpportunities(e.target.checked)}
                   />
                 </div>
                 <div className="ml-3 text-sm">

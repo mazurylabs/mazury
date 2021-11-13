@@ -19,7 +19,7 @@ export default function PeopleList(props) {
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Top skills
+                    Roles
                   </th>
                   <th
                     scope="col"
@@ -46,9 +46,9 @@ export default function PeopleList(props) {
                       </a>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap max-w-lg overflow-hidden">
-                      {person.skills.slice(0,2).map((skill) => (
-                        <span key={`${skill.name}+${person.address}`} className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-200 text-gray-800 mr-2">
-                          {`${skill.name}`}
+                      {person.roles.map((role) => (
+                        <span key={role} className="text-lg text-gray-800 mr-2">
+                          {role}
                         </span>
                       ))}
                     </td>

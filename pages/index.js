@@ -83,13 +83,36 @@ export default function Dashboard() {
           )
         }
       });
+      const profile_roles = []
+      if(profile.role_developer){
+        profile_roles.push("💻")
+      }
+      if(profile.role_designer){
+        profile_roles.push("🎨")
+      }
+      if(profile.role_trader){
+        profile_roles.push("📈")
+      }
+      if(profile.role_creator){
+        profile_roles.push("✨")
+      }
+      if(profile.role_researcher){
+        profile_roles.push("📚")
+      }
+      if(profile.role_investor){
+        profile_roles.push("💰")
+      }
+      if(profile.role_community_manager){
+        profile_roles.push("🐒")
+      }
       people.push(
         {
           "address": profile.eth_address,
           "username": profile.ens_name,
           "avatar": profile.avatar,
           "skills": profile_skills,
-          "badges": profile.top_badges
+          "badges": profile.top_badges,
+          "roles": profile_roles
         }
       )
     }
