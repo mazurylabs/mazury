@@ -4,6 +4,8 @@ import { UserDataContext } from "../context/userData"
 import { web3Context } from "../context/web3Data"
 import SocialMediaButton from "./SocialMediaButton"
 
+import RoleCheckbox from "./RoleCheckbox"
+
 export default function ChangeProfileForm() {
 
   const { userData } = useContext(UserDataContext)
@@ -13,6 +15,14 @@ export default function ChangeProfileForm() {
   const [bio, setBio] = useState("")
   const [avatar, setAvatar] = useState(null)
   const [avatarPreview, setAvatarPreview] = useState("")
+  const [openToOpportunities, setOpenToOpportunities] = useState(null)
+  const [roleDeveloper, setRoleDeveloper] = useState(null)
+  const [roleDesigner, setRoleDesigner] = useState(null)
+  const [roleTrader, setRoleTrader] = useState(null)
+  const [roleCreator, setRoleCreator] = useState(null)
+  const [roleResearcher, setRoleResearcher] = useState(null)
+  const [roleInvestor, setRoleInvestor] = useState(null)
+  const [roleCommunityManager, setRoleCommunityManager] = useState(null)
   const fileUploadRef = useRef(null)
 
   useEffect(() => {
@@ -37,6 +47,30 @@ export default function ChangeProfileForm() {
     }
     if(bio) {
       formData.append("bio", bio)
+    }
+    if(openToOpportunities != null) {
+      formData.append("open_to_opportunities", openToOpportunities)
+    }
+    if(roleDeveloper != null) {
+      formData.append("role_developer", roleDeveloper)
+    }
+    if(roleDesigner != null) {
+      formData.append("role_designer", roleDesigner)
+    }
+    if(roleTrader != null) {
+      formData.append("role_trader", roleTrader)
+    }
+    if(roleCreator != null) {
+      formData.append("role_creator", roleCreator)
+    }
+    if(roleResearcher != null) {
+      formData.append("role_researcher", roleResearcher)
+    }
+    if(roleInvestor != null) {
+      formData.append("role_investor", roleInvestor)
+    }
+    if(roleCommunityManager != null) {
+      formData.append("role_community_manager", roleCommunityManager)
     }
 
     const auth_key = await getSignedMessage()
@@ -115,6 +149,68 @@ export default function ChangeProfileForm() {
                   Upload
                 </button>
               </div>
+            </div>
+
+            <div className="sm:col-span-6">
+              <label htmlFor="photo" className="block text-sm font-medium text-gray-700 mb-1">
+                Hiring
+              </label>
+              <div className="relative flex items-start">
+                <div className="flex items-center h-5">
+                  <input
+                    type="checkbox"
+                    className="h-4 w-4 text-gray-900 border-gray-300 rounded focus:outline-none"
+                    defaultChecked={userData.open_to_opportunities}
+                    onChange={(e) => setOpenToOpportunities(e.target.checked)}
+                  />
+                </div>
+                <div className="ml-3 text-sm">
+                  <label htmlFor="opportunities" className="font-medium text-gray-700">
+                    I'm open for new opportunities
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div className="sm:col-span-6">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Your roles
+              </label>
+              <RoleCheckbox
+                setRole={setRoleDeveloper}
+                checked={userData.role_developer}
+                text="💻 Developer"
+              />
+              <RoleCheckbox
+                setRole={setRoleDesigner}
+                checked={userData.role_designer}
+                text="🎨 Designer"
+              />
+              <RoleCheckbox
+                setRole={setRoleTrader}
+                checked={userData.role_trader}
+                text="📈 Trader"
+              />
+              <RoleCheckbox
+                setRole={setRoleCreator}
+                checked={userData.role_creator}
+                text="✨ Creator"
+              />
+              <RoleCheckbox
+                setRole={setRoleResearcher}
+                checked={userData.role_researcher}
+                text="📚 Researcher"
+              />
+              <RoleCheckbox
+                setRole={setRoleInvestor}
+                checked={userData.role_investor}
+                text="💰 Investor"
+              />
+              <RoleCheckbox
+                setRole={setRoleCommunityManager}
+                checked={userData.role_community_manager}
+                text="🐒 Community manager"
+              />
             </div>
           </div>
         </div>
