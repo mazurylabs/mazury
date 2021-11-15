@@ -25,6 +25,7 @@ export default function Home() {
   const [referrals, setReferrals] = useState([])
   const [badges, setBadges] = useState([])
   const [scores, setScores] = useState([])
+  const [loadingReferrals, setLoadinReferrals] = useState(true)
 
   const header_text = userData.ens_name ? `Welcome back, ${userData.ens_name}` : ``
 
@@ -54,6 +55,7 @@ export default function Home() {
       )
     }
     setReferrals(receivedReferrals)
+    setLoadinReferrals(false)
 
     const scores = []
 
@@ -124,9 +126,10 @@ export default function Home() {
       />
       <main className="-mt-32">
         <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row">
-          <div className="bg-white rounded-lg h-96 shadow flex-grow md:mr-10 overflow-y-auto mb-10 md:mb-auto">
+          <div className="bg-white rounded-lg max-h-96 shadow flex-grow md:mr-10 overflow-y-auto mb-10 md:mb-auto">
             <ReferralList
               referrals={referrals}
+              loading={loadingReferrals}
             />
           </div>
         </div>
