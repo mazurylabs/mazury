@@ -124,6 +124,7 @@ export default function People() {
           "username": profile.ens_name,
           "avatar": profile.avatar,
           "badges": profile.top_badges,
+          "referred_by": profile.referred_by,
           "roles": profile_roles
         }
       )

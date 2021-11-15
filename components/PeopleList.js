@@ -1,12 +1,14 @@
 import BadgeMinPreview from "./BadgeMinPreview"
+import ProfileMinPreview from "./ProfileMinPreview"
 
 export default function PeopleList(props) {
+
   return (
     <div className="flex flex-col">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <div className="overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="min-w-full divide-y divide-gray-200 table-auto">
               <thead className="bg-gray-50">
                 <tr>
                   <th
@@ -27,6 +29,12 @@ export default function PeopleList(props) {
                   >
                     Top badges
                   </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Referred by
+                  </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -46,20 +54,50 @@ export default function PeopleList(props) {
                       </a>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap max-w-lg overflow-hidden">
-                      {person.roles.map((role) => (
-                        <span key={role} className="text-lg text-gray-800 mr-2">
-                          {role}
-                        </span>
-                      ))}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap max-w-lg overflow-hidden flex flex-row items-center">
-                      {person.badges.map((badge) => (
-                        <div className="mr-2 my-2">
-                          <BadgeMinPreview
-                            badgeData={badge}
-                          />
+                      {person.roles.length != 0
+                      ?
+                        <div>
+                          {person.roles.map((role) => (
+                            <span key={role} className="text-lg text-gray-800 mr-2">
+                              {role}
+                            </span>
+                          ))}
                         </div>
-                      ))}
+                      :
+                        <p className="text-sm text-gray-500">No role assigned</p>
+                      }
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap max-w-lg overflow-hidden">
+                      {person.badges.length != 0
+                      ?
+                        <div className="flex flex-row items-center">
+                          {person.badges.map((badge) => (
+                            <div className="mr-2 my-2">
+                              <BadgeMinPreview
+                                badgeData={badge}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      :
+                        <p className="text-sm text-gray-500">No badges earned</p>
+                      }
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap max-w-lg overflow-hidden">
+                      {person.referred_by.length != 0
+                        ?
+                          <div className="flex flex-row items-center">
+                            {person.referred_by.map((profile) => (
+                              <div className="mr-2 my-2">
+                                <ProfileMinPreview
+                                  profileData={profile}
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        :
+                        <p className="text-sm text-gray-500">User not referred yet</p>
+                      }
                     </td>
                   </tr>
                 ))}

@@ -112,6 +112,7 @@ export default function Dashboard() {
           "avatar": profile.avatar,
           "skills": profile_skills,
           "badges": profile.top_badges,
+          "referred_by": profile.referred_by,
           "roles": profile_roles
         }
       )
