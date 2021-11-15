@@ -62,12 +62,12 @@ export default function BadgeDetailModal(props) {
                 >
                   Go back to dashboard
                 </button>
-                <button
+                <div
                   type="button"
-                  className="inline-flex justify-center w-full rounded-md border border-gray-900 shadow-sm px-4 py-2 bg-white hover:bg-gray-100 text-base font-medium text-gray-900 focus:outline-none sm:text-sm"
+                  className="inline-flex justify-center cursor-not-allowed w-full rounded-md border border-gray-900 shadow-sm px-4 py-2 bg-gray-200 text-base font-medium text-gray-900 focus:outline-none sm:text-sm opacity-30"
                 >
-                  Mint as NFT
-                </button>
+                  Mint as NFT (coming soon)
+                </div>
               </div>
             </div>
           </Transition.Child>
