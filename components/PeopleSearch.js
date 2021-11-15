@@ -17,7 +17,7 @@ export default function PeopleSearch(props) {
         name="search"
         id="search"
         placeholder="Search for a skill or badge"
-        debounceTimeout={200}
+        debounceTimeout={800}
         onChange={(e) => searchPeople(e.target.value)}
         className="shadow-sm focus:ring-gray-500 focus:border-gray-500 block w-full pr-12 sm:text-sm border-gray-300 rounded-md"
       />

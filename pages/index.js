@@ -30,6 +30,7 @@ export default function Dashboard() {
   const [prevPageURL, setPrevPageURL] = useState(null)
   const [nextPageURL, setNextPageURL] = useState(null)
   const [totalPeopleCount, setTotalPeopleCount] = useState(0)
+  const [loadingPeople, setLoadingPeople] = useState(true)
 
   const header_text = userData.ens_name ? `Welcome back, ${userData.ens_name}` : ``
 
@@ -120,6 +121,7 @@ export default function Dashboard() {
 
     setPeople(people)
     setDisplayPeople(people)
+    setLoadingPeople(false)
   }
 
   return (
@@ -169,6 +171,7 @@ export default function Dashboard() {
               totalPeopleCount={totalPeopleCount}
               people={displayPeople}
               fetchPeople={fetchPeople}
+              loading={loadingPeople}
             />
           </div>
         </div>

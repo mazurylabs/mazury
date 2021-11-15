@@ -26,6 +26,7 @@ export default function People() {
   const [nextPageURL, setNextPageURL] = useState(null)
   const [totalPeopleCount, setTotalPeopleCount] = useState(0)
   const [headerText, setHeaderText] = useState("People")
+  const [loadingPeople, setLoadingPeople] = useState(true)
   const router = useRouter();
 
   useEffect(() => {
@@ -51,6 +52,9 @@ export default function People() {
   }, [router.isReady])
   
   async function fetchPeople(direction="", query="") {
+    setLoadingPeople(true)
+    setPeople([])
+    setDisplayPeople([])
 
     let result;
 
@@ -132,6 +136,7 @@ export default function People() {
 
     setPeople(people)
     setDisplayPeople(people)
+    setLoadingPeople(false)
   }
   
   return (
@@ -163,6 +168,7 @@ export default function People() {
               totalPeopleCount={totalPeopleCount}
               people={displayPeople}
               fetchPeople={fetchPeople}
+              loading={loadingPeople}
             />
           </div>
         </div>
