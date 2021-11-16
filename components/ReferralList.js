@@ -48,7 +48,10 @@ export default function ReferralList(props) {
                       </Link>
                     </td>
                     <td className="px-1 py-4 break-words flex-grow">
-                      <p className="text-sm text-gray-900 pr-4">{`placehodler :)`.slice(0,70)}</p>
+                      {referral.content != ""
+                      ? <p className="text-sm text-gray-900 pr-4 w-96 break-words">{referral.content}</p>
+                      : <p className="text-sm text-gray-500">No written content</p>
+                      }
                     </td>
                     <td className="px-1 py-4 w-96">
                       {referral.skills.slice(0,2).map((skill) => (
