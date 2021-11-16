@@ -70,14 +70,14 @@ export default function People() {
       setEndPage(Math.max(endPage-20, 20))
     } else if(query != "") {
       try{
-        result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles?empty=false&q=${query}`);
+        result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles?q=${query}`);
         setEndPage(Math.min(result.data.count, 20))
       } catch {
         console.log("search failed")
         return
       }
     } else {
-      result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles?empty=false`);
+      result = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles`);
       setEndPage(Math.min(result.data.count, 20))
     }
 
