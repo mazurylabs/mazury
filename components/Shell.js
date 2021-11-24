@@ -122,9 +122,6 @@ export default function Shell(props) {
 
   return (
     <div className="bg-gray-800 pb-32">
-      {(chainId != 4) &&
-        <WrongNetworkModal />
-      }
       <Disclosure as="nav" className="bg-gray-800">
         {({ open }) => (
           <>

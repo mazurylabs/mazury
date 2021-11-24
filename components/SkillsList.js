@@ -1,6 +1,8 @@
+import axios from "axios";
 import { ethers } from "ethers";
 import { skills } from "../utils/const"
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { UserDataContext } from "../context/userData"
 
 const EAS_CONTRACT = "0xBf49E19254DF70328C6696135958C94CD6cd0430"
 const COMPETENCE_SCHEMA_UUID = "0xee610047e16d27b734e6f37c41a2cc06984381dec683f744791d236aeddf0769"
@@ -10,6 +12,9 @@ export default function SkillsList(props) {
 
   const [selectedSkills, setSelectedSkills] = useState(skills.map((skill) => (false)));
   const [transactionState, setTransactionState] = useState("default")
+  const [referralContent, setReferralContent] = useState("")
+
+  const { userData } = useContext(UserDataContext)
 
   function toggleSkill(e){
     const skillId = e.id
@@ -21,7 +26,7 @@ export default function SkillsList(props) {
     e.classList.toggle("border-white");
   }
 
-  async function saveReferral() {
+  async function saveReferralToEAS() {
     const AbiCoder = ethers.utils.AbiCoder;
     const abiCoder = new AbiCoder();
     const types = [ ...Array(skills.length).keys() ].map( i => "bool");
@@ -47,6 +52,34 @@ export default function SkillsList(props) {
     }
   }
 
+  const getSignedMessage = async () => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/message?address=${userData.eth_address}`)
+    const signedMessage = await props.signer.signMessage(response.data)
+    return signedMessage
+  }
+
+  const saveReferral = async () => {
+    const formData = new FormData()
+
+    formData.append("selected_skills", selectedSkills)
+    formData.append("content", referralContent)
+    formData.append("receiver", props.referralAddress)
+
+    const auth_key = await getSignedMessage()
+
+    setTransactionState("pending")
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/referrals/`,
+      formData,
+      {
+        headers: {
+          'ETH-AUTH': auth_key
+        }
+      }
+    )
+    setTransactionState("done")
+  }
+
   return (
     <div className="flex flex-col items-center">
       <fieldset className="w-full md:px-5 mb-4">
@@ -64,6 +97,19 @@ export default function SkillsList(props) {
           ))}
         </div>
       </fieldset>
+      <div className="w-full md:px-5">
+        <label className="block text-sm font-medium text-gray-700">
+          Content
+        </label>
+        <div className="mt-1 w-full mb-6">
+          <textarea
+            rows={4}
+            className="shadow-sm w-full sm:text-sm border-gray-300 rounded-md focus:border-gray-600 focus:outline-none resize-none focus:ring-1 focus:ring-gray-600"
+            onChange={(e) => setReferralContent(e.target.value)}
+            placeholder="Something nice :)"
+          />
+        </div>
+      </div>
       {transactionState == "default" &&
         <button
           type="button"

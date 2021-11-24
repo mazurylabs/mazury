@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import Link from "next/link";
+
 import SkillsList from './SkillsList';
 import { useState, useEffect } from 'react';
 
@@ -35,17 +37,21 @@ export default function ReferPanel(props) {
         <div
           className="col-span-1 flex flex-col text-center rounded-lg"
         >
-          <div className="flex-1 flex flex-col p-8">
-            {profileData
-            ? <img src={profileData.avatar} className="h-32 w-32 rounded-full mx-auto" />
-            : <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/media/gradient2.jpg`} className="h-32 w-32 rounded-full mx-auto" />
-            }
+          <Link href={`people/${props.referralAddress}`}>
+            <a>
+              <div className="flex-1 flex flex-col p-8">
+                {profileData
+                ? <img src={profileData.avatar} className="h-32 w-32 rounded-full mx-auto" />
+                : <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/media/gradient2.jpg`} className="h-32 w-32 rounded-full mx-auto" />
+                }
 
-            <h3 className="mt-6 text-gray-900 text-sm font-medium">{props.referralEnsName}</h3>
-            <dl className="mt-1 flex-grow flex flex-col justify-between">
-              <dd className="text-gray-500 text-sm">{props.referralAddress ? `${props.referralAddress.slice(0, 5)}...${props.referralAddress.slice(-3)}` : "loading..."}</dd>
-            </dl>
-          </div>
+                <h3 className="mt-6 text-gray-900 text-sm font-medium">{props.referralEnsName}</h3>
+                <dl className="mt-1 flex-grow flex flex-col justify-between">
+                  <dd className="text-gray-500 text-sm">{props.referralAddress ? `${props.referralAddress.slice(0, 5)}...${props.referralAddress.slice(-3)}` : "loading..."}</dd>
+                </dl>
+              </div>
+            </a>
+          </Link>
         </div>
         {profileData
         ?
