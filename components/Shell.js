@@ -9,7 +9,7 @@ import { useState, useEffect, useContext } from 'react';
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 
-import WrongNetworkModal from './WrongNetworkModal';
+import OnboardingModal from "./OnboardingModal"
 import { UserDataContext } from '../context/userData';
 import { web3Context } from '../context/web3Data';
 import axios from 'axios';
@@ -22,7 +22,7 @@ function classNames(...classes) {
 export default function Shell(props) {
 
   const [address, setAddress] = useState("...")
-  const { userData, setLoadingUserData, setUserData } = useContext(UserDataContext)
+  const { userData, loadingUserData, setLoadingUserData, setUserData } = useContext(UserDataContext)
   const {
     provider,
     setProvider,
@@ -122,6 +122,9 @@ export default function Shell(props) {
 
   return (
     <div className="bg-gray-800 pb-32">
+      {(!loadingUserData && !userData.onboarded) &&
+        <OnboardingModal />
+      }
       <Disclosure as="nav" className="bg-gray-800">
         {({ open }) => (
           <>

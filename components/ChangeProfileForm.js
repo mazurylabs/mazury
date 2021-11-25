@@ -8,7 +8,7 @@ import RoleCheckbox from "./RoleCheckbox"
 
 export default function ChangeProfileForm() {
 
-  const { userData } = useContext(UserDataContext)
+  const { userData, setUserData } = useContext(UserDataContext)
   const { signer } = useContext(web3Context)
 
   const [username, setUsername] = useState("")
@@ -73,6 +73,8 @@ export default function ChangeProfileForm() {
       formData.append("role_community_manager", roleCommunityManager)
     }
 
+    formData.append("onboarded", true)
+
     const auth_key = await getSignedMessage()
 
     const response = await axios.patch(
@@ -83,7 +85,10 @@ export default function ChangeProfileForm() {
           'ETH-AUTH': auth_key
         }
       }
-      ).then(window.location.reload())
+      ).then((response) => {
+        setUserData(response.data)
+        window.location.reload()
+      })
   }
 
   return (
@@ -218,7 +223,7 @@ export default function ChangeProfileForm() {
         <div className="pt-8">
           <div>
             <h3 className="text-lg leading-6 font-medium text-gray-900">Integrations</h3>
-            <p className="mt-1 text-sm text-gray-500">Connect your web2 accounts to bootstrap your scores</p>
+            <p className="mt-1 text-sm text-gray-500">Connect your web2 accounts to get your first badges</p>
             <div className="flex flex-row space-x-4 mt-4">
               <SocialMediaButton
                 name="Twitter"
@@ -234,7 +239,7 @@ export default function ChangeProfileForm() {
       </div>
 
       <div className="pt-5">
-        <div className="flex justify-end">
+        <div className="flex justify-center">
           <button
             type="button"
             className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
