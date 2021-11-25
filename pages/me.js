@@ -9,6 +9,7 @@ import axios from "axios";
 import { useState, useEffect, useContext } from 'react';
 import { web3Context } from "../context/web3Data"
 import { UserDataContext } from "../context/userData"
+import AllBadgesModal from "../components/AllBadgesModal"
 import Badge from "../components/Badge"
 
 const navigation = [
@@ -26,6 +27,8 @@ export default function Home() {
   const [badges, setBadges] = useState([])
   const [scores, setScores] = useState([])
   const [loadingReferrals, setLoadinReferrals] = useState(true)
+  const [showBadges, setShowBadges] = useState(false)
+  const [allBadges, setAllBadges] = useState([])
 
   const header_text = userData.ens_name ? `Welcome back, ${userData.ens_name}` : ``
 
@@ -96,9 +99,8 @@ export default function Home() {
       )
     }
 
-    console.log(owned_badges)
-
     setBadges(owned_badges)
+    setAllBadges(result_types.data.results)
   }
 
   function parseReferralData(data) {
@@ -137,17 +139,35 @@ export default function Home() {
         <h2 className="text-4xl font-medium max-w-7xl w-full mx-auto pb-4 px-4 sm:px-6 lg:px-8">
           Badges
         </h2>
-        <div className="max-w-7xl w-full mx-auto pb-12 px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-10 gap-y-6">
-          {badges.map((badge) => (
-            <Badge
-              key={badge.title}
-              image={badge.image}
-              title={badge.title}
-              description={badge.description}
-              total_supply={badge.total_supply}
-            />
-          ))}
+        {badges.length > 0
+        ?
+          <div className="max-w-7xl w-full mx-auto pb-12 px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-10 gap-y-6">
+            {badges.map((badge) => (
+              <Badge
+                key={badge.title}
+                image={badge.image}
+                title={badge.title}
+                description={badge.description}
+                total_supply={badge.total_supply}
+              />
+            ))}
+          </div>
+        :
+          <p className="max-w-7xl mx-auto text-center py-4 md:pr-8 text-sm text-gray-700">No badges</p>
+        }
+        <div className="max-w-7xl mx-auto text-center py-4 md:pr-8 mt-12">
+          <button
+            className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none"
+            onClick={() => setShowBadges(!showBadges)}
+          >
+            Show all badges
+          </button>
         </div>
+        <AllBadgesModal
+          open={showBadges}
+          setOpen={setShowBadges}
+          badges={allBadges}
+        />
       </main>
     </div>
   )

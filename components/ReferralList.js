@@ -78,7 +78,7 @@ export default function ReferralList(props) {
               </div>
             }
             {(props.referrals.length == 0 && !props.loading) &&
-              <p className="w-full text-center py-4 text-sm">This user has not been referred yet</p>
+              <p className="w-full text-center py-4 text-sm">No referrals</p>
             }
           </div>
         </div>
