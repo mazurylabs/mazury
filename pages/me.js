@@ -11,6 +11,7 @@ import { web3Context } from "../context/web3Data"
 import { UserDataContext } from "../context/userData"
 import AllBadgesModal from "../components/AllBadgesModal"
 import Badge from "../components/Badge"
+import Footer from "../components/Footer"
 
 const navigation = [
   { name: 'Dashboard', href: '/', current: false },
@@ -169,6 +170,7 @@ export default function Home() {
           badges={allBadges}
         />
       </main>
+      <Footer />
     </div>
   )
 }

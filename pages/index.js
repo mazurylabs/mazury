@@ -11,6 +11,7 @@ import { web3Context } from "../context/web3Data"
 import { UserDataContext } from "../context/userData"
 import Badge from "../components/Badge"
 import DashboardTile from "../components/DashboardTile"
+import Footer from "../components/Footer";
 
 const navigation = [
   { name: 'Dashboard', href: '/', current: true },
@@ -163,7 +164,7 @@ export default function Dashboard() {
         <h2 className="text-4xl font-medium max-w-7xl w-full mx-auto pb-4 px-4 sm:px-6 lg:px-8">
           People in your communities
         </h2>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
           <div className="bg-white rounded-lg shadow w-full">
             <PeopleList
               startPage={startPage}
@@ -176,6 +177,7 @@ export default function Dashboard() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   )
 }

@@ -6,6 +6,7 @@ import Head from 'next/head'
 import { useRouter } from "next/router";
 import PeopleList from '../components/PeopleList'
 import PeopleSearch from '../components/PeopleSearch'
+import Footer from "../components/Footer";
 
 import { useState, useEffect, useContext } from 'react';
 
@@ -173,6 +174,7 @@ export default function People() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   )
 }

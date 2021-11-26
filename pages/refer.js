@@ -7,6 +7,7 @@ import Head from 'next/head'
 
 import { useState, useEffect, useContext } from 'react';
 import { web3Context } from "../context/web3Data"
+import Footer from "../components/Footer";
 
 const navigation = [
   { name: 'Dashboard', href: '/', current: false },
@@ -110,6 +111,7 @@ export default function Refer() {
           </div>          
         </div>
       </main>
+      <Footer />
     </div>
   )
 }

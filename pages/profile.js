@@ -7,6 +7,7 @@ import Head from 'next/head'
 import axios from "axios";
 import { useState, useEffect, useContext } from 'react';
 import Router, { useRouter } from "next/router";
+import Footer from '../components/Footer';
 
 const navigation = [
   { name: 'Dashboard', href: '/', current: false },
@@ -73,6 +74,7 @@ export default function Profile() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   )
 }

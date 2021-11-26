@@ -6,6 +6,7 @@ import Shell from '../../components/Shell'
 import UserProfile from '../../components/UserProfile'
 import Badge from "../../components/Badge";
 import Head from 'next/head'
+import Footer from "../../components/Footer";
 
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react';
@@ -199,6 +200,7 @@ const Person = () => {
           </svg>
         </div>
       }
+      <Footer />
     </div>
   )
 }
