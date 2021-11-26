@@ -157,6 +157,8 @@ const Person = () => {
               referrals={referrals}
               scores={scores}
               bio={profileData.bio}
+              email={profileData.email}
+              twitter={profileData.twitter}
             />
           }
         </div>

@@ -13,6 +13,7 @@ export default function ChangeProfileForm() {
 
   const [username, setUsername] = useState("")
   const [bio, setBio] = useState("")
+  const [email, setEmail] = useState("")
   const [avatar, setAvatar] = useState(null)
   const [avatarPreview, setAvatarPreview] = useState("")
   const [openToOpportunities, setOpenToOpportunities] = useState(null)
@@ -47,6 +48,9 @@ export default function ChangeProfileForm() {
     }
     if(bio) {
       formData.append("bio", bio)
+    }
+    if(email) {
+      formData.append("email", email)
     }
     if(openToOpportunities != null) {
       formData.append("open_to_opportunities", openToOpportunities)
@@ -132,7 +136,23 @@ export default function ChangeProfileForm() {
                 />
               </div>
             </div>
-
+            <div className="sm:col-span-6">
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+                Email
+              </label>
+              <div className="mt-1 flex rounded-md shadow-sm">
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  autoComplete="off"
+                  defaultValue={userData.email}
+                  spellCheck={false}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="flex-1 focus:ring-gray-500 focus:border-gray-500 block w-full min-w-0 rounded-md sm:text-sm border-gray-300"
+                />
+              </div>
+            </div>
             <div className="sm:col-span-6">
               <label htmlFor="photo" className="block text-sm font-medium text-gray-700">
                 Profile picture

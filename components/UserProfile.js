@@ -28,12 +28,23 @@ export default function UserProfile(props) {
                   Refer
                 </a>
               </Link>
-                <button
-                type="button"
-                className="inline-flex items-center px-4 py-1 border border-transparent text-base font-normal rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-400 focus:outline-none mx-2"
-              >
-                Contact
-              </button>
+              {props.email &&
+                <a
+                  href={`mailto:${props.email}`}
+                  className="inline-flex items-center px-4 py-1 border border-transparent text-base font-normal rounded-md shadow-sm text-white bg-pink-400 hover:bg-pink-300 focus:outline-none mx-2"
+                >
+                  Email
+                </a>
+              }
+              {!props.email && props.twitter &&
+                <a
+                  href={`https://twitter.com/${props.twitter}`}
+                  target="_blank"
+                  className="inline-flex items-center px-4 py-1 border border-transparent text-base font-normal rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-400 focus:outline-none mx-2"
+                >
+                  Twitter
+                </a>
+              }
             </div>
           </div>
           <Bio
