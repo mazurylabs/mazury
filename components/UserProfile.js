@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import ScoresList from './ScoresList'
 import ReferralList from './ReferralList';
 import Bio from './Bio';
@@ -17,6 +19,21 @@ export default function UserProfile(props) {
             <div>
               <h1 className="text-2xl font-bold text-gray-200">{props.username ? props.username : "Anon"}</h1>
               <p className="text-sm font-medium text-gray-400">{`${props.address.slice(0, 5)}...${props.address.slice(-3)}`}</p>
+            </div>
+            <div className="">
+              <Link href={`/refer?address=${props.address}`}>
+                <a
+                  className="inline-flex items-center px-4 py-1 border border-transparent text-base font-normal rounded-md shadow-sm text-white bg-pink-400 hover:bg-pink-300 focus:outline-none mx-2"
+                >
+                  Refer
+                </a>
+              </Link>
+                <button
+                type="button"
+                className="inline-flex items-center px-4 py-1 border border-transparent text-base font-normal rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-400 focus:outline-none mx-2"
+              >
+                Contact
+              </button>
             </div>
           </div>
           <Bio

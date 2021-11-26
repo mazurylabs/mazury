@@ -1,7 +1,7 @@
 export default function Bio(props) {
 
   return (
-    <div className="max-w-lg sm:px-6">
+    <div className="max-w-lg sm:px-6 w-full">
       {props.content
         ?
           <div className="bg-gray-700 rounded-lg px-6 py-3 shadow-md">
