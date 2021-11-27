@@ -149,7 +149,7 @@ export default function ChangeProfileForm() {
                   defaultValue={userData.email}
                   spellCheck={false}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="youare@awesome.com"
+                  placeholder="ur@awesome.com"
                   className="flex-1 focus:ring-gray-500 focus:border-gray-500 block w-full min-w-0 rounded-md sm:text-sm border-gray-300"
                 />
               </div>
@@ -249,10 +249,12 @@ export default function ChangeProfileForm() {
               <SocialMediaButton
                 name="Twitter"
                 username={userData.twitter}
+                eth_address={userData.eth_address}
               />
               <SocialMediaButton
                 name="Github"
                 username={userData.github}
+                eth_address={userData.eth_address}
               />
             </div>
           </div>

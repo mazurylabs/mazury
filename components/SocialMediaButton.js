@@ -1,4 +1,6 @@
-import link from "next/link"
+import TwitterLinkModal from "./TwitterLinkModal"
+
+import { useState } from "react"
 
 export default function SocialMediaButton(props) {
 
@@ -18,8 +20,18 @@ export default function SocialMediaButton(props) {
   }
 
   const AUTH_LINKS = {
-    "Twitter": "#",
+    "Twitter": `https://twitter.com/intent/tweet?text=I'm%20verifying%20myself%20for%20%40mazurylabs%20%F0%9F%8C%8A%0a%0a${props.eth_address}`,
     "Github": `https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}`
+  }
+
+  const TARGETS = {
+    "Twitter": "_blank",
+    "Github": "_self",
+  }
+
+  const ON_CLICK_FUNCTIONS = {
+    "Twitter": () => setOpenTwitterModal(true),
+    "Github": () => void(0),
   }
 
   const color = COLORS[props.name]
@@ -27,6 +39,10 @@ export default function SocialMediaButton(props) {
   const icon = ICONS[props.name]
   const auth_link = AUTH_LINKS[props.name]
   const socialName = props.name
+  const target = TARGETS[props.name]
+  const onClickFunction = ON_CLICK_FUNCTIONS[props.name]
+
+  const [openTwtitterModal, setOpenTwitterModal] = useState(false)
 
   return (
     <>
@@ -41,12 +57,18 @@ export default function SocialMediaButton(props) {
     :
       <a
         href={auth_link}
+        target={target}
+        onClick={onClickFunction}
         className={`inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white ${color} ${colorHover} focus:outline-none`}
       >
         {icon}
         {socialName}
       </a>
     }
+    <TwitterLinkModal
+      open={openTwtitterModal}
+      setOpen={setOpenTwitterModal}
+    />
     </>
   )
 }
