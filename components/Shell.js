@@ -179,11 +179,20 @@ export default function Shell(props) {
                         <Menu as="div" className="ml-3 relative">
                           <div>
                             <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none">
-                              <p
-                                className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-900 bg-gray-100 hover:bg-gray-200 focus:outline-none"
-                              >
-                                {userData.ens_name ? userData.ens_name : `${address.slice(0, 5)}...${address.slice(-3)}`}
-                              </p>
+                              {(!loadingUserData && userData.username.length > 24)
+                              ?
+                                <p
+                                  className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-900 bg-gray-100 hover:bg-gray-200 focus:outline-none"
+                                >
+                                  {`${userData.username.slice(0, 5)}...${userData.username.slice(-3)}`}
+                                </p>
+                              :
+                                <p
+                                  className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-900 bg-gray-100 hover:bg-gray-200 focus:outline-none"
+                                >
+                                  {userData.username}
+                                </p>
+                              }
                             </Menu.Button>
                           </div>
                           <Transition

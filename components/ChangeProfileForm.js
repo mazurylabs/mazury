@@ -113,7 +113,7 @@ export default function ChangeProfileForm() {
                   name="username"
                   id="username"
                   autoComplete="off"
-                  defaultValue={userData.ens_name}
+                  defaultValue={userData.username}
                   spellCheck={false}
                   onChange={(e) => setUsername(e.target.value)}
                   className="flex-1 focus:ring-gray-500 focus:border-gray-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
@@ -149,6 +149,7 @@ export default function ChangeProfileForm() {
                   defaultValue={userData.email}
                   spellCheck={false}
                   onChange={(e) => setEmail(e.target.value)}
+                  placeholder="youare@awesome.com"
                   className="flex-1 focus:ring-gray-500 focus:border-gray-500 block w-full min-w-0 rounded-md sm:text-sm border-gray-300"
                 />
               </div>
