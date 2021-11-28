@@ -83,6 +83,7 @@ export default function Shell(props) {
     setProvider(null)
     setSigner(null)
     setUserData({})
+    window.location.reload()
   }
 
   async function fetchAccountData() {
