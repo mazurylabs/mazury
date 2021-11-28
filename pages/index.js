@@ -138,7 +138,7 @@ export default function Dashboard() {
       />
       <main className="-mt-32">
         <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row">
-          <div className="flex flex-row justify-center w-full">
+          <div className="flex flex-col md:flex-row justify-center items-center w-full">
             <DashboardTile
               icon="/aave.png"
               href="/people?q=top_aave_gov"
