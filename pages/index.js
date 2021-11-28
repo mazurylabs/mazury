@@ -138,7 +138,7 @@ export default function Dashboard() {
       />
       <main className="-mt-32">
         <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row">
-          <div className="flex flex-row justify-center w-full">
+          <div className="flex flex-col md:flex-row justify-center items-center w-full">
             <DashboardTile
               icon="/aave.png"
               href="/people?q=top_aave_gov"
@@ -161,21 +161,28 @@ export default function Dashboard() {
             />
           </div>
         </div>
-        <h2 className="text-4xl font-medium max-w-7xl w-full mx-auto pb-4 px-4 sm:px-6 lg:px-8">
-          People in your communities
-        </h2>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
-          <div className="bg-white rounded-lg shadow w-full">
-            <PeopleList
-              startPage={startPage}
-              endPage={endPage}
-              totalPeopleCount={totalPeopleCount}
-              people={displayPeople}
-              fetchPeople={fetchPeople}
-              loading={loadingPeople}
-            />
+        {!(userData && Object.keys(userData).length === 0)
+        ?
+          <div>
+            <h2 className="text-4xl font-medium max-w-7xl w-full mx-auto pb-4 px-4 sm:px-6 lg:px-8">
+              People in your communities
+            </h2>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+              <div className="bg-white rounded-lg shadow w-full">
+                <PeopleList
+                  startPage={startPage}
+                  endPage={endPage}
+                  totalPeopleCount={totalPeopleCount}
+                  people={displayPeople}
+                  fetchPeople={fetchPeople}
+                  loading={loadingPeople}
+                />
+              </div>
+            </div>
           </div>
-        </div>
+          :
+          <p className="text-lg text-gray-700 text-center">Connect wallet to explore your own web3 network</p>
+        }
       </main>
       <Footer />
     </div>

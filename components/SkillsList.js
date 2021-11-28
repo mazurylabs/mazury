@@ -110,6 +110,9 @@ export default function SkillsList(props) {
           />
         </div>
       </div>
+      {!(userData && Object.keys(userData).length === 0)
+      ?
+      <div>
       {transactionState == "default" &&
         <button
           type="button"
@@ -133,6 +136,14 @@ export default function SkillsList(props) {
           Done!
         </div>
       }
+      </div>
+      :
+      <div
+          className="inline-flex justify-center items-center px-4 py-2 text-base font-medium rounded-md text-white bg-red-500 focus:outline-none transition duration-200"
+        >
+          Connect your wallet to proceed
+        </div>
+    }
     </div>
   )
 }

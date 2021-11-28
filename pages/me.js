@@ -128,6 +128,8 @@ export default function Home() {
         navigation={navigation}
         header={header_text}
       />
+      {!(userData && Object.keys(userData).length === 0)
+      ?
       <main className="-mt-32">
         <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row">
           <div className="bg-white rounded-lg max-h-96 shadow flex-grow md:mr-10 overflow-y-auto mb-10 md:mb-auto">
@@ -170,6 +172,9 @@ export default function Home() {
           badges={allBadges}
         />
       </main>
+      :
+      <p className="text-lg text-gray-700 text-center mt-12">Connect wallet to manage your web3 profile</p>
+      }
       <Footer />
     </div>
   )

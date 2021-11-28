@@ -245,18 +245,23 @@ export default function ChangeProfileForm() {
           <div>
             <h3 className="text-lg leading-6 font-medium text-gray-900">Integrations</h3>
             <p className="mt-1 text-sm text-gray-500">Connect your web2 accounts to get your first badges</p>
-            <div className="flex flex-row space-x-4 mt-4">
-              <SocialMediaButton
-                name="Twitter"
-                username={userData.twitter}
-                eth_address={userData.eth_address}
-              />
-              <SocialMediaButton
-                name="Github"
-                username={userData.github}
-                eth_address={userData.eth_address}
-              />
+            {userData.onboarded
+            ?
+              <div className="flex flex-row space-x-4 mt-4">
+                <SocialMediaButton
+                  name="Twitter"
+                  username={userData.twitter}
+                  eth_address={userData.eth_address}
+                />
+                <SocialMediaButton
+                  name="Github"
+                  username={userData.github}
+                  eth_address={userData.eth_address}
+                />
             </div>
+            :
+            <p className="mt-1 text-sm text-blue-500">After onboarding, click on your avatar in top right corner to connect your web2 accounts</p>
+            }
           </div>
         </div>
       </div>
