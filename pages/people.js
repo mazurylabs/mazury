@@ -166,6 +166,7 @@ export default function People() {
             </div>
           :
             <div className="h-10">
+              <p className="text-white md:pr-4">Search & filters coming soon</p>
             </div>
           }
         </div>
