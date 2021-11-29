@@ -4,6 +4,7 @@ import { skills } from "../utils/const"
 import Shell from '../components/Shell'
 import Head from 'next/head'
 import { useRouter } from "next/router";
+import { UserDataContext } from "../context/userData"
 import PeopleList from '../components/PeopleList'
 import PeopleSearch from '../components/PeopleSearch'
 import Footer from "../components/Footer";
@@ -18,7 +19,8 @@ const navigation = [
 ]
 
 export default function People() {
-  
+
+  const { userData } = useContext(UserDataContext)
   const [people, setPeople] = useState([])
   const [displayPeople, setDisplayPeople] = useState([])
   const [startPage, setStartPage] = useState(0)
@@ -153,13 +155,19 @@ export default function People() {
       />
       <main className="-mt-32">
         <div className="max-w-7xl mx-auto mb-5 flex flex-row justify-end w-full px-4 sm:px-6 lg:px-8 -mt-48">
-          <div className="w-72">
-            <PeopleSearch
-              people={people}
-              setDisplayPeople={setDisplayPeople}
-              fetchPeople={fetchPeople}
-            />
-          </div>
+          {userData.eth_address == "" // only show to whitelisted adddresses
+          ?
+            <div className="w-72">
+              <PeopleSearch
+                people={people}
+                setDisplayPeople={setDisplayPeople}
+                fetchPeople={fetchPeople}
+              />
+            </div>
+          :
+            <div className="h-10">
+            </div>
+          }
         </div>
         <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-lg shadow">
