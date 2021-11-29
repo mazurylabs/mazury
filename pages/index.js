@@ -142,7 +142,7 @@ export default function Dashboard() {
             <DashboardTile
               icon="/aave.png"
               href="/people?q=top_aave_gov"
-              title="Top aave governance"
+              title="Aave governance"
             />
             <DashboardTile
               icon="/fabric.jpeg"
@@ -155,9 +155,9 @@ export default function Dashboard() {
               title="Open to opportunities"
             />
             <DashboardTile
-              icon="/twitter.png"
-              href="/people?q=verified_with_twitter"
-              title="Verified with twitter"
+              icon="/waves.png"
+              href="/people?q=early_adopters"
+              title="Mazury early adopters"
             />
           </div>
         </div>
