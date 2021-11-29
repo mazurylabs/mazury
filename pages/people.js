@@ -38,7 +38,7 @@ export default function People() {
         setHeaderText("Referred by fabric")
       }
       else if(router.query.q == "top_aave_gov") {
-        setHeaderText("Top aave governance")
+        setHeaderText("Aave governance")
       }
       else if(router.query.q == "open") {
         setHeaderText("Open to opportunities")
