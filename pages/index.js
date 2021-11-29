@@ -145,9 +145,9 @@ export default function Dashboard() {
               title="Aave governance"
             />
             <DashboardTile
-              icon="/fabric.jpeg"
-              href="/people?q=referred_by_fabric"
-              title="Referred by Fabric"
+              icon="/lcf.jpg"
+              href="/people?q=lcf"
+              title="Le crypto fellows"
             />
             <DashboardTile
               icon="/open.png"
