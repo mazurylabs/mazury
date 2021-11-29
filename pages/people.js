@@ -36,8 +36,8 @@ export default function People() {
     if(!router.isReady) return;
     if(router.query.q){
       fetchPeople("", router.query.q)
-      if(router.query.q == "referred_by_fabric") {
-        setHeaderText("Referred by fabric")
+      if(router.query.q == "lcf") {
+        setHeaderText("Le crypto fellows")
       }
       else if(router.query.q == "top_aave_gov") {
         setHeaderText("Aave governance")
@@ -45,8 +45,8 @@ export default function People() {
       else if(router.query.q == "open") {
         setHeaderText("Open to opportunities")
       }
-      else if(router.query.q == "verified_with_twitter") {
-        setHeaderText("Verified with twitter")
+      else if(router.query.q == "early_adopters") {
+        setHeaderText("Mazury early adopters")
       }
 
     } else {
