@@ -33,11 +33,11 @@ export default function Dashboard() {
   const [totalPeopleCount, setTotalPeopleCount] = useState(0)
   const [loadingPeople, setLoadingPeople] = useState(true)
 
-  const header_text = `Welcome back, ${userData.username}`
-
   useEffect(() => {
-    fetchPeople("", "connected")
-  }, [])
+    if(userData.eth_address) {
+      fetchPeople("", `same_badges-${userData.eth_address}`)
+    }
+  }, [userData])
 
   async function fetchPeople(direction="", query="") {
 
@@ -165,7 +165,7 @@ export default function Dashboard() {
         ?
           <div>
             <h2 className="text-4xl font-medium max-w-7xl w-full mx-auto pb-4 px-4 sm:px-6 lg:px-8">
-              People in your communities
+              People with similar badges
             </h2>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
               <div className="bg-white rounded-lg shadow w-full">
