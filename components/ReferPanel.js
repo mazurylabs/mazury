@@ -57,7 +57,7 @@ export default function ReferPanel(props) {
         ?
           <div>
             <p className="text-gray-700 text-sm">Top 3 badges</p>
-            <div className="px-6 whitespace-nowrap max-w-lg overflow-hidden items-center w-48 mx-auto">
+            <div className="px-6 whitespace-nowrap max-w-lg overflow-hidden items-center w-64 mx-auto">
               {profileData.top_badges.map((badge) => (
                 <div className="mr-2 my-2">
                   <BadgeMinPreview
