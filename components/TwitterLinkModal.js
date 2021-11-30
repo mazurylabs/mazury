@@ -83,7 +83,7 @@ export default function BadgeDetailModal(props) {
                         id="company-website"
                         onChange={(e) => setTweetURL(e.target.value)}
                         className="focus:outline-none focus:border-gray-700 focus:ring-0 border block w-full pl-4 sm:text-sm border-gray-300 rounded-md"
-                        placeholder="https://twitter.com/mazurylabs/status/1461058168323203075"
+                        placeholder="tweet url eg. https://twitter.com/you/status/1461058168323203075"
                       />
                     </div>
                     <button
