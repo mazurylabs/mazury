@@ -3,6 +3,7 @@ import { ethers } from "ethers";
 import { skills } from "../utils/const"
 import { useState, useEffect, useContext } from 'react';
 import { UserDataContext } from "../context/userData"
+import { web3Context } from "../context/web3Data"
 
 const EAS_CONTRACT = "0xBf49E19254DF70328C6696135958C94CD6cd0430"
 const COMPETENCE_SCHEMA_UUID = "0xee610047e16d27b734e6f37c41a2cc06984381dec683f744791d236aeddf0769"
@@ -15,6 +16,7 @@ export default function SkillsList(props) {
   const [referralContent, setReferralContent] = useState("")
 
   const { userData } = useContext(UserDataContext)
+  const { provider, signer } = useContext(web3Context)
 
   function toggleSkill(e){
     const skillId = e.id
@@ -54,7 +56,7 @@ export default function SkillsList(props) {
 
   const getSignedMessage = async () => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/message?address=${userData.eth_address}`)
-    const signedMessage = await props.signer.signMessage(response.data)
+    const signedMessage = await provider.send("personal_sign", [response.data, userData.eth_address]);
     return signedMessage
   }
 

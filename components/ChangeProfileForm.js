@@ -9,7 +9,7 @@ import RoleCheckbox from "./RoleCheckbox"
 export default function ChangeProfileForm() {
 
   const { userData, setUserData } = useContext(UserDataContext)
-  const { signer } = useContext(web3Context)
+  const { provider, signer } = useContext(web3Context)
 
   const [username, setUsername] = useState("")
   const [bio, setBio] = useState("")
@@ -34,7 +34,7 @@ export default function ChangeProfileForm() {
 
   const getSignedMessage = async () => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/message?address=${userData.eth_address}`)
-    const signedMessage = await signer.signMessage(response.data)
+    const signedMessage = await provider.send("personal_sign", [response.data, userData.eth_address]);
     return signedMessage
   }
 
