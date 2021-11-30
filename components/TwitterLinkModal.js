@@ -10,12 +10,12 @@ export default function BadgeDetailModal(props) {
 
   const [tweetURL, setTweetURL ] = useState("")
   const { userData, loadingUserData, setUserData } = useContext(UserDataContext)
-  const { signer } = useContext(web3Context)
+  const { provider, signer } = useContext(web3Context)
 
   const getSignedMessage = async () => {
 
     const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/message?address=${userData.eth_address}`)
-    const signedMessage = await signer.signMessage(response.data)
+    const signedMessage = await provider.send("personal_sign", [response.data, userData.eth_address]);
     return signedMessage
   }
 
