@@ -31,7 +31,13 @@ export default function Home() {
   const [showBadges, setShowBadges] = useState(false)
   const [allBadges, setAllBadges] = useState([])
 
-  const header_text = userData.ens_name ? `Welcome back, ${userData.ens_name}` : ``
+  let header_text;
+  
+  if (userData.username && userData.username.length > 36) {
+    header_text = `Welcome back, ${userData.username.slice(0, 5)}...${userData.username.slice(-3)}`
+  } else {
+    header_text = `Welcome back, ${userData.username}`
+  }
 
   useEffect(() => {
     if(signer){
@@ -52,7 +58,7 @@ export default function Home() {
       receivedReferrals.push(
         {
           "author_address": referral.author.eth_address,
-          "author_username": referral.author.ens_name,
+          "author_username": referral.author.username,
           "author_avatar": referral.author.avatar,
           "skills": parseReferralData(referral),
           "content": referral.content

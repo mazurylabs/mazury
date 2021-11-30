@@ -17,8 +17,17 @@ export default function UserProfile(props) {
               </span>
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-200">{props.username ? props.username : "Anon"}</h1>
-              <p className="text-sm font-medium text-gray-400">{`${props.address.slice(0, 5)}...${props.address.slice(-3)}`}</p>
+              {props.username == props.address
+                ?
+                  <div>
+                    <div className="text-2xl font-bold text-gray-200">{`${props.address.slice(0, 5)}...${props.address.slice(-3)}`}</div>
+                  </div>
+                :
+                  <div>
+                    <div className="text-2xl font-bold text-gray-200">{props.username}</div>
+                    <div className="text-sm font-medium text-gray-400">{`${props.address.slice(0, 5)}...${props.address.slice(-3)}`}</div>
+                  </div>
+                }
             </div>
             <div className="">
               <Link href={`/refer?address=${props.address}`}>

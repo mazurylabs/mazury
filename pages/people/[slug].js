@@ -65,10 +65,11 @@ const Person = () => {
     const receivedReferrals = []
 
     for (const referral of result.data.results) {
+      console.log(referral)
       receivedReferrals.push(
         {
           "author_address": referral.author.eth_address,
-          "author_username": referral.author.ens_name,
+          "author_username": referral.author.username,
           "author_avatar": referral.author.avatar,
           "skills": parseReferralData(referral),
           "content": referral.content
@@ -153,7 +154,7 @@ const Person = () => {
             <UserProfile
               address={profileData.eth_address}
               avatar={profileData.avatar}
-              username={profileData.ens_name}
+              username={profileData.username}
               referrals={referrals}
               scores={scores}
               bio={profileData.bio}

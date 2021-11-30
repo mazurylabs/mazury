@@ -40,8 +40,17 @@ export default function ReferralList(props) {
                               <img className="h-10 w-10 rounded-full" src={referral.author_avatar} />
                             </div>
                             <div className="ml-4">
-                              <div className="text-sm font-medium text-gray-900">{referral.author_username ? referral.author_username : "Anon"}</div>
-                              <div className="text-sm text-gray-500">{`${referral.author_address.slice(0, 5)}...${referral.author_address.slice(-3)}`}</div>
+                              {referral.author_username == referral.author_address
+                              ?
+                                <div>
+                                  <div className="text-sm font-medium text-gray-900">{`${referral.author_address.slice(0, 6)}...${referral.author_address.slice(-4)}`}</div>
+                                </div>
+                              :
+                                <div>
+                                  <div className="text-sm font-medium text-gray-900">{referral.author_username}</div>
+                                  <div className="text-sm text-gray-500">{`${referral.author_address.slice(0, 5)}...${referral.author_address.slice(-3)}`}</div>
+                                </div>
+                              }
                             </div>
                           </div>
                         </a>

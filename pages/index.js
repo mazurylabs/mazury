@@ -33,7 +33,7 @@ export default function Dashboard() {
   const [totalPeopleCount, setTotalPeopleCount] = useState(0)
   const [loadingPeople, setLoadingPeople] = useState(true)
 
-  const header_text = userData.ens_name ? `Welcome back, ${userData.ens_name}` : ``
+  const header_text = `Welcome back, ${userData.username}`
 
   useEffect(() => {
     fetchPeople("", "connected")
@@ -110,7 +110,7 @@ export default function Dashboard() {
       people.push(
         {
           "address": profile.eth_address,
-          "username": profile.ens_name,
+          "username": profile.username,
           "avatar": profile.avatar,
           "skills": profile_skills,
           "badges": profile.top_badges,

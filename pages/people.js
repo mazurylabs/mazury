@@ -128,7 +128,7 @@ export default function People() {
       people.push(
         {
           "address": profile.eth_address,
-          "username": profile.ens_name,
+          "username": profile.username,
           "avatar": profile.avatar,
           "badges": profile.top_badges,
           "referred_by": profile.referred_by,
