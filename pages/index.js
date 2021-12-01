@@ -152,7 +152,7 @@ export default function Dashboard() {
             <DashboardTile
               icon="/open.png"
               href="/people?q=open"
-              title="Open to opportunities"
+              title="Open to new projects"
             />
             <DashboardTile
               icon="/waves.png"

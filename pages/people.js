@@ -43,7 +43,7 @@ export default function People() {
         setHeaderText("Aave governance")
       }
       else if(router.query.q == "open") {
-        setHeaderText("Open to opportunities")
+        setHeaderText("Open to new projects")
       }
       else if(router.query.q == "early_adopters") {
         setHeaderText("Mazury early adopters")

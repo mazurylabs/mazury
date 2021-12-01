@@ -179,7 +179,7 @@ export default function ChangeProfileForm() {
 
             <div className="sm:col-span-6">
               <label htmlFor="photo" className="block text-sm font-medium text-gray-700 mb-1">
-                Hiring
+                New projects
               </label>
               <div className="relative flex items-start">
                 <div className="flex items-center h-5">

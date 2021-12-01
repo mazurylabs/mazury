@@ -1,6 +1,8 @@
 import BadgeMinPreview from "./BadgeMinPreview"
 import ProfileMinPreview from "./ProfileMinPreview"
 
+import Link from "next/link"
+
 export default function PeopleList(props) {
 
   return (
@@ -42,26 +44,31 @@ export default function PeopleList(props) {
                 {props.people.map((person) => (
                   <tr key={person.address}>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <a href={"/people/" + person.address} className="flex items-center">
-                        <div className="flex-shrink-0 h-10 w-10">
-                          <span className="h-10 w-10 rounded-full overflow-hidden bg-gray-100 mx-auto">
-                            <img className="h-10 w-10 rounded-full" src={person.avatar} />
-                          </span>
-                        </div>
-                        <div className="ml-4">
-                          {person.username == person.address
-                          ?
-                            <div>
-                              <div className="text-sm font-medium text-gray-900">{`${person.address.slice(0, 5)}...${person.address.slice(-3)}`}</div>
-                            </div>
-                          :
-                            <div>
-                              <div className="text-sm font-medium text-gray-900">{person.username}</div>
-                              <div className="text-sm text-gray-500">{`${person.address.slice(0, 5)}...${person.address.slice(-3)}`}</div>
-                            </div>
-                          }
-                        </div>
-                      </a>
+                      <Link href={{
+                          pathname: '/people/[slug]',
+                          query: { slug: person.address },
+                        }}>
+                        <a className="flex items-center">
+                          <div className="flex-shrink-0 h-10 w-10">
+                            <span className="h-10 w-10 rounded-full overflow-hidden bg-gray-100 mx-auto">
+                              <img className="h-10 w-10 rounded-full" src={person.avatar} />
+                            </span>
+                          </div>
+                          <div className="ml-4">
+                            {person.username == person.address
+                            ?
+                              <div>
+                                <div className="text-sm font-medium text-gray-900">{`${person.address.slice(0, 5)}...${person.address.slice(-3)}`}</div>
+                              </div>
+                            :
+                              <div>
+                                <div className="text-sm font-medium text-gray-900">{person.username}</div>
+                                <div className="text-sm text-gray-500">{`${person.address.slice(0, 5)}...${person.address.slice(-3)}`}</div>
+                              </div>
+                            }
+                          </div>
+                        </a>
+                    </Link>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap max-w-lg overflow-hidden">
                       {person.roles.length != 0
@@ -98,7 +105,7 @@ export default function PeopleList(props) {
                         ?
                           <div className="flex flex-row items-center">
                             {person.referred_by.map((profile) => (
-                              <div className="mr-2 my-2">
+                              <div key={profile.eth_address} className="mr-2 my-2">
                                 <ProfileMinPreview
                                   profileData={profile}
                                 />
