@@ -151,14 +151,9 @@ const Person = () => {
         <div className="max-w-7xl mx-auto mb-5 flex flex-row justify-end w-full px-4 sm:px-6 lg:px-8 -mt-48">
           {profileData &&
             <UserProfile
-              address={profileData.eth_address}
-              avatar={profileData.avatar}
-              username={profileData.username}
+              profileData={profileData}
               referrals={referrals}
               scores={scores}
-              bio={profileData.bio}
-              email={profileData.email}
-              twitter={profileData.twitter}
             />
           }
         </div>
@@ -181,7 +176,7 @@ const Person = () => {
         </h2>
         {poaps.length > 0
           ?
-            <div className="max-w-7xl mx-auto pb-12 grid grid-cols-5 gap-y-6 gap-x-6 place-items-center">
+            <div className="max-w-7xl mx-auto pb-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-6 gap-x-6 place-items-center">
               {poaps.map(poap => (
                 <a key={poap.event.id} target="_blank" href={poap.event.event_url}>
                   <img className="rounded-full w-24 h-24 lg:w-28 lg:h-28 shadow mx-auto" src={poap.event.image_url} />
