@@ -27,6 +27,7 @@ export default function Home() {
   const [referrals, setReferrals] = useState([])
   const [badges, setBadges] = useState([])
   const [scores, setScores] = useState([])
+  const [poaps, setPoaps] = useState([])
   const [loadingReferrals, setLoadinReferrals] = useState(true)
   const [showBadges, setShowBadges] = useState(false)
   const [allBadges, setAllBadges] = useState([])
@@ -43,6 +44,7 @@ export default function Home() {
     if(signer){
       fetchReferrals()
       fetchBadges()
+      fetchPaops()
     }
   }, [signer])
 
@@ -108,6 +110,14 @@ export default function Home() {
 
     setBadges(owned_badges)
     setAllBadges(result_types.data.results)
+  }
+
+  async function fetchPaops() {
+    const address = await signer.getAddress()
+
+    const result = await axios.get(`https://api.poap.xyz/actions/scan/${address}`)
+
+    setPoaps(result.data)
   }
 
   function parseReferralData(data) {
@@ -177,6 +187,23 @@ export default function Home() {
           setOpen={setShowBadges}
           badges={allBadges}
         />
+        <h2 className="text-4xl font-medium max-w-7xl w-full mx-auto pb-4 px-4 sm:px-6 lg:px-8">
+          POAPs
+        </h2>
+        {poaps.length > 0
+          ?
+            <div className="max-w-2xl mx-auto pb-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-y-6 gap-x-6">
+              {poaps.map(poap => (
+                <a key={poap.event.id} target="_blank" href={poap.event.event_url}>
+                  <img className="rounded-full w-24 h-24 lg:w-28 lg:h-28 shadow mx-auto" src={poap.event.image_url} />
+                </a>
+              ))}
+            </div>
+          :
+            <div className="max-w-7xl mx-auto pb-12 grid grid-cols-5 gap-y-6 gap-x-6 place-items-center">
+              No poaps
+            </div>
+        }
       </main>
       :
       <p className="text-lg text-gray-700 text-center mt-12">Connect wallet to manage your web3 profile</p>
