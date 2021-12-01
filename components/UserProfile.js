@@ -18,7 +18,7 @@ export default function UserProfile(props) {
               </span>
             </div>
             <div>
-              {profileData.username == profileData.address
+              {profileData.username == profileData.eth_address
                 ?
                   <div>
                     <div className="text-2xl font-bold text-gray-200">{`${profileData.eth_address.slice(0, 5)}...${profileData.eth_address.slice(-3)}`}</div>
@@ -95,7 +95,7 @@ export default function UserProfile(props) {
             }
           </div>
         </div>
-        <h2 className="text-4xl font-medium pb-4">
+        <h2 className="text-4xl font-medium pb-4 pt-1">
           Referrals received
         </h2>
         <div className=" flex flex-col md:flex-row">
