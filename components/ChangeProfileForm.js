@@ -192,7 +192,7 @@ export default function ChangeProfileForm() {
                 </div>
                 <div className="ml-3 text-sm">
                   <label htmlFor="opportunities" className="font-medium text-gray-700">
-                    I'm open for new opportunities
+                    I'm open to contribute to new projects
                   </label>
                 </div>
               </div>
