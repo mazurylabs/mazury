@@ -45,7 +45,7 @@ const Person = () => {
     if(router.query.slug){
       fetchProfileData(router.query.slug)
     }
-  }, [router.isReady])
+  }, [router.isReady, router.query])
 
   async function fetchProfileData(url_address) {
     const profileData = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profiles/${url_address}`)
@@ -65,7 +65,6 @@ const Person = () => {
     const receivedReferrals = []
 
     for (const referral of result.data.results) {
-      console.log(referral)
       receivedReferrals.push(
         {
           "author_address": referral.author.eth_address,
@@ -184,7 +183,7 @@ const Person = () => {
           ?
             <div className="max-w-7xl mx-auto pb-12 grid grid-cols-5 gap-y-6 gap-x-6 place-items-center">
               {poaps.map(poap => (
-                <a target="_blank" href={poap.event.event_url}>
+                <a key={poap.event.id} target="_blank" href={poap.event.event_url}>
                   <img className="rounded-full w-24 h-24 lg:w-28 lg:h-28 shadow mx-auto" src={poap.event.image_url} />
                 </a>
               ))}
