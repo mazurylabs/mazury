@@ -155,7 +155,12 @@ export default function People() {
       />
       <main className="-mt-32">
         <div className="max-w-7xl mx-auto mb-5 flex flex-row justify-end w-full px-4 sm:px-6 lg:px-8 -mt-48">
-          {userData.eth_address == "" // only show to whitelisted adddresses
+          {[
+            "0x762ff66e28679fA3ABb10d6be0942aBd6eb29ABc", //olaf
+            "0xF417ACe7b13c0ef4fcb5548390a450A4B75D3eB3", //wojtek
+            "0xe6F3503e20a5102E995219885b2D63Be7fa9dfC8",
+            "0x114794178CD4318888F44cc0924A2dA3636Ac16a",
+          ].includes(userData.eth_address) // only show to whitelisted adddresses
           ?
             <div className="w-72">
               <PeopleSearch
