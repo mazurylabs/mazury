@@ -14,6 +14,7 @@ export default function ChangeProfileForm() {
   const [username, setUsername] = useState("")
   const [bio, setBio] = useState("")
   const [email, setEmail] = useState("")
+  const [website, setWebsite] = useState("")
   const [avatar, setAvatar] = useState(null)
   const [avatarPreview, setAvatarPreview] = useState("")
   const [openToOpportunities, setOpenToOpportunities] = useState(null)
@@ -51,6 +52,9 @@ export default function ChangeProfileForm() {
     }
     if(email) {
       formData.append("email", email)
+    }
+    if(website) {
+      formData.append("website", website)
     }
     if(openToOpportunities != null) {
       formData.append("open_to_opportunities", openToOpportunities)
@@ -150,6 +154,24 @@ export default function ChangeProfileForm() {
                   spellCheck={false}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="ur@awesome.com"
+                  className="flex-1 focus:ring-gray-500 focus:border-gray-500 block w-full min-w-0 rounded-md sm:text-sm border-gray-300"
+                />
+              </div>
+            </div>
+            <div className="sm:col-span-6">
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+                Website
+              </label>
+              <div className="mt-1 flex rounded-md shadow-sm">
+                <input
+                  type="url"
+                  name="url"
+                  id="url"
+                  autoComplete="off"
+                  defaultValue={userData.website}
+                  spellCheck={false}
+                  onChange={(e) => setWebsite(e.target.value)}
+                  placeholder="https://mazurylabs.com"
                   className="flex-1 focus:ring-gray-500 focus:border-gray-500 block w-full min-w-0 rounded-md sm:text-sm border-gray-300"
                 />
               </div>
