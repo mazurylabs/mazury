@@ -7,6 +7,7 @@ import Head from 'next/head'
 
 import axios from "axios";
 import { useState, useEffect, useContext } from 'react';
+import Link from 'next/link'
 import { web3Context } from "../context/web3Data"
 import { UserDataContext } from "../context/userData"
 import AllBadgesModal from "../components/AllBadgesModal"
@@ -147,7 +148,24 @@ export default function Home() {
       {!(userData && Object.keys(userData).length === 0)
       ?
       <main className="-mt-32">
-        <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row">
+        <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
+          <div className="mb-4">
+              <Link href={`/people/${userData.username}`}>
+                <a
+                  className="inline-flex items-center px-4 py-1 border border-transparent text-base font-normal rounded-md shadow-sm text-white bg-blue-800 hover:bg-blue-700 focus:outline-none mx-2 mb-2 md:mb-0"
+                >
+                  Go to your public profile
+                </a>
+              </Link>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText("https://mzry.me/" + userData.username).then(() => alert(`https://mzry.me/${userData.username} copied to clipboard`))
+                }}
+                className="inline-flex items-center px-4 py-1 border border-transparent text-base font-normal rounded-md shadow-sm text-white bg-blue-700 hover:bg-blue-400 focus:outline-none mx-2"
+              >
+                Copy your link
+              </button>
+            </div>
           <div className="bg-white rounded-lg max-h-96 shadow flex-grow md:mr-10 overflow-y-auto mb-10 md:mb-auto">
             <ReferralList
               referrals={referrals}
