@@ -110,7 +110,7 @@ export default function ChangeProfileForm() {
               </label>
               <div className="mt-1 flex rounded-md shadow-sm">
                 <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
-                  app.mazurylabs.com/people/
+                  app.mazury.xyz/people/
                 </span>
                 <input
                   type="text"
@@ -171,7 +171,7 @@ export default function ChangeProfileForm() {
                   defaultValue={userData.website}
                   spellCheck={false}
                   onChange={(e) => setWebsite(e.target.value)}
-                  placeholder="https://mazurylabs.com"
+                  placeholder="https://mazury.xyz"
                   className="flex-1 focus:ring-gray-500 focus:border-gray-500 block w-full min-w-0 rounded-md sm:text-sm border-gray-300"
                 />
               </div>

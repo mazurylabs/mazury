@@ -20,7 +20,7 @@ export default function SocialMediaButton(props) {
   }
 
   const AUTH_LINKS = {
-    "Twitter": `https://twitter.com/intent/tweet?text=I'm%20verifying%20myself%20for%20%40mazurylabs%20%F0%9F%8C%8A%0a%0a${props.eth_address}`,
+    "Twitter": `https://twitter.com/intent/tweet?text=I'm%20verifying%20myself%20for%20%40mazuryxyz%20%F0%9F%8C%8A%0a%0a${props.eth_address}`,
     "Github": `https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}`
   }
 

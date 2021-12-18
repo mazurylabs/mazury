@@ -6,7 +6,7 @@ import { Web3ContextProvider } from '../context/web3Data'
 
 function MyApp({ Component, pageProps }) {
   return (
-    <PlausibleProvider domain="app.mazurylabs.com">
+    <PlausibleProvider domain="app.mazury.xyz">
       <Web3ContextProvider>
         <UserDataDataProvider>
           <Component {...pageProps} />
