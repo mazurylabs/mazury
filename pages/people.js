@@ -158,9 +158,11 @@ export default function People() {
           {[
             "0x762ff66e28679fA3ABb10d6be0942aBd6eb29ABc", //olaf
             "0xF417ACe7b13c0ef4fcb5548390a450A4B75D3eB3", //wojtek
-            "0xe6F3503e20a5102E995219885b2D63Be7fa9dfC8",
-            "0x114794178CD4318888F44cc0924A2dA3636Ac16a",
-            "0xfdA462548Ce04282f4B6D6619823a7C64Fdc0185",
+            "0xe6F3503e20a5102E995219885b2D63Be7fa9dfC8", //partner 1
+            "0x114794178CD4318888F44cc0924A2dA3636Ac16a", //partner 2
+            "0xfdA462548Ce04282f4B6D6619823a7C64Fdc0185", //partner 3
+            "0x946Fb1b69a0F53599CB685a9A12f870f280c5BD9", //investoooor
+            "0x63799a661Cc1894Cb7dBc0428abDF242B8c143b6"  //partner 4
           ].includes(userData.eth_address) // only show to whitelisted adddresses
           ?
             <div className="w-72">
