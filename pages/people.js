@@ -161,7 +161,7 @@ export default function People() {
             "0xe6F3503e20a5102E995219885b2D63Be7fa9dfC8", //partner 1
             "0x114794178CD4318888F44cc0924A2dA3636Ac16a", //partner 2
             "0xfdA462548Ce04282f4B6D6619823a7C64Fdc0185", //partner 3
-            "0x946Fb1b69a0F53599CB685a9A12f870f280c5BD9", //investoooor
+            "0x2059a96525c364560A806Ca035a40C9F379eBcA9", //investoooor
             "0x63799a661Cc1894Cb7dBc0428abDF242B8c143b6"  //partner 4
           ].includes(userData.eth_address) // only show to whitelisted adddresses
           ?
