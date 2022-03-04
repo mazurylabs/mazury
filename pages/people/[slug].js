@@ -5,6 +5,7 @@ import { skills } from "../../utils/const"
 import Shell from '../../components/Shell'
 import UserProfile from '../../components/UserProfile'
 import Badge from "../../components/Badge";
+import Post from "../../components/Post";
 import Head from 'next/head'
 import Footer from "../../components/Footer";
 
@@ -25,6 +26,7 @@ const Person = () => {
   const [referrals, setReferrals] = useState([])
   const [scores, setScores] = useState([])
   const [badges, setBadges] = useState([])
+  const [posts, setPosts] = useState([])
   const [profileData, setProfileData] = useState(null)
   const [poaps, setPoaps] = useState([])
   const [loading, setLoading] = useState(true)
@@ -35,6 +37,7 @@ const Person = () => {
     if(profileData != null){
       fetchReferrals()
       fetchBadges()
+      fetchPosts()
       fetchPaops()
       setLoading(false)
     }
@@ -116,6 +119,14 @@ const Person = () => {
     setBadges(owned_badges)
   }
 
+  async function fetchPosts() {
+
+    const result_posts = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/writing/posts/?author=${profileData.eth_address}`)
+
+    console.log(result_posts)
+    setPosts(result_posts.data.results)
+  }
+
   function parseReferralData(data) {
 
     const parsedData = []
@@ -168,6 +179,20 @@ const Person = () => {
               title={badge.title}
               description={badge.description}
               total_supply={badge.total_supply}
+            />
+          ))}
+        </div>
+        <h2 className="text-4xl font-medium max-w-7xl w-full mx-auto pb-4 px-4 sm:px-6 lg:px-8">
+          Writing
+        </h2>
+        <div className="max-w-7xl w-full mx-auto pb-12 px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-10 gap-y-6">
+          {posts.map((post) => (
+            <Post
+              key={post.title}
+              image={post.background_image}
+              title={post.title}
+              description={post.preview}
+              url={post.url}
             />
           ))}
         </div>
