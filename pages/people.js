@@ -155,28 +155,16 @@ export default function People() {
       />
       <main className="-mt-32">
         <div className="max-w-7xl mx-auto mb-5 flex flex-row justify-end w-full px-4 sm:px-6 lg:px-8 -mt-48">
-          {[
-            "0x762ff66e28679fA3ABb10d6be0942aBd6eb29ABc", //olaf
-            "0xF417ACe7b13c0ef4fcb5548390a450A4B75D3eB3", //wojtek
-            "0xe6F3503e20a5102E995219885b2D63Be7fa9dfC8", //partner 1
-            "0x114794178CD4318888F44cc0924A2dA3636Ac16a", //partner 2
-            "0xfdA462548Ce04282f4B6D6619823a7C64Fdc0185", //partner 3
-            "0x2059a96525c364560A806Ca035a40C9F379eBcA9", //investoooor
-            "0x63799a661Cc1894Cb7dBc0428abDF242B8c143b6"  //partner 4
-          ].includes(userData.eth_address) // only show to whitelisted adddresses
-          ?
-            <div className="w-72">
+          <div className="">
+            <div className="w-72 mb-1">
               <PeopleSearch
                 people={people}
                 setDisplayPeople={setDisplayPeople}
                 fetchPeople={fetchPeople}
               />
             </div>
-          :
-            <div className="h-10">
-              <p className="text-white md:pr-4 hidden md:block">Search & filters coming soon</p>
-            </div>
-          }
+            <a href="https://mazury.notion.site/mazury-serach-4f67e55e02b1444baf750af4fc32db0e" target="_blank" className="text-white underline">read about our search here</a>
+          </div>
         </div>
         <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-lg shadow">
