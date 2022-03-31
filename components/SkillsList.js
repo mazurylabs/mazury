@@ -96,7 +96,7 @@ export default function SkillsList(props) {
           {skills.map((skill) => (
             <button
               key={skill.id}
-              id={skill.easName}
+              id={skill.humanName}
               onClick={(e) => toggleSkill(e.target)}
               className="px-4 py-3 text-sm font-medium text-gray-700 text-left border border-gray-300 hover:border-green-500 rounded-lg focus:outline-none transition duration-100"
             >
