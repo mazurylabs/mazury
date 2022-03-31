@@ -63,7 +63,7 @@ export default function Home() {
           "author_address": referral.author.eth_address,
           "author_username": referral.author.username,
           "author_avatar": referral.author.avatar,
-          "skills": parseReferralData(referral),
+          "skills": referral.skills,
           "content": referral.content
         }
       )
