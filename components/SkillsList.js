@@ -31,8 +31,6 @@ export default function SkillsList(props) {
     e.classList.toggle("hover:bg-green-500");
     e.classList.toggle("text-gray-100");
     e.classList.toggle("border-white");
-
-    console.log(selectedSkills)
   }
 
   async function saveReferralToEAS() {
