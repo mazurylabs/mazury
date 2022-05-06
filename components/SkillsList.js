@@ -11,7 +11,7 @@ const EAS_ABI = [{"inputs":[{"internalType":"contract IASRegistry","name":"regis
 
 export default function SkillsList(props) {
 
-  const [selectedSkills, setSelectedSkills] = useState(skills.map((skill) => (false)));
+  const [selectedSkills, setSelectedSkills] = useState([]);
   const [transactionState, setTransactionState] = useState("default")
   const [referralContent, setReferralContent] = useState("")
 
@@ -21,7 +21,12 @@ export default function SkillsList(props) {
   function toggleSkill(e){
     const skillId = e.id
     
-    selectedSkills[skillId] = !selectedSkills[skillId]
+    if(selectedSkills.includes(skillId)){
+      const removeIndex = selectedSkills.indexOf(skillId)
+      selectedSkills.splice(removeIndex, 1)
+    } else {
+      selectedSkills.push(skillId)
+    }
     e.classList.toggle("bg-green-400");
     e.classList.toggle("hover:bg-green-500");
     e.classList.toggle("text-gray-100");
@@ -61,18 +66,19 @@ export default function SkillsList(props) {
   }
 
   const saveReferral = async () => {
-    const formData = new FormData()
 
-    formData.append("selected_skills", selectedSkills)
-    formData.append("content", referralContent)
-    formData.append("receiver", props.referralAddress)
+    const requestData = {
+      "skills": selectedSkills,
+      "content": referralContent,
+      "receiver": props.referralAddress
+    }
 
     const auth_key = await getSignedMessage()
 
     setTransactionState("pending")
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/referrals/`,
-      formData,
+      requestData, 
       {
         headers: {
           'ETH-AUTH': auth_key
@@ -90,7 +96,7 @@ export default function SkillsList(props) {
           {skills.map((skill) => (
             <button
               key={skill.id}
-              id={skill.id}
+              id={skill.humanName}
               onClick={(e) => toggleSkill(e.target)}
               className="px-4 py-3 text-sm font-medium text-gray-700 text-left border border-gray-300 hover:border-green-500 rounded-lg focus:outline-none transition duration-100"
             >

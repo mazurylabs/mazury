@@ -155,20 +155,16 @@ export default function People() {
       />
       <main className="-mt-32">
         <div className="max-w-7xl mx-auto mb-5 flex flex-row justify-end w-full px-4 sm:px-6 lg:px-8 -mt-48">
-          {userData.eth_address == "" // only show to whitelisted adddresses
-          ?
-            <div className="w-72">
+          <div className="">
+            <div className="w-72 mb-1">
               <PeopleSearch
                 people={people}
                 setDisplayPeople={setDisplayPeople}
                 fetchPeople={fetchPeople}
               />
             </div>
-          :
-            <div className="h-10">
-              <p className="text-white md:pr-4 hidden md:block">Search & filters coming soon</p>
-            </div>
-          }
+            <a href="https://mazury.notion.site/mazury-serach-4f67e55e02b1444baf750af4fc32db0e" target="_blank" className="text-white underline">read about our search here</a>
+          </div>
         </div>
         <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-lg shadow">

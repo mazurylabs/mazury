@@ -65,7 +65,7 @@ export default function ReferralList(props) {
                     <td className="px-1 py-4 w-96">
                       {referral.skills.slice(0,2).map((skill) => (
                         <span key={skill.id} className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-200 text-gray-800 mr-2">
-                          {skill.humanName}
+                          {skill.name}
                         </span>
                       ))}
                       {referral.skills.length-2 > 0 &&
