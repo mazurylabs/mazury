@@ -10,6 +10,7 @@ import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 
 import OnboardingModal from "./OnboardingModal"
+import V2ComingBanner from './v2ComingBanner';
 import { UserDataContext } from '../context/userData';
 import { web3Context } from '../context/web3Data';
 import axios from 'axios';
@@ -126,6 +127,7 @@ export default function Shell(props) {
       {(!loadingUserData && !userData.onboarded) &&
         <OnboardingModal />
       }
+      <V2ComingBanner />
       <Disclosure as="nav" className="bg-gray-800">
         {({ open }) => (
           <>
